@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopware ↔ Odoo — User Guide</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:40px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.card-svg{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:16px;margin:14px 0}
+svg{max-width:100%;height:auto;display:block}
+text.t{font-family:var(--sans);font-size:14px;fill:var(--text)}
+text.th{font-family:var(--sans);font-weight:500;font-size:14px;fill:var(--text)}
+text.ts{font-family:var(--sans);font-size:12px;fill:var(--text-2)}
+.box>rect{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:.5}
+.arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
+.c-purple>rect{fill:var(--mp-bg);stroke:#7F77DD;stroke-width:.5}.c-purple text{fill:var(--mp-fg)}
+.c-teal>rect{fill:var(--mt-bg);stroke:#1D9E75;stroke-width:.5}.c-teal text{fill:var(--mt-fg)}
+.c-blue>rect{fill:var(--mb-bg);stroke:#378ADD;stroke-width:.5}.c-blue text{fill:var(--mb-fg)}
+.c-coral>rect{fill:var(--mc-bg);stroke:#D85A30;stroke-width:.5}.c-coral text{fill:var(--mc-fg)}
+.c-amber>rect{fill:var(--ma-bg);stroke:#EF9F27;stroke-width:.5}.c-amber text{fill:var(--ma-fg)}
+.c-pink>rect{fill:var(--mk-bg);stroke:#D4537E;stroke-width:.5}.c-pink text{fill:var(--mk-fg)}
+.c-gray>rect{fill:var(--mg-bg);stroke:#888780;stroke-width:.5}.c-gray text{fill:var(--mg-fg)}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+.dir{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scn{color:var(--text-2);font-size:15px;margin:10px 0}
+.scn b{color:var(--text);font-weight:500}
+.rail{position:relative;margin:16px 0 4px}
+.rail:before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:var(--border)}
+.stg{display:flex;gap:14px;align-items:stretch;margin-bottom:10px;position:relative}
+.node{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;border:2px solid var(--fg);z-index:1}
+.card{flex:1;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:10px 14px;cursor:pointer}
+.card:hover{border-color:var(--border-strong)}
+.stg.sel .card{border-color:var(--fg);background:var(--surface-2)}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);color:var(--fg);font-size:12px;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.ttl{font-weight:500;font-size:15px}
+.ex{color:var(--text-2);font-size:13px;margin-top:3px}
+.det{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:14px 16px;margin-top:6px}
+.det h4{margin:0 0 2px;font-size:15px;font-weight:500}
+.det .lab{font-size:12px;color:var(--text-3);margin:10px 0 3px;text-transform:uppercase;letter-spacing:.04em}
+.det p{margin:0;font-size:14px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border)}
+.chip.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.chip.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.chip.bad{background:var(--bg-danger);color:var(--text-danger);border-color:var(--border-danger)}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.words{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:6px 18px;margin:14px 0}
+.words dt{font-weight:500;margin-top:10px}
+.words dd{margin:0 0 4px;color:var(--text-2);font-size:14.5px}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;padding-top:12px;border-top:1px solid var(--border)}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.dot{width:11px;height:11px;border-radius:3px;background:var(--fg)}
+.sw-blk{cursor:pointer}
+.sw-blk:hover rect{stroke-width:2}
+.sw-blk:focus{outline:none}
+.sw-def{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:13px 16px;margin:4px 0 6px}
+.sw-def .h{font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:3px;font-size:15px}
+.sw-def p{margin:0;font-size:14px;color:var(--text-2)}
+.sw-def code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.doc{display:none}
+.docmode #live{display:none}
+.docmode .doc{display:block}
+.doc h3{border-top:1px solid var(--border);padding-top:16px}
+footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{
+.noprint{display:none!important}
+body{background:#fff;font-size:12px}
+.wrap{max-width:none;padding:0}
+#live{display:none!important}
+.doc{display:block!important}
+.card-svg{break-inside:avoid;border:1px solid #ddd}
+.stg,.det,h3{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>Shopware &#x2194; Odoo &mdash; User Guide</h1>
+<p class="lead">A plain-language guide for new team members. No technical background needed &mdash; start with the basics, then click through what happens, what you need to do, and where to find things.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="document.body.classList.toggle('docmode')">Handout view</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>1. What is this integration?</h2>
+<p><b>Shopware</b> is your online shop &mdash; where customers browse and buy. <b>Odoo</b> is the ERP system that runs the business behind it &mdash; orders, stock, invoices and deliveries. On their own, the two don't talk to each other.</p>
+<p>The <b>integration</b> (or "connector") is a little messenger that sits between them and keeps both sides in step, on its own. So when a customer buys something, or you change a price, the messenger carries it across &mdash; nobody has to copy it by hand.</p>
+<div class="card-svg">
+<svg width="100%" viewBox="0 0 680 340" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>What the integration connects</title><desc>Odoo and Shopware exchange orders, products, stock, shipments and returns through the integration connector.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="box"><rect x="20" y="140" width="145" height="80" rx="12"/><text class="th" x="92" y="176" text-anchor="middle">Odoo</text><text class="ts" x="92" y="196" text-anchor="middle">your ERP system</text></g>
+<g class="box"><rect x="490" y="140" width="168" height="80" rx="12"/><text class="th" x="574" y="176" text-anchor="middle">Shopware</text><text class="ts" x="574" y="196" text-anchor="middle">your online shop</text></g>
+<line x1="167" y1="175" x2="218" y2="175" class="arr" marker-end="url(#ar)"/>
+<line x1="218" y1="195" x2="167" y2="195" class="arr" marker-end="url(#ar)"/>
+<line x1="452" y1="175" x2="488" y2="175" class="arr" marker-end="url(#ar)"/>
+<line x1="488" y1="195" x2="452" y2="195" class="arr" marker-end="url(#ar)"/>
+<g class="box"><rect x="220" y="20" width="228" height="300" rx="16"/><text class="th" x="334" y="44" text-anchor="middle">Integration connector</text></g>
+<g class="c-teal sw-blk" tabindex="0" role="button" onclick="swShow('order')" onkeypress="if(event.key==='Enter')swShow('order')"><rect x="240" y="62" width="188" height="30" rx="8"/><text class="th" x="334" y="82" text-anchor="middle">&#x2190; Order Import</text></g>
+<g class="c-blue sw-blk" tabindex="0" role="button" onclick="swShow('product')" onkeypress="if(event.key==='Enter')swShow('product')"><rect x="240" y="100" width="188" height="30" rx="8"/><text class="th" x="334" y="120" text-anchor="middle">&#x2194; Product Sync</text></g>
+<g class="c-coral sw-blk" tabindex="0" role="button" onclick="swShow('stock')" onkeypress="if(event.key==='Enter')swShow('stock')"><rect x="240" y="138" width="188" height="30" rx="8"/><text class="th" x="334" y="158" text-anchor="middle">&#x2192; Stock Export</text></g>
+<g class="c-amber sw-blk" tabindex="0" role="button" onclick="swShow('shipment')" onkeypress="if(event.key==='Enter')swShow('shipment')"><rect x="240" y="176" width="188" height="30" rx="8"/><text class="th" x="334" y="196" text-anchor="middle">&#x2192; Shipment Export</text></g>
+<g class="c-pink sw-blk" tabindex="0" role="button" onclick="swShow('return')" onkeypress="if(event.key==='Enter')swShow('return')"><rect x="240" y="214" width="188" height="30" rx="8"/><text class="th" x="334" y="234" text-anchor="middle">&#x2192; Return Export</text></g>
+<g class="c-gray sw-blk" tabindex="0" role="button" onclick="swShow('taxes')" onkeypress="if(event.key==='Enter')swShow('taxes')"><rect x="240" y="252" width="188" height="30" rx="8"/><text class="th" x="334" y="272" text-anchor="middle">Taxes &amp; Currencies</text></g>
+</svg>
+</div>
+
+<div id="swDef" class="sw-def m-gray noprint">
+<div class="h"><span class="dot"></span><span id="swDefT">What the connector does</span></div>
+<p id="swDefP">👆 Click any coloured block inside the connector above to see what it does.</p>
+</div>
+<script>
+(function(){
+const D={
+order:['m-teal','&#x2190; Order Import','Orders placed in your Shopware shop are pulled into Odoo automatically (once a day) and become normal Sales Orders — ready to pick, pack and invoice. <b>Direction: Shopware → Odoo.</b>'],
+product:['m-blue','&#x2194; Product Sync','Products can travel both ways: pull shop products into Odoo, or push Odoo products up to Shopware. Names, prices, images, variants, category and tax are kept in step. <b>Direction: both ways.</b>'],
+stock:['m-coral','&#x2192; Stock Export','Odoo sends the real available stock to Shopware every day, so the shop shows correct availability and you avoid overselling. Only the numbers that changed are sent. <b>Direction: Odoo → Shopware.</b>'],
+shipment:['m-amber','&#x2192; Shipment Export','When your warehouse validates a delivery in Odoo, Shopware is marked “shipped” and the tracking number is sent so the customer can follow their parcel. <b>Direction: Odoo → Shopware.</b>'],
+'return':['m-pink','&#x2192; Return Export','When you process a customer return in Odoo, the matching Shopware order is updated to “returned”. (Any refund or credit note is a separate step in Odoo Invoicing.) <b>Direction: Odoo → Shopware.</b>'],
+taxes:['m-gray','Taxes &amp; Currencies','A one-time setup step: Odoo matches Shopware’s tax rates and currencies to its own, using the <b>Import Taxes</b> and <b>Map Currencies</b> buttons. Do this once, right after enabling the integration.']
+};
+const box=document.getElementById('swDef'),t=document.getElementById('swDefT'),p=document.getElementById('swDefP');
+window.swShow=function(k){const d=D[k];if(!d)return;box.className='sw-def '+d[0];t.innerHTML=d[1];p.innerHTML=d[2];};
+})();
+</script>
+
+<h3>A few words you'll hear</h3>
+<dl class="words">
+<dt>Import</dt><dd>Bringing information <b>into Odoo</b> (for example, an order from the shop).</dd>
+<dt>Export</dt><dd>Sending information <b>out to Shopware</b> (for example, a new stock number).</dd>
+<dt>Sync</dt><dd>Keeping both sides showing the <b>same</b> thing.</dd>
+<dt>Scheduled action</dt><dd>A task that runs <b>automatically on a timer</b> (usually once a day), so you don't have to start it.</dd>
+<dt>Log</dt><dd>A diary the system keeps, so you can <b>see what happened</b> and why &mdash; your first place to look if something seems off.</dd>
+<dt>Integration Hub</dt><dd>The menu in Odoo where all of this lives (<code>Integration Hub &gt; Shopware</code>).</dd>
+</dl>
+
+<h2>2. What happens automatically vs what you do</h2>
+<p>Most of the integration runs on its own. You only need to act in a few specific situations.</p>
+<div class="card-svg">
+<svg width="100%" viewBox="0 0 680 240" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Automatic actions versus manual actions</title><desc>Left column shows what happens automatically daily. Right column shows what you need to do yourself.</desc>
+<rect x="16" y="16" width="304" height="208" rx="14" fill="var(--bg-success)" stroke="var(--border-success)" stroke-width=".5"/>
+<text class="th" x="168" y="40" text-anchor="middle" style="fill:var(--text-success)">Happens automatically</text>
+<line x1="32" y1="50" x2="304" y2="50" stroke="var(--border-success)" stroke-width=".5"/>
+<text class="t" x="40" y="76">&#x2190; Import orders from Shopware</text>
+<text class="ts" x="40" y="91">Every day &middot; nothing to do</text>
+<text class="t" x="40" y="113">&#x2190; Import new products from Shopware</text>
+<text class="ts" x="40" y="128">Every day &middot; nothing to do</text>
+<text class="t" x="40" y="150">&#x2192; Send stock levels to Shopware</text>
+<text class="ts" x="40" y="165">Every day &middot; nothing to do</text>
+<text class="t" x="40" y="187">&#x2192; Send shipment &amp; return updates</text>
+<text class="ts" x="40" y="202">When you validate a delivery in Odoo</text>
+<rect x="360" y="16" width="304" height="208" rx="14" fill="var(--surface-1)" stroke="var(--border-strong)" stroke-width=".5"/>
+<text class="th" x="512" y="40" text-anchor="middle">You do this when needed</text>
+<line x1="376" y1="50" x2="648" y2="50" stroke="var(--border)" stroke-width=".5"/>
+<text class="t" x="384" y="76">&#x2192; Export a product to Shopware</text>
+<text class="ts" x="384" y="91">Sales > Products > action menu</text>
+<text class="t" x="384" y="120">&#x2190; Import one specific order now</text>
+<text class="ts" x="384" y="135">Integration Hub > Shopware > Import</text>
+<text class="t" x="384" y="164">&#x21BA; Process a return</text>
+<text class="ts" x="384" y="179">Inventory > Deliveries > Return</text>
+<text class="t" x="384" y="208" style="fill:var(--text-3)">&#x1F50D; Check logs if something looks wrong</text>
+</svg>
+</div>
+
+<h2>3. Step by step</h2>
+<p>Click any step to see a plain-language explanation, where to find it in Odoo, and a practical tip. Use the drop-down to switch between tasks.</p>
+
+<div id="live" class="noprint">
+<div class="bar">
+<select id="wf"></select>
+<span class="dir" id="dir"></span>
+</div>
+<div class="scn" id="scn"></div>
+<div class="rail" id="rail"></div>
+<div class="det" id="det"></div>
+</div>
+
+<div class="lg">
+<span class="lgi m-purple"><span class="dot"></span>Step you need to take</span>
+<span class="lgi m-teal"><span class="dot"></span>What appears in Odoo</span>
+<span class="lgi m-blue"><span class="dot"></span>Choice or option</span>
+<span class="lgi m-coral"><span class="dot"></span>Happens automatically</span>
+<span class="lgi m-gray"><span class="dot"></span>External system</span>
+<span class="lgi m-amber"><span class="dot"></span>Where to check</span>
+<span class="lgi m-pink"><span class="dot"></span>One-time setting</span>
+</div>
+
+<div class="doc" id="doc"></div>
+
+<footer>
+Based on the Shopware &lt;&gt; Odoo integration User Documentation (Knowledge article 1541) &middot; much. Consulting. Beginner glossary and plain-language intro added for new team members. Use the buttons above to switch theme or print a handout (Handout view shows every task at once).
+</footer>
+
+</div>
+<script>
+const WF=[
+{id:'setup',label:'0 · First-time setup',dir:'Done once with IT',scn:'Connect Odoo to your Shopware store for the first time. This is done once and does not need to be repeated unless you add a new company or a new Shopware store.',steps:[
+{m:'m-pink',t:'IT installs the modules',ex:'Nothing to do on your end',biz:'Your IT team or Odoo administrator installs the integration modules in the background. You do not need to do anything at this step. Once installed, the integration menu appears in Odoo under Integration Hub.',mo:'Odoo > Apps (IT only)',st:[],cfg:'This only needs to happen once per Odoo environment'},
+{m:'m-purple',t:'Create the connection record',ex:'Integration Hub > Integrations > New',biz:'In Odoo, go to Integration Hub and click New. Give the integration a name (for example "Shopware Production"), select Shopware as the type, and choose the Odoo company it applies to. If you have two companies or two Shopware stores, you create one integration for each.',mo:'Integration Hub > Integrations > New',st:[],cfg:'One connection per company and one per Shopware store'},
+{m:'m-pink',t:'Enter your Shopware credentials',ex:'Shopware Admin > Settings > System > Integrations',biz:'In your Shopware admin panel, go to Settings > System > Integrations and create a new integration with Administrator access. Copy the two keys it gives you (Access key ID and Secret access key). Back in Odoo, go to Integration Settings and paste them into the URL, API key and API Password fields.',mo:'Integration Hub > Shopware > Integration Settings',st:[],cfg:'Treat these keys like a password — do not share them'},
+{m:'m-purple',t:'Enable the integration',ex:'Click Enable Integration',biz:'Once the credentials are saved, click the Enable Integration button at the top of the page. Odoo will verify that it can reach Shopware. If it works, the status changes to Active and the automatic daily syncs will start.',mo:'Integration Hub > Shopware',st:['Inactive','Active'],cfg:'If it fails, double-check the Shopware URL and that the keys were copied correctly'},
+{m:'m-pink',t:'Import taxes and map currencies',ex:'Two buttons at the top of the page',biz:'Before doing anything else, click two buttons on the integration page: Import Taxes (Odoo fetches all tax rates from Shopware automatically) and Map Currencies (Odoo links Shopware currencies to Odoo currencies). These only need to be clicked once.',mo:'Integration Hub > Shopware (header buttons)',st:[],cfg:'Required before any products are synced or orders imported — do this right after enabling'}
+]},
+{id:'oi',label:'1 · A customer places an order',dir:'Shopware to Odoo — automatic',scn:'A customer buys something on your Shopware shop. Without you doing anything, the order appears in Odoo as a confirmed sales order, ready to fulfil.',steps:[
+{m:'m-gray',t:'Customer buys on Shopware',ex:'Nothing to do on your end',biz:'A customer completes their purchase on your Shopware store. At this point nothing happens in Odoo yet — the integration will pick the order up on its next scheduled run.',mo:'Shopware (customer-facing shop)',st:[],cfg:'Shopware marks the order as "In Progress" automatically as soon as Odoo imports it'},
+{m:'m-coral',t:'Odoo picks up the order automatically',ex:'Every day, automatically',biz:'Once a day, Odoo connects to Shopware and imports all new orders. You do not need to do anything. If you need an order imported right now without waiting for the daily sync, you can do it manually: go to Integration Hub > Shopware, click Import, select Orders, paste the order ID from the Shopware URL, and click Execute.',mo:'Integration Hub > Shopware > Import (for manual)',st:['Automatic'],cfg:'A 30-minute safety buffer is built in so no orders are missed at the edge of a sync window'},
+{m:'m-teal',t:'Order appears in Odoo Sales',ex:'Sales > Orders',biz:'The order appears in Odoo with all the details: customer name, billing and shipping address, all products and quantities, shipping cost, and any discount codes (these show as a separate Voucher line). The order number starts with SW- so you can recognise Shopware orders easily.',mo:'Sales > Orders',st:['Draft','Confirmed'],cfg:'The SW- prefix is configurable — it helps you tell Shopware orders apart from other orders in Odoo'},
+{m:'m-teal',t:'Delivery order is created',ex:'Inventory > Deliveries',biz:'If the connector is set to confirm orders on import (which it usually is), the order is confirmed automatically and a delivery order is created for the warehouse team to pick, pack and ship.',mo:'Inventory > Deliveries',st:[],cfg:'If you do not see a delivery order, check that "Confirm Order on Import" is enabled in the connector Sales Settings'},
+{m:'m-amber',t:'Something missing? Check the logs',ex:'Integration Hub > Shopware > Logs',biz:'If an order you expected is not in Odoo, go to Integration Hub > Shopware and click the Logs button. Every import run is recorded there with a result. You can also import a specific order manually using the Import button.',mo:'Integration Hub > Shopware > Logs',st:[],cfg:'Click the Orders button on the integration page for a quick list of all imported orders'}
+]},
+{id:'pi',label:'2 · Products: Shopware to Odoo',dir:'Shopware to Odoo — automatic daily',scn:'A new product is added or updated in Shopware. The next day it appears in Odoo automatically, with all its variants, images and price.',steps:[
+{m:'m-coral',t:'New products are imported every day',ex:'Automatic — nothing to do',biz:'Every day, Odoo checks Shopware for products that are new or have been updated and imports them automatically. Products that already exist in Odoo are also updated if the "Update Existing Products" option is turned on in the connector settings.',mo:'Integration Hub > Shopware > Integration Settings > Product Settings',st:['Automatic'],cfg:'Turn on "Update Existing Products" in Product Settings if you want changes in Shopware to also update existing Odoo products'},
+{m:'m-purple',t:'Need it now? Import manually',ex:'Integration Hub > Shopware > Import > Products',biz:'To import a specific product immediately: in Shopware admin, open the product and copy the ID from the page URL. In Odoo, go to Integration Hub > Shopware > Import, select Products, paste the ID, and click Execute.',mo:'Integration Hub > Shopware > Import > Products',st:[],cfg:'You can find the product ID in the URL when you open a product in Shopware admin'},
+{m:'m-blue',t:'Large catalogue? Choose High Volume mode',ex:'Background import — you get a notification when done',biz:'If you are importing hundreds of products at once, choose High Volume mode when you import. Odoo runs it as a background task so it does not slow down the system. You will receive a notification in Odoo when the import is finished. For very large catalogues, it is best to run this outside office hours.',mo:'Integration Hub > Shopware > Import > High Volume',st:['Standard','High Volume'],cfg:'High Volume is recommended for catalogues with many product variants — it runs in 6 phases and is much more stable'},
+{m:'m-teal',t:'Product appears in Odoo',ex:'Sales > Products',biz:'The product appears in Odoo with its name, description, price (VAT-inclusive), tax, category, images and variants. The product reference (SKU) and barcode are also synced from Shopware.',mo:'Sales > Products',st:[],cfg:'For products with variants (for example sizes or colours), the reference and barcode are on each variant, not on the main product page'},
+{m:'m-amber',t:'Check the result',ex:'Integration Hub > Shopware > Products or Logs',biz:'Click the Products button on the integration page to see all imported products, or click Logs to see the detailed import report. Image download issues are flagged as warnings but do not stop the rest of the import.',mo:'Integration Hub > Shopware > Products',st:[],cfg:'High Volume sends you an Odoo notification when it finishes — you can then click through to the results'}
+]},
+{id:'pe',label:'3 · Products: Odoo to Shopware',dir:'Odoo to Shopware — you trigger this',scn:'You create or update a product in Odoo and want it to appear in your Shopware shop. You push it manually — or set it up so it happens automatically on save.',steps:[
+{m:'m-purple',t:'Export one product via the action menu',ex:'Sales > Products > gear icon > Export to connectors',biz:'Open the product in Odoo under Sales > Products. Click the gear icon (action menu) at the top and select "Export to connectors". Choose Shopware from the list and click Execute. A pop-up confirms whether it worked.',mo:'Sales > Products > action menu',st:[],cfg:''},
+{m:'m-purple',t:'Export multiple products at once',ex:'Sales > Products > list view > Actions',biz:'In Sales > Products, switch to the List view using the icon in the top right corner. Tick the boxes next to all the products you want to export, then click Actions > Export to Connectors > Shopware. This is the fastest way to push a batch of products.',mo:'Sales > Products (List view) > Actions > Export to Connectors',st:[],cfg:'Switch to List view first — the action menu in grid view only works for one product at a time'},
+{m:'m-pink',t:'Auto-update: turn on Export on save',ex:'Integration Hub > Shopware > Integration Settings > Product Settings',biz:'If you manage your product information in Odoo and want Shopware to always reflect your changes automatically, turn on "Export on save" in the connector Product Settings. After that, every time you save a product or variant in Odoo, it is sent to Shopware straight away without you needing to do anything.',mo:'Integration Hub > Shopware > Integration Settings > Product Settings',st:[],cfg:'Useful if Odoo is where you manage your product catalogue and Shopware should always mirror it'},
+{m:'m-gray',t:'Product appears in Shopware',ex:'Shopware > Catalogues > Products',biz:'The product appears in your Shopware catalogue with name, description, price, tax, category, variants and images. If it already existed in Shopware, it is updated.',mo:'Shopware > Catalogues > Products',st:[],cfg:'The first time a product is exported, its Shopware ID is saved in Odoo so future exports update it instead of creating a duplicate'},
+{m:'m-amber',t:'Something went wrong?',ex:'Integration Hub > Shopware > Logs',biz:'If the product does not appear in Shopware or the pop-up showed an error, go to Integration Hub > Shopware > Logs to see what happened.',mo:'Integration Hub > Shopware > Logs',st:[],cfg:'A confirmation pop-up appears immediately after a successful single-product export'}
+]},
+{id:'se',label:'4 · Stock is kept in sync',dir:'Odoo to Shopware — automatic daily',scn:'Orders are shipped and stock decreases in Odoo. Every day, Shopware is automatically updated to show the correct available quantities.',steps:[
+{m:'m-coral',t:'Stock is sent to Shopware every day',ex:'Automatic — nothing to do',biz:'Every day, Odoo sends the current available stock for all synced products to Shopware. This means your online shop always shows accurate stock levels, updated overnight. You do not need to trigger this manually.',mo:'Automatic (Integration Hub > Shopware > Scheduled Actions)',st:['Automatic'],cfg:'To change how often this runs, go to Integration Hub > Shopware > Scheduled Actions'},
+{m:'m-gray',t:'Which products are included',ex:'Only products already synced between both systems',biz:'Only products that exist in both Odoo and Shopware are included in the stock export. The quantities come from the warehouse and location that are configured in the connector settings.',mo:'Integration Hub > Shopware > Integration Settings > Sales Settings',st:[],cfg:'Check the Warehouse and Location in the connector Sales Settings if stock figures look wrong'},
+{m:'m-teal',t:'Products removed from Shopware are archived',ex:'Happens automatically during the sync',biz:'During the daily stock export, the integration also checks whether each product still exists in Shopware. If a product has been deleted from Shopware, it is automatically archived in Odoo. The product is not deleted — just hidden from normal views.',mo:'Sales > Products (archived)',st:[],cfg:'Archived products can be restored if needed — search for them with the Archived filter in Sales > Products'},
+{m:'m-amber',t:'Stock looks wrong in Shopware?',ex:'Integration Hub > Shopware > Logs',biz:'If Shopware is showing incorrect stock levels, check the Logs for the last stock export run. Any errors will appear there. If there was an error, the integration will try again automatically on the next daily run.',mo:'Integration Hub > Shopware > Logs',st:[],cfg:'Stock export errors retry automatically on the next scheduled run'}
+]},
+{id:'sh',label:'5 · Shipping an order',dir:'Odoo to Shopware — automatic on validation',scn:'Your warehouse validates a delivery in Odoo. Shopware automatically updates the order status to <b>Shipped</b> and shows the tracking number to the customer.',steps:[
+{m:'m-purple',t:'Validate the delivery in Odoo',ex:'Inventory > Deliveries > Validate',biz:'When the package is ready to go and has been handed to the carrier, the warehouse team validates the delivery in Odoo (clicks Validate to set it to Done). Make sure the tracking number from the carrier is entered on the delivery before validating — it will be sent to Shopware automatically.',mo:'Inventory > Deliveries > Validate',st:[],cfg:'Enter the tracking number on the delivery before validating so the customer can track their parcel'},
+{m:'m-coral',t:'Shopware is notified automatically',ex:'Immediately or on the next daily sync',biz:'As soon as the delivery is validated, the integration sends the shipment information to Shopware. If "Auto-export Shipment" is turned on in the connector settings, this happens right away. Otherwise it happens the next morning with the daily sync.',mo:'Integration Hub > Shopware > Integration Settings > Sales Settings > Auto-export Shipment',st:['Immediate','Daily'],cfg:'Turn on Auto-export Shipment for real-time updates — customers get their tracking number straight away'},
+{m:'m-gray',t:'Shopware shows the order as Shipped',ex:'Shopware > Orders',biz:'The order in Shopware is updated to Shipped and the tracking number is visible. If only part of the order was shipped (a partial delivery), Shopware reflects a partial shipment status — you do not need to do anything extra.',mo:'Shopware > Orders > Deliveries',st:[],cfg:'Partial shipments are fully supported — send what you have and Shopware reflects the partial status'},
+{m:'m-amber',t:'Shopware not updated?',ex:'Check: Integration Hub > Shopware > Logs',biz:'If the Shopware order still shows the wrong status, check the Logs. The integration retries automatically on the next daily run if the first attempt failed.',mo:'Integration Hub > Shopware > Logs',st:[],cfg:'The delivery stays flagged for export until Shopware confirms it was received'}
+]},
+{id:'re',label:'6 · A customer returns something',dir:'Odoo to Shopware — automatic on validation',scn:'A customer sends a product back. You process the return in Odoo and Shopware automatically updates the order status to <b>Returned</b>.',steps:[
+{m:'m-purple',t:'Create the return in Odoo',ex:'Inventory > Deliveries > Return',biz:'Open the original delivery order in Odoo under Inventory > Deliveries. Click the Return button, select which products and how many are coming back, then confirm. Odoo creates a new incoming receipt for the returned items.',mo:'Inventory > Deliveries > Return',st:[],cfg:'You can do a partial return — you do not have to return everything from the order at once'},
+{m:'m-purple',t:'Validate the return receipt',ex:'Inventory > Receipts > Validate',biz:'Once the returned items physically arrive at your warehouse, open the return receipt in Odoo (Inventory > Receipts) and validate it to confirm the items have been received back into stock. This is the action that triggers the notification to Shopware.',mo:'Inventory > Receipts > Validate',st:[],cfg:'The returned stock goes back into Odoo inventory when you validate the receipt'},
+{m:'m-coral',t:'Shopware is notified automatically',ex:'Immediately or on the next daily sync',biz:'As soon as the return receipt is validated, the integration sends the update to Shopware. The same "Auto-export Shipment" setting that controls shipment notifications also covers returns.',mo:'Integration Hub > Shopware > Integration Settings > Sales Settings > Auto-export Shipment',st:['Immediate','Daily'],cfg:'The Auto-export Shipment setting covers both outbound shipments and returns — one setting, both directions'},
+{m:'m-gray',t:'Shopware shows the order as Returned',ex:'Shopware > Orders',biz:'The Shopware order delivery status is updated to Returned. Note: any refund or credit note for the customer is a separate step in Odoo Invoicing — the integration only updates the delivery status in Shopware.',mo:'Shopware > Orders > Deliveries',st:[],cfg:'Refunds to customers are handled separately in Odoo — go to Invoicing to create a credit note if needed'},
+{m:'m-amber',t:'Shopware not updated?',ex:'Integration Hub > Shopware > Logs',biz:'If the Shopware order status was not updated, check the Logs. The integration retries automatically on the next daily run.',mo:'Integration Hub > Shopware > Logs',st:[],cfg:'Check the Logs smart button on the integration page for a clear history of what was sent'}
+]}
+];
+let wi=0,sel=0;
+const selEl=document.getElementById('wf');
+WF.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;selEl.appendChild(o);});
+function tone(s){s=s.toLowerCase();if(/fail|error|wrong|bad/.test(s))return'bad';if(/done|active|confirmed|automatic|immediate|ok|success/.test(s))return'ok';if(/draft|daily|manual|inactive|choice|high volume/.test(s))return'warn';return'';}
+function chipHtml(st){return st.length?'<div class="lab">Status</div><div class="chips">'+st.map(x=>'<span class="chip '+tone(x)+'">'+x+'</span>').join('')+'</div>':'';}
+function render(){
+const w=WF[wi];
+document.getElementById('dir').textContent=w.dir;
+document.getElementById('scn').innerHTML=w.scn;
+const rail=document.getElementById('rail');rail.innerHTML='';
+w.steps.forEach((s,i)=>{
+const stg=document.createElement('div');stg.className='stg '+s.m+(i===sel?' sel':'');
+stg.innerHTML='<div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div></div>';
+stg.querySelector('.card').onclick=()=>{sel=i;render();};
+rail.appendChild(stg);
+});
+const s=w.steps[sel];
+document.getElementById('det').innerHTML='<h4>'+s.t+'</h4><p>'+s.biz+'</p><div class="lab">Where to find it</div><p><code>'+s.mo+'</code></p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'');
+}
+selEl.onchange=()=>{wi=+selEl.value;sel=0;render();};
+render();
+function renderDoc(){
+const doc=document.getElementById('doc');let h='';
+WF.forEach(w=>{
+h+='<h3>'+w.label+' &nbsp;&middot;&nbsp; '+w.dir+'</h3><p class="scn">'+w.scn+'</p><div class="rail">';
+w.steps.forEach((s,i)=>{
+h+='<div class="stg '+s.m+'"><div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div><div class="det" style="margin-top:8px"><p>'+s.biz+'</p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'')+'</div></div></div>';
+});
+h+='</div>';
+});
+doc.innerHTML=h;
+}
+renderDoc();
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. Products — Overview</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:600;margin:0 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.prod{border:1px solid var(--border);border-radius:16px;background:var(--surface-1);padding:18px 20px;margin:16px 0;border-left:5px solid var(--fg)}
+.p-top{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+.p-ic{width:46px;height:46px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:23px;background:var(--bg);color:var(--fg)}
+.p-name{font-size:18px;font-weight:600}
+.p-sub{font-size:13px;color:var(--text-2);margin-top:1px}
+.p-status{margin-left:auto;flex-shrink:0;font-size:12px;font-weight:600;padding:3px 11px;border-radius:999px;border:1px solid var(--border)}
+.p-status.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.p-status.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.p-desc{margin:14px 0 0;font-size:15px;color:var(--text)}
+.lab{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);font-weight:600;margin:15px 0 4px}
+.prod p.body{margin:0;font-size:14.5px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:3px 10px;border-radius:7px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border);text-decoration:none}
+a.chip:hover{border-color:var(--text-3)}
+.meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3)}
+.meta b{color:var(--text-2);font-weight:600}
+.pnote{margin-top:14px;background:var(--bg-warning);border:1px solid var(--border-warning);border-radius:10px;padding:11px 14px;font-size:14px;color:var(--text-warning)}
+.pnote b{font-weight:600}
+footer{margin-top:40px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{.noprint{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>much. Products</h1>
+<p class="lead">What each much. product does, who it's for, its status and where to find it. Ask to update this as products evolve.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<div id="products"></div>
+
+<footer>much. Consulting · Product overview · Questions, or a new product to add? Contact <b>David Maisuradze</b>.</footer>
+
+</div>
+<script>
+const PRODUCTS=[
+{
+ ic:'🤖',color:'m-pink',name:'AI Automated Actions Agents',status:'Stable',statusCls:'ok',
+ sub:'Generative AI inside Odoo automated / server actions',
+ desc:'Integrates generative AI (ChatGPT, Gemini, Claude, Mistral) into Odoo\'s native automated or server actions — enabling intelligent document processing, data analysis, and automated response generation across any Odoo model.',
+ who:'Odoo users who want to build powerful, intelligent automations into their workflows without needing technical coding skills.',
+ resources:[{label:'Odoo App Store Page',url:''},{label:'GitHub Repository',url:'https://github.com/much-GmbH/much_automated_agent_actions'}],
+ meeting:'20/07 (to be scheduled)',testing:{label:'Testing link',url:''},
+ note:'<b>Heads-up on versions:</b> this module was built mainly for <b>older Odoo versions</b>. Odoo 19 already ships with AI actions <b>by default</b>, so the much. module is most useful for customers on versions <b>before 19</b> — or those who want the extra AI providers and flexibility it adds on top of the native feature.'
+},
+{
+ ic:'⚙️',color:'m-purple',name:'Integration Hub',status:'Stable',statusCls:'ok',
+ sub:'Central framework for all much. integrations',
+ desc:'The framework that powers every much. integration. Provides installation, configuration, monitoring, logs, mappers, queues, webhooks and scheduled jobs for all connections between Odoo and external systems.',
+ who:'Any customer using a much. integration product.',
+ features:'Integration Hub (iHub) manages the full lifecycle of connections between Odoo and external systems (e-commerce, accounting, logistics). Key features: <b>Integrations</b> (connections with Staging / Active states), <b>Scheduled Jobs</b> (automated sync intervals), <b>Background Jobs</b> (heavy tasks without blocking Odoo), <b>Logs</b> (full visibility with severity levels), <b>Mappers</b> (value translation between systems), <b>Queues</b> (controlled processing of incoming data), <b>Webhooks</b> (real-time data push) and <b>Cronwatch</b> (alerts when a job stops running). Without iHub, no much. integration works.',
+ resources:[{label:'Knowledge article',url:'https://erp.muchconsulting.de/odoo/knowledge/1569'}],meeting:'07/07'
+},
+{
+ ic:'🛒',color:'m-teal',name:'Order Base integration',status:'Maintenance',statusCls:'warn',
+ sub:'Base framework for all e-commerce order integrations',
+ desc:'Defines how orders from external platforms are imported into Odoo — customers, addresses, products, taxes and deliveries. The shared layer every shop connector is built on.',
+ who:'Customers using Shopware, Shopify or ChannelEngine integrations.',
+ features:'Order Base Integration (OBI) manages the full data lifecycle between Odoo and external shop platforms (Shopify, Channel Engine, etc.). Key features: <b>Shop Connector</b> (credentials & connection state), <b>Order Import</b> (orders into Odoo with customer matching), <b>Order Cancellations</b> (full / partial, updates pickings), <b>Order Returns</b> (return pickings + credit notes), <b>Product Import</b> (catalogues, variants, attributes), <b>Product Export</b> (push products to platform), <b>Shipment Export</b> (tracking data on delivery), <b>Stock Export</b> (batch stock sync) and <b>Scheduled Actions</b> (5 cron jobs per connector out of the box). Without OBI, no much. e-commerce integration works.',
+ resources:[{label:'GitHub description',url:'https://github.com/much-GmbH/much-order-base-integration'}],meeting:'07/07'
+},
+{
+ ic:'🔌',color:'m-blue',name:'Shopware',status:'',statusCls:'',
+ sub:'Platform connector built on top of OBI and iHub',
+ desc:'Handles the full Shopware 6 ↔ Odoo data lifecycle: OAuth credentials & connection state, order import (Standard and High Volume modes), product import and export, stock export (batch, daily), shipment export with tracking, return export, and one-time tax & currency mapping.',
+ who:'Customers running a Shopware 6 online store integrated with Odoo.',
+ features:'The Shopware Connector is much.\'s platform-specific integration layer, built on top of Order Base Integration (OBI) and iHub. Key features: <b>OAuth-based credentials</b> & connection management, <b>Order Import</b> (Standard mode for regular volume; High Volume mode for large catalogues, running in 6 background phases), <b>Product Import</b> (variants, images, SKUs, barcodes), <b>Product Export</b> (manual or automatic on save), <b>Stock Export</b> (daily batch sync; auto-archives products deleted from Shopware), <b>Shipment Export</b> (tracking numbers on delivery validation), <b>Return Export</b> (on return-receipt validation) and <b>Tax Import & Currency Mapping</b> (one-time setup buttons). Without the Shopware Connector, no Shopware ↔ Odoo integration runs.',
+ resources:[{label:'Knowledge article',url:'https://erp.muchconsulting.de/odoo/knowledge/1541'},{label:'Git Repository',url:'https://github.com/much-GmbH/much-order-shopware-integration'},{label:'Sales Product Page',url:''}],meeting:'08/07'
+}
+];
+function resChip(r){return r.url?`<a class="chip" href="${r.url}" target="_blank" rel="noopener">${r.label} ↗</a>`:`<span class="chip">${r.label}</span>`;}
+document.getElementById('products').innerHTML=PRODUCTS.map(p=>`
+  <div class="prod ${p.color}">
+    <div class="p-top">
+      <div class="p-ic">${p.ic}</div>
+      <div style="min-width:0">
+        <div class="p-name">${p.name}</div>
+        <div class="p-sub">${p.sub}</div>
+      </div>
+      ${p.status?`<span class="p-status ${p.statusCls}">${p.status}</span>`:''}
+    </div>
+    <p class="p-desc">${p.desc}</p>
+    ${p.note?`<div class="pnote">${p.note}</div>`:''}
+    <div class="lab">Who it's for</div><p class="body">${p.who}</p>
+    ${p.features?`<div class="lab">Key features</div><p class="body">${p.features}</p>`:''}
+    <div class="lab">Resources</div>
+    <div class="chips">${p.resources.map(resChip).join('')}${p.testing?resChip({label:'🔗 '+p.testing.label,url:p.testing.url}):''}</div>
+    <div class="meta">${p.meeting?`<span><b>🗓 Meeting:</b> ${p.meeting}</span>`:''}${p.status?`<span><b>Status:</b> ${p.status}</span>`:''}</div>
+  </div>`).join('');
+</script>
+</body>
+</html>

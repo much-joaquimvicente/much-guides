@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. Integration Hub — Onboarding</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:40px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.card-svg{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:16px;margin:14px 0}
+svg{max-width:100%;height:auto;display:block}
+text.t{font-family:var(--sans);font-size:14px;fill:var(--text)}
+text.th{font-family:var(--sans);font-weight:500;font-size:14px;fill:var(--text)}
+text.ts{font-family:var(--sans);font-size:12px;fill:var(--text-2)}
+.box>rect{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:.5}
+.arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
+.c-purple>rect{fill:var(--mp-bg);stroke:#7F77DD;stroke-width:.5}.c-purple text{fill:var(--mp-fg)}
+.c-teal>rect{fill:var(--mt-bg);stroke:#1D9E75;stroke-width:.5}.c-teal text{fill:var(--mt-fg)}
+.c-blue>rect{fill:var(--mb-bg);stroke:#378ADD;stroke-width:.5}.c-blue text{fill:var(--mb-fg)}
+.c-coral>rect{fill:var(--mc-bg);stroke:#D85A30;stroke-width:.5}.c-coral text{fill:var(--mc-fg)}
+.c-amber>rect{fill:var(--ma-bg);stroke:#EF9F27;stroke-width:.5}.c-amber text{fill:var(--ma-fg)}
+.c-pink>rect{fill:var(--mk-bg);stroke:#D4537E;stroke-width:.5}.c-pink text{fill:var(--mk-fg)}
+.c-gray>rect{fill:var(--mg-bg);stroke:#888780;stroke-width:.5}.c-gray text{fill:var(--mg-fg)}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+.dir{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scn{color:var(--text-2);font-size:15px;margin:10px 0}
+.scn b{color:var(--text);font-weight:500}
+.rail{position:relative;margin:16px 0 4px}
+.rail:before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:var(--border)}
+.stg{display:flex;gap:14px;align-items:stretch;margin-bottom:10px;position:relative}
+.node{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;border:2px solid var(--fg);z-index:1}
+.card{flex:1;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:10px 14px;cursor:pointer}
+.card:hover{border-color:var(--border-strong)}
+.stg.sel .card{border-color:var(--fg);background:var(--surface-2)}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);color:var(--fg);font-size:12px;padding:2px 9px;border-radius:999px;white-space:nowrap;font-family:var(--mono)}
+.ttl{font-weight:500;font-size:15px}
+.ex{color:var(--text-2);font-size:13px;margin-top:3px}
+.det{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:14px 16px;margin-top:6px}
+.det h4{margin:0 0 2px;font-size:15px;font-weight:500}
+.det .lab{font-size:12px;color:var(--text-3);margin:10px 0 3px}
+.det p{margin:0;font-size:14px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border)}
+.chip.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.chip.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.chip.bad{background:var(--bg-danger);color:var(--text-danger);border-color:var(--border-danger)}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;padding-top:12px;border-top:1px solid var(--border)}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.dot{width:11px;height:11px;border-radius:3px;background:var(--fg)}
+.ihub-blk{cursor:pointer}
+.ihub-blk:hover rect{stroke-width:2}
+.ihub-blk:focus{outline:none}
+.ihub-def{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:13px 16px;margin:4px 0 6px}
+.ihub-def .h{font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:3px;font-size:15px}
+.ihub-def p{margin:0;font-size:14px;color:var(--text-2)}
+.ihub-def code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.doc{display:none}
+.docmode #live{display:none}
+.docmode .doc{display:block}
+.doc h3{border-top:1px solid var(--border);padding-top:16px}
+footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{
+.noprint{display:none!important}
+body{background:#fff;font-size:12px}
+.wrap{max-width:none;padding:0}
+#live{display:none!important}
+.doc{display:block!important}
+.card-svg{break-inside:avoid;border:1px solid #ddd}
+.stg,.det,h3{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>much. Integration Hub — onboarding</h1>
+<p class="lead">How iHub connects Odoo to external systems, with real examples from the Shopware integration.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="document.body.classList.toggle('docmode')">Handout view</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>1. The big picture</h2>
+<p>iHub is a standardized middle layer. Instead of every connector being a bespoke build, they all reuse the same seven building blocks. In code, an integration is two linked records: the shared <code>ihub.integration</code> (the <code>super_id</code>) plus a connector-specific model (the <code>sub_id</code>).</p>
+<div class="card-svg">
+<svg width="100%" viewBox="0 0 680 386" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Where the integration hub sits</title><desc>Odoo and external systems exchange data through the integration hub, which contains seven building blocks.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="box"><rect x="40" y="153" width="160" height="70" rx="12"/><text class="th" x="120" y="185" text-anchor="middle">Odoo</text><text class="ts" x="120" y="205" text-anchor="middle">ERP records</text></g>
+<g class="box"><rect x="480" y="153" width="160" height="70" rx="12"/><text class="th" x="560" y="185" text-anchor="middle">External systems</text><text class="ts" x="560" y="205" text-anchor="middle">Shops, banks, 3PL</text></g>
+<line x1="203" y1="180" x2="227" y2="180" class="arr" marker-end="url(#ar)"/><line x1="227" y1="200" x2="203" y2="200" class="arr" marker-end="url(#ar)"/>
+<line x1="453" y1="180" x2="477" y2="180" class="arr" marker-end="url(#ar)"/><line x1="477" y1="200" x2="453" y2="200" class="arr" marker-end="url(#ar)"/>
+<g class="box"><rect x="230" y="30" width="220" height="316" rx="16"/><text class="th" x="340" y="54" text-anchor="middle">much. integration hub</text></g>
+<g class="c-purple ihub-blk" tabindex="0" role="button" onclick="ihubShow('integration')" onkeypress="if(event.key==='Enter')ihubShow('integration')"><rect x="250" y="74" width="180" height="30" rx="8"/><text class="th" x="340" y="93" text-anchor="middle">Integration</text></g>
+<g class="c-blue ihub-blk" tabindex="0" role="button" onclick="ihubShow('scheduled')" onkeypress="if(event.key==='Enter')ihubShow('scheduled')"><rect x="250" y="112" width="180" height="30" rx="8"/><text class="th" x="340" y="131" text-anchor="middle">Scheduled actions</text></g>
+<g class="c-teal ihub-blk" tabindex="0" role="button" onclick="ihubShow('queue')" onkeypress="if(event.key==='Enter')ihubShow('queue')"><rect x="250" y="150" width="180" height="30" rx="8"/><text class="th" x="340" y="169" text-anchor="middle">Queue</text></g>
+<g class="c-blue ihub-blk" tabindex="0" role="button" onclick="ihubShow('jobs')" onkeypress="if(event.key==='Enter')ihubShow('jobs')"><rect x="250" y="188" width="180" height="30" rx="8"/><text class="th" x="340" y="207" text-anchor="middle">Background jobs</text></g>
+<g class="c-coral ihub-blk" tabindex="0" role="button" onclick="ihubShow('mapper')" onkeypress="if(event.key==='Enter')ihubShow('mapper')"><rect x="250" y="226" width="180" height="30" rx="8"/><text class="th" x="340" y="245" text-anchor="middle">Mapper</text></g>
+<g class="c-amber ihub-blk" tabindex="0" role="button" onclick="ihubShow('logs')" onkeypress="if(event.key==='Enter')ihubShow('logs')"><rect x="250" y="264" width="180" height="30" rx="8"/><text class="th" x="340" y="283" text-anchor="middle">Logs</text></g>
+<g class="c-pink ihub-blk" tabindex="0" role="button" onclick="ihubShow('cronwatch')" onkeypress="if(event.key==='Enter')ihubShow('cronwatch')"><rect x="250" y="302" width="180" height="30" rx="8"/><text class="th" x="340" y="321" text-anchor="middle">Cronwatch</text></g>
+</svg>
+</div>
+
+<div id="ihubDef" class="ihub-def m-gray noprint">
+<div class="h"><span class="dot"></span><span id="ihubDefT">The seven building blocks</span></div>
+<p id="ihubDefP">👆 Click any coloured block inside the hub above to see what it does.</p>
+</div>
+<script>
+(function(){
+const D={
+integration:['m-purple','Integration','One saved connection to an external system — a shop, a bank, a 3PL. It holds the settings, credentials, on/off state and logo; everything else hangs off it. <code>ihub.integration</code>'],
+scheduled:['m-blue','Scheduled actions','Timers (crons) that run a sync automatically — for example “import new orders every hour”. Several ship switched off by default, so a stopped sync is often just a disabled timer.'],
+queue:['m-teal','Queue','A durable to-do list for heavy work: tasks are dropped on it and worked through in batches, surviving restarts and retrying safely. <code>ihub.queue</code>'],
+jobs:['m-blue','Background jobs','Runs a slow task on its own thread so the screen never freezes. A “zombie” job is one that died mid-run (e.g. a server restart); a watcher retries it. <code>ihub.job.thread</code>'],
+mapper:['m-coral','Mapper','A translation table between the outside system’s values and Odoo records — e.g. shop “Invoice” → payment term, “19%” → tax. <code>ihub.mapper.item</code>'],
+logs:['m-amber','Logs','A searchable, timestamped diary at five levels (debug → critical). Error logs are kept even if the operation rolls back. <code>ihub.event.log</code>'],
+cronwatch:['m-pink','Cronwatch','A smoke detector for the timers: if a scheduled action is switched off or deleted, it emails the people following it — so a silent stop becomes a visible alert.']
+};
+const box=document.getElementById('ihubDef'),t=document.getElementById('ihubDefT'),p=document.getElementById('ihubDefP');
+window.ihubShow=function(k){const d=D[k];if(!d)return;box.className='ihub-def '+d[0];t.textContent=d[1];p.innerHTML=d[2];};
+})();
+</script>
+
+<h2>2. The three-level stack</h2>
+<p>For shops, the layering is real: the <b>Shopware connector</b> only knows how to talk to Shopware's API; it plugs into <b>order base</b>, which owns the generic shop logic; which plugs into <b>iHub</b>. Order base calls a generic <code>import_orders()</code> and iHub's handler pattern routes it to <code>import_orders_shopware_shop()</code> — so swapping Shopware for Shopify changes only the top layer.</p>
+<div class="card-svg">
+<svg width="100%" viewBox="0 0 680 306" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>The three-level integration stack for Shopware</title><desc>Odoo and a Shopware store connected through three layers: the Shopware connector, order base, and the integration hub.</desc>
+<defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="box"><rect x="24" y="108" width="140" height="90" rx="12"/><text class="th" x="94" y="145" text-anchor="middle">Odoo</text><text class="ts" x="94" y="167" text-anchor="middle">orders · stock</text><text class="ts" x="94" y="183" text-anchor="middle">products</text></g>
+<g class="box"><rect x="496" y="108" width="144" height="90" rx="12"/><text class="th" x="568" y="145" text-anchor="middle">Shopware 6</text><text class="ts" x="568" y="167" text-anchor="middle">e-commerce store</text><text class="ts" x="568" y="183" text-anchor="middle">Admin API</text></g>
+<line x1="166" y1="146" x2="184" y2="146" class="arr" marker-end="url(#ar2)"/><line x1="184" y1="160" x2="166" y2="160" class="arr" marker-end="url(#ar2)"/>
+<line x1="472" y1="146" x2="494" y2="146" class="arr" marker-end="url(#ar2)"/><line x1="494" y1="160" x2="472" y2="160" class="arr" marker-end="url(#ar2)"/>
+<g class="c-coral"><rect x="186" y="40" width="284" height="66" rx="12"/><text class="th" x="328" y="67" text-anchor="middle">much. Shopware connector</text><text class="ts" x="328" y="87" text-anchor="middle">OAuth · search · sync API (sub_id)</text></g>
+<g class="c-teal"><rect x="186" y="120" width="284" height="66" rx="12"/><text class="th" x="328" y="147" text-anchor="middle">much. order base</text><text class="ts" x="328" y="167" text-anchor="middle">orders · products · stock · returns</text></g>
+<g class="c-purple"><rect x="186" y="200" width="284" height="66" rx="12"/><text class="th" x="328" y="227" text-anchor="middle">much. integration hub</text><text class="ts" x="328" y="247" text-anchor="middle">the shared building blocks (super_id)</text></g>
+</svg>
+</div>
+
+<h2>3. The workflows</h2>
+<p>Start with the one-time <b>setup</b>, then the six live workflows. The teaching point across all of them: the same iHub blocks appear in different combinations — only product import leans on the queue, only heavy syncs spin up a job, but every workflow logs and every cron can be watched.</p>
+
+<div id="live" class="noprint">
+<div class="bar">
+<select id="wf"></select>
+<span class="dir" id="dir"></span>
+</div>
+<div class="scn" id="scn"></div>
+<div class="rail" id="rail"></div>
+<div class="det" id="det"></div>
+</div>
+
+<div class="lg">
+<span class="lgi m-purple"><span class="dot"></span>Connector &amp; cron</span>
+<span class="lgi m-teal"><span class="dot"></span>Queue</span>
+<span class="lgi m-blue"><span class="dot"></span>Background job</span>
+<span class="lgi m-coral"><span class="dot"></span>Mapper</span>
+<span class="lgi m-gray"><span class="dot"></span>Record / API call</span>
+<span class="lgi m-amber"><span class="dot"></span>Log</span>
+<span class="lgi m-pink"><span class="dot"></span>Cronwatch</span>
+</div>
+
+<div class="doc" id="doc"></div>
+
+<footer>
+Built for internal onboarding · grounded in the iHub user documentation (Knowledge article 1569) and the source of much-integration-hub, much-order-base-integration and much-order-shopware-integration. Use the buttons above to switch theme or print a handout (Handout view expands every workflow).
+</footer>
+
+</div>
+<script>
+const WF=[
+{id:'setup',label:'0 · Setup / first run',dir:'One-time configuration',scn:'Before any sync runs: install, create the integration, enter Shopware credentials, test, enable, and prepare mappers.',steps:[
+{m:'m-purple',t:'Install & create',ex:'Integration Hub → Integrations → New',biz:'Activate the much. Shopware app in Apps, then create an integration record: give it a name, set the Integration Type to shopware_shop, and pick the Odoo company it applies to.',mo:'ihub.integration + shop.connector',st:['Inactive'],cfg:'One integration per company · integration_group <code>shop-connector</code> · starts Inactive'},
+{m:'m-gray',t:'Enter credentials',ex:'Shopware host URL + OAuth client id/secret',biz:'In the Integration Settings tab, fill the Shopware Admin API base URL and the OAuth client credentials (integration access key id and secret from the Shopware admin).',mo:'host_url · api_key · api_password',st:[],cfg:'Client-credentials grant against <code>POST /api/oauth/token</code> · bearer token cached with expiry'},
+{m:'m-blue',t:'Test connection',ex:'Verify Odoo can reach Shopware',biz:'test_connection_shopware_shop resets the bearer token, re-authenticates, and calls Shopware’s health endpoint. Green means the credentials and URL are valid.',mo:'test_connection_shopware_shop()',st:['success','failed'],cfg:'<code>GET /_info/version</code> · returns (ok, message)'},
+{m:'m-purple',t:'Enable integration',ex:'Inactive → Test or Active',biz:'Click Enable Integration. iHub auto-detects whether this Odoo instance is staging or production and sets the state accordingly; scheduled actions then start running.',mo:'enable_integration()',st:['Inactive','Test','Active'],cfg:'An Active integration cannot be deleted — disable it first'},
+{m:'m-blue',t:'Configure crons',ex:'Set which syncs run and how often',biz:'The Scheduled Actions (Jobs tab) control each sync’s cadence, priority, and which integration triggers it. Custom parameters can be passed per cron.',mo:'ir.cron · Custom Cron Job Parameters',st:['Active','Inactive'],cfg:'Run Manually button for on-demand · integration_type_ids link a cron to this type'},
+{m:'m-coral',t:'Prepare mappers',ex:'Pre-map payments, carriers, taxes, categories',biz:'Decide how unknown values behave per mapper type (Automatic / Manual / Fail), and optionally pre-fill known mappings so the very first import is clean.',mo:'ihub.mapper.type · ihub.mapper.item',st:['Automatic','Manual','Fail'],cfg:'Base ships delivery_carrier / product_category / payment_term mapper types · on-import and on-export set independently'},
+{m:'m-amber',t:'First run & logs',ex:'Run manually, then review Logs',biz:'Trigger an import manually and check the event logs. Mark logs Checked once verified; a Critical error can auto-create an Odoo activity for the responsible user.',mo:'ihub.event.log',st:['Not checked','Checked'],cfg:'Activate IHub Logs first in Settings → Event Logs'}
+]},
+{id:'oi',label:'1 · Order import',dir:'Shopware → Odoo',scn:'Order <b>SW-10042</b> (Anna Mueller, paid by Invoice) is placed in Shopware → a confirmed <b>Sales Order</b> in Odoo.',steps:[
+{m:'m-purple',t:'Trigger',ex:'Daily cron fetches new orders',biz:'auto_import_shop_orders_connector runs; the Shopware connector queries the Admin API for orders created since the last sync, skipping completed and cancelled ones.',mo:'import_orders_shopware_shop()',st:['Active','Inactive'],cfg:'<code>POST /api/search/order</code> with a createdAt range · cron <code>ir_cron_import_shop_orders_connector</code>'},
+{m:'m-gray',t:'Stage as shop order',ex:'shop.sale.order created (draft)',biz:'The raw Shopware JSON is stored first as a staging record, so processing is decoupled from fetching and nothing is lost if a later step fails.',mo:'shop.sale.order',st:['draft','linked','failed'],cfg:'external_number <code>SW-10042</code> · full order+included JSON kept in payload'},
+{m:'m-coral',t:'Map values',ex:"'Invoice' → payment term · 19% → account.tax",biz:'External values are translated to Odoo records: payment method, shipping carrier, tax rate and currency each resolve through a mapper (auto-create, manual, or fail).',mo:'ihub.mapper.item',st:['Automatic','Manual','Fail'],cfg:'Invoice→account.payment.term · DHL Express→delivery.carrier · 19%→account.tax · EUR currency'},
+{m:'m-gray',t:'Create Odoo order',ex:'sale.order with 3 lines, state = sale',biz:'to_odoo_sale_order() builds the real order — customer, billing/shipping addresses, product lines, delivery line and the SUMMER20 promo — then can auto-confirm and invoice.',mo:'sale.order',st:['draft','sale','done'],cfg:'Anna Mueller · Blue Widget ×2 @ 49.99 · DHL 5.99 · promo −10.00 · shop order flips draft→linked'},
+{m:'m-amber',t:'Log',ex:'Info on success, Error on failure',biz:'Every import is logged for traceability. A failure leaves the shop order in failed state and raises an Error (or Critical) log.',mo:'ihub.event.log',st:['Info','Warning','Error','Critical'],cfg:'ihub_info / ihub_error, linked to the shop.sale.order via related'},
+{m:'m-pink',t:'Cronwatch',ex:'The order-import cron is watched',biz:'Order import is business-critical — a watcher emails followers if this cron is ever disabled or deleted.',mo:'ihub_cronwatch.watcher',st:['Cron active','Cron down'],cfg:'A missed run means orders silently stop arriving in Odoo'}
+]},
+{id:'pi',label:'2 · Product import',dir:'Shopware → Odoo',scn:"The <b>Cotton T-Shirt</b> (variants Red/M, Red/L) is imported from Shopware → an Odoo <b>product template with variants</b>, images and 19% tax.",steps:[
+{m:'m-purple',t:'Trigger',ex:'Cron fetches active/updated products',biz:'auto_import_shop_product_connector queries Shopware for active products changed since the last sync, with all their variants, options, media and tax.',mo:'import_products_shopware_shop()',st:['Active','Inactive'],cfg:'<code>POST /api/search/product</code> filtered on active + updatedAt'},
+{m:'m-teal',t:'Queue (V2 pipeline)',ex:'Big catalogues split into queued stages',biz:'For high volume the import is broken into ordered queue stages so a huge catalogue never runs as one giant transaction — each stage processes in batches.',mo:'ihub.queue',st:['Active','Archived'],cfg:'fetch_parents → fetch_variants → create_template → create_variants → download_images → set_pricing · batches of 100 / 50'},
+{m:'m-coral',t:'Map values',ex:"property groups 'Color/Size' → attributes",biz:'Shopware property groups become Odoo product attributes; the category trail and tax rate resolve through mappers.',mo:'ihub.mapper.item',st:['Automatic','Manual','Fail'],cfg:"Color/Size → product.attribute · 'Apparel>Men' → product.category · 19% → account.tax"},
+{m:'m-gray',t:'Create Odoo product',ex:'template + 2 variants, images, prices',biz:'A product.template plus one product.product per variant is created, images downloaded in parallel, and shop link records keep the Shopware UUIDs.',mo:'product.template · product.product',st:['draft','linked'],cfg:'SKUs TSHIRT-001-RED-M / -L · barcodes · gross 17.84 € · linked via shop.product.template'},
+{m:'m-amber',t:'Log',ex:'Per-batch progress; image errors logged',biz:'Each batch and any image-download failure is logged so a partial import is fully visible.',mo:'ihub.event.log',st:['Info','Warning','Error'],cfg:'High volume can generate many entries — Debug is for troubleshooting only'},
+{m:'m-pink',t:'Cronwatch',ex:'The product-import cron is watched',biz:'Alerts followers if the catalogue sync stops running.',mo:'ihub_cronwatch.watcher',st:['Cron active','Cron down'],cfg:'Email on deactivate / delete'}
+]},
+{id:'pe',label:'3 · Product export',dir:'Odoo → Shopware',scn:"An Odoo <b>Cotton T-Shirt</b> is pushed to Shopware — property groups, price, tax, category, variants and images.",steps:[
+{m:'m-purple',t:'Trigger',ex:'Export on change or on demand',biz:'export_products() only runs on an active integration; it normalises templates and variants into one payload structure.',mo:'export_products_shopware_shop()',st:['Active only'],cfg:'Decorated @active_integration · handles template-only vs full-variant updates'},
+{m:'m-blue',t:'Background job',ex:'Batch payload built, images uploaded',biz:'The export runs asynchronously; images use a two-step create-then-upload so a large catalogue never blocks the UI.',mo:'ihub.job.thread',st:['In progress','Done','Partial','Failed'],cfg:'Images: <code>POST /api/media</code> then /_action/media/{id}/upload'},
+{m:'m-coral',t:'Map values',ex:'category → Shopware category; attrs upserted',biz:'Odoo values are translated the other way: category resolves via get_mapper_for_export and property groups are upserted in Shopware.',mo:'ihub.mapper.item (export)',st:['Automatic','Manual','Fail'],cfg:'property_group Color(Red,Blue) / Size(M,L) upserted before the product'},
+{m:'m-gray',t:'Push to Shopware',ex:'POST /api/_action/sync upsert product',biz:'The product, its variants (linked by parentId), price, tax, visibilities and category are sent in one sync call.',mo:'/api/_action/sync',st:[],cfg:'net/gross price · tax 19% · sales-channel visibilities · media linked via product_media'},
+{m:'m-amber',t:'Log',ex:'Result logged; external UUIDs saved back',biz:'Success and failure are logged, and the new Shopware UUIDs are written back onto the shop records for future updates.',mo:'ihub.event.log',st:['Info','Warning','Error'],cfg:'Shop records now hold external_id → next export updates instead of duplicating'},
+{m:'m-pink',t:'Cronwatch',ex:'The export cron is watched',biz:'Alerts followers if scheduled product export stops.',mo:'ihub_cronwatch.watcher',st:['Cron active','Cron down'],cfg:'Email on deactivate / delete'}
+]},
+{id:'se',label:'4 · Stock export',dir:'Odoo → Shopware',scn:"Warehouse stock changes in Odoo → new <b>stock levels</b> pushed to Shopware, but only for products that actually changed.",steps:[
+{m:'m-purple',t:'Trigger',ex:'Daily cron, oldest exports first',biz:'auto_export_product_stock picks products ordered by their last export date, so nothing is starved.',mo:'export_stock()',st:['Active','Inactive'],cfg:'cron <code>ir_cron_export_product_stock</code> · ordered by last_export_stock_date'},
+{m:'m-blue',t:'Incremental check',ex:'Skip products whose stock is unchanged',biz:'Live qty_available is compared against the cached exported_qty per location; only real changes are sent, in batches of 250.',mo:'shop.product.location.stock',st:['changed','unchanged'],cfg:'_prepare_incremental_stock_export · cache refreshed whenever a stock.quant is written'},
+{m:'m-gray',t:'Push to Shopware',ex:'sync {id, stock} · e.g. {stock: 150}',biz:'Stock levels are upserted by product UUID. Products deleted in Shopware are detected and archived on the Odoo side.',mo:'/api/_action/sync',st:[],cfg:'pre-checks existence via POST /api/search/product · archives vanished products'},
+{m:'m-gray',t:'Update cache',ex:'exported_qty + timestamp written back',biz:'After a successful push the cache is updated so the next run can skip it — this is what makes the export incremental.',mo:'update_exported_stock()',st:[],cfg:'writes exported_qty and last_export_stock_date'},
+{m:'m-amber',t:'Log',ex:'Counts logged',biz:'How many products were checked, sent and skipped is logged.',mo:'ihub.event.log',st:['Info','Warning','Error'],cfg:'Connection failures become Error logs; the run can retry next cron'},
+{m:'m-pink',t:'Cronwatch',ex:'Stock cron is watched (critical)',biz:'Overselling risk if stock stops syncing — a watcher guards this cron closely.',mo:'ihub_cronwatch.watcher',st:['Cron active','Cron down'],cfg:'Followers emailed the moment it stops'}
+]},
+{id:'sh',label:'5 · Shipment export',dir:'Odoo → Shopware',scn:"A delivery for order <b>SW-10042</b> is validated in Odoo → the Shopware delivery is marked <b>shipped</b> with tracking <b>DHL1234567890</b>.",steps:[
+{m:'m-purple',t:'Trigger',ex:'Picking validated (done) or daily cron',biz:'When a delivery is validated it is flagged to_be_exported_shop; a cron then exports all flagged pickings.',mo:'export_shipment_shopware_shop()',st:['Active','Inactive'],cfg:'cron <code>ir_cron_export_shipment</code> · @active_integration'},
+{m:'m-blue',t:'Determine status',ex:'ship · ship_partially · retour…',biz:'get_order_status compares shipped vs ordered quantities to decide whether this is a full ship, a partial ship, or a return.',mo:'get_order_status(picking)',st:['ship','ship_partially','retour','retour_partially'],cfg:'partial deliveries are handled correctly, not forced to full'},
+{m:'m-gray',t:'Push delivery state',ex:'delivery open → shipped',biz:'The Shopware delivery state machine is advanced via a dedicated action endpoint after reading the current delivery.',mo:'/_action/order_delivery/{id}/state/ship',st:['open','shipped'],cfg:'fetches the current delivery first · sendMail:false'},
+{m:'m-gray',t:'Push tracking',ex:'PATCH trackingCodes: ["DHL1234567890"]',biz:'The carrier tracking reference is written onto the Shopware delivery so the customer sees it.',mo:'/api/order-delivery/{id}',st:[],cfg:'appends to any existing tracking codes'},
+{m:'m-amber',t:'Log',ex:'Logged; picking flagged exported',biz:'The export result is logged and the picking is marked so it is not re-sent.',mo:'ihub.event.log',st:['Info','Warning','Error'],cfg:'to_be_exported_shop set back to false'},
+{m:'m-pink',t:'Cronwatch',ex:'The shipment cron is watched',biz:'Alerts followers if fulfilment stops flowing back to Shopware.',mo:'ihub_cronwatch.watcher',st:['Cron active','Cron down'],cfg:'Email on deactivate / delete'}
+]},
+{id:'ri',label:'6 · Return import',dir:'Shopware → Odoo',scn:"A customer return for order <b>SW-10042</b> comes back from Shopware → an incoming <b>stock.picking</b> in Odoo, plus an optional credit note.",steps:[
+{m:'m-purple',t:'Trigger',ex:'Cron fetches new returns',biz:'auto_import_shop_returns_connector pulls returns/RMAs raised in Shopware since the last sync.',mo:'import_order_returns_shopware_shop()',st:['Active','Inactive'],cfg:'cron <code>ir_cron_import_shop_returns_connector</code>'},
+{m:'m-gray',t:'Stage as return',ex:'shop.order.return created (draft)',biz:'The return payload is stored as a staging record before it touches Odoo stock.',mo:'shop.order.return',st:['draft','linked'],cfg:'external_number + raw payload kept for audit'},
+{m:'m-coral',t:'Match & map',ex:'find the original sale.order + lines',biz:'The return is matched to the original Odoo order and each return line is matched to its product (creating it if allowed).',mo:'check_order_line_product()',st:['Automatic','Manual','Fail'],cfg:'links back to the sale.order imported in workflow 1'},
+{m:'m-gray',t:'Create return',ex:'incoming picking + optional credit note',biz:'process_odoo_order_return creates an incoming stock.picking for the returned quantities and can reverse the invoice into a credit note.',mo:'stock.picking · account.move',st:['draft','linked'],cfg:'uses operation_type_id for returns · revert_invoice() raises the credit note'},
+{m:'m-amber',t:'Log',ex:'Success / failure logged',biz:'The return processing outcome is logged, and the staging record flips draft→linked.',mo:'ihub.event.log',st:['Info','Warning','Error'],cfg:'a mismatch (e.g. qty exceeds delivered) raises an Error log'},
+{m:'m-pink',t:'Cronwatch',ex:'The returns cron is watched',biz:'Alerts followers if returns stop importing.',mo:'ihub_cronwatch.watcher',st:['Cron active','Cron down'],cfg:'Email on deactivate / delete'}
+]}
+];
+let wi=0,sel=0;
+const selEl=document.getElementById('wf');
+WF.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;selEl.appendChild(o);});
+function tone(s){s=s.toLowerCase();if(/fail|error|critical|down|archiv|cancel|retour|unchanged/.test(s))return'bad';if(/done|active|linked|info|shipped|ship|changed|checked|success/.test(s)&&!/not checked/.test(s))return'ok';if(/progress|retry|partial|warning|manual|inactive|draft|open|not checked/.test(s))return'warn';return'';}
+function chipHtml(st){return st.length?'<div class="lab">States</div><div class="chips">'+st.map(x=>'<span class="chip '+tone(x)+'">'+x+'</span>').join('')+'</div>':'';}
+function render(){
+const w=WF[wi];
+document.getElementById('dir').textContent=w.dir;
+document.getElementById('scn').innerHTML=w.scn;
+const rail=document.getElementById('rail');rail.innerHTML='';
+w.steps.forEach((s,i)=>{
+const stg=document.createElement('div');stg.className='stg '+s.m+(i===sel?' sel':'');
+stg.innerHTML='<div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div></div>';
+stg.querySelector('.card').onclick=()=>{sel=i;render();};
+rail.appendChild(stg);
+});
+const s=w.steps[sel];
+document.getElementById('det').innerHTML='<h4>'+s.t+'</h4><p>'+s.biz+'</p><div class="lab">Under the hood</div><p><code>'+s.mo+'</code></p>'+chipHtml(s.st)+'<div class="lab">Good to know</div><p>'+s.cfg+'</p>';
+}
+selEl.onchange=()=>{wi=+selEl.value;sel=0;render();};
+render();
+function renderDoc(){
+const doc=document.getElementById('doc');let h='';
+WF.forEach(w=>{
+h+='<h3>'+w.label+' &nbsp;·&nbsp; '+w.dir+'</h3><p class="scn">'+w.scn+'</p><div class="rail">';
+w.steps.forEach((s,i)=>{
+h+='<div class="stg '+s.m+'"><div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div><div class="det" style="margin-top:8px"><p>'+s.biz+'</p>'+chipHtml(s.st)+'<div class="lab">Good to know</div><p>'+s.cfg+'</p></div></div></div>';
+});
+h+='</div>';
+});
+doc.innerHTML=h;
+}
+renderDoc();
+</script>
+</body>
+</html>

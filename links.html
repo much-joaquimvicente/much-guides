@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing Environments &amp; Useful Links</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:820px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:600;margin:0 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{font-size:13px;color:var(--mp-fg);text-decoration:none}
+a.back:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.lk{border:1px solid var(--border);border-radius:14px;background:var(--surface-1);padding:16px 18px;margin:14px 0;border-left:4px solid var(--fg)}
+.lk-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.lk-ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;background:var(--bg);color:var(--fg)}
+.lk-name{font-size:17px;font-weight:600;margin:0;text-decoration:none;color:var(--text)}
+.lk-name:hover{text-decoration:underline}
+.lk-url{font-family:var(--mono);font-size:12px;color:var(--text-3);word-break:break-all;margin:2px 0 0}
+.lk-open{margin-left:auto;flex-shrink:0;text-decoration:none;font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:8px;background:var(--bg);color:var(--fg);border:1px solid var(--fg)}
+.lk-open:hover{filter:brightness(.97)}
+.lk-lab{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);font-weight:600;margin:14px 0 3px}
+.lk p{margin:0;font-size:14.5px;color:var(--text-2)}
+.lk .path{font-family:var(--mono);font-size:.86em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.note{display:inline-block;margin-top:10px;font-size:13px;background:var(--bg-warning);color:var(--text-warning);border:1px solid var(--border-warning);border-radius:8px;padding:6px 11px}
+.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.sec{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin:44px 0 6px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.qa{display:flex;gap:14px;border:1px solid var(--border);border-radius:14px;background:var(--surface-1);padding:14px 16px;margin:12px 0;border-left:4px solid var(--fg)}
+.qa-ic{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:19px;background:var(--bg);color:var(--fg)}
+.qa-t{font-weight:600;font-size:15px;margin-bottom:3px}
+.qa p{margin:0;font-size:14.5px;color:var(--text-2)}
+.chan{font-family:var(--mono);font-size:.85em;background:var(--bg);color:var(--fg);padding:1px 7px;border-radius:6px;font-weight:600;white-space:nowrap}
+.people{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.who{font-size:12.5px;padding:3px 11px;border-radius:999px;background:var(--surface-0);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+footer{margin-top:40px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{.noprint{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>Testing environments &amp; useful links</h1>
+<p class="lead">The web tools you'll use as a new hire — what each one is for, and when to reach for it.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<div id="links"></div>
+
+<div class="sec">Good to know &amp; who to ask</div>
+<div id="notes"></div>
+
+<footer>much. Consulting · Onboarding · Testing environments &amp; links</footer>
+
+</div>
+<script>
+const LINKS=[
+{ic:'🧪',color:'m-teal',name:'Shoovels',url:'https://app.shoovels.com/',
+ desc:'Our shared, always-on testing Odoo environment. Path once you\'re in: <span class="path">Shoovels → Select product → QA&nbsp;Testing</span>.',
+ hire:'This is your day-to-day home for manual QA. Start here to test features in a shared Odoo without setting anything up yourself.',
+ note:''},
+{ic:'🚀',color:'m-blue',name:'Odoo.sh — Projects',url:'https://www.odoo.sh/project',
+ desc:'For starting fresh projects. Use it when you want a clean codebase from a specific Odoo version.',
+ hire:'Reach for this when you need a clean, isolated environment built from scratch for one version — e.g. to reproduce something without our customisations getting in the way.',
+ note:'⚠️ Projects are deleted after 30 days — don\'t keep anything important only here.'},
+{ic:'🪞',color:'m-coral',name:'Product-odoo-18-tests (staging)',url:'https://product-odoo-18-tests-staging-qa.odoo-host.dev/odoo',
+ desc:'A live reflection of the <code>Product-odoo-18-tests</code> branch — and the remaining versions have their own equivalent hosts.',
+ hire:'The hosted staging that mirrors our test repo. Use it to see our actual test code running for a given version, exactly as it is in the branch.',
+ note:''},
+{ic:'🤖',color:'m-gray',name:'Runbot',url:'https://runbot.odoo.com/',
+ desc:'Every Odoo environment / version as <b>vanilla</b> (plain, unmodified Odoo).',
+ hire:'Odoo\'s official build farm. Great for checking how standard Odoo behaves for any version — a reference point when you need to know whether something is our customisation or standard behaviour.',
+ note:'🔑 Login: admin / admin. You can do anything here — except delete.'}
+];
+document.getElementById('links').innerHTML=LINKS.map(l=>`
+  <div class="lk ${l.color}">
+    <div class="lk-top">
+      <div class="lk-ic">${l.ic}</div>
+      <div style="min-width:0">
+        <a class="lk-name" href="${l.url}" target="_blank" rel="noopener">${l.name}</a>
+        <div class="lk-url">${l.url}</div>
+      </div>
+      <a class="lk-open" href="${l.url}" target="_blank" rel="noopener">Open ↗</a>
+    </div>
+    <div class="lk-lab">What it is</div>
+    <p>${l.desc}</p>
+    <div class="lk-lab">When to use it (new hire)</div>
+    <p>${l.hire}</p>
+    ${l.note?`<div class="note">${l.note}</div>`:''}
+  </div>`).join('');
+
+const NOTES=[
+{ic:'🐚',color:'m-teal',t:'Shoovels',
+ html:'The Odoo container lives inside <b>Shoovels QA</b>. If the server is down, ask in <span class="chan">#dev-ops-questions</span> on Slack.'},
+{ic:'📦',color:'m-blue',t:'Odoo Container',
+ html:'The Odoo container runs inside <b>Shoovels QA</b>. If the server is down, post in <span class="chan">#dev-ops-questions</span> — or reach out directly to:',
+ people:['Robinson Pompeu','David Akalugo','Frank Mogbuk']},
+{ic:'🎛️',color:'m-coral',t:'Odoo Studio — do customers use it?',
+ html:'<b>We don\'t recommend it.</b> We normally prefer to be the ones who add the features and do the coding, rather than letting customers build with Studio.'}
+];
+document.getElementById('notes').innerHTML=NOTES.map(n=>`
+  <div class="qa ${n.color}">
+    <div class="qa-ic">${n.ic}</div>
+    <div style="min-width:0">
+      <div class="qa-t">${n.t}</div>
+      <p>${n.html}</p>
+      ${n.people?`<div class="people">${n.people.map(p=>`<span class="who">👤 ${p}</span>`).join('')}</div>`:''}
+    </div>
+  </div>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. Integrations — Guide Hub</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:900px;margin:0 auto;padding:40px 22px 80px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:36px;height:36px;border-radius:9px;background:var(--mp-bg);display:flex;align-items:center;justify-content:center;position:relative;font-size:22px;line-height:1;cursor:default;user-select:none}
+.logo svg{width:34px;height:34px}
+.logo .mk-laugh{display:none}
+.logo:hover .mk-idle{display:none}
+.logo:hover .mk-laugh{display:inline-block;animation:laugh .22s ease-in-out infinite}
+@keyframes laugh{
+0%{transform:rotate(-11deg) translateY(0) scale(1.06)}
+25%{transform:rotate(11deg) translateY(-2.5px) scale(1.2)}
+50%{transform:rotate(-7deg) translateY(1px) scale(1.1)}
+75%{transform:rotate(10deg) translateY(-2.5px) scale(1.2)}
+100%{transform:rotate(-11deg) translateY(0) scale(1.06)}}
+.brand-text h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.brand-text p{font-size:13px;color:var(--text-2);margin:0}
+.btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.hero{text-align:center;padding:24px 0 48px}
+.hero h2{font-size:32px;font-weight:600;margin:0 0 10px;letter-spacing:-.02em}
+.hero p{color:var(--text-2);font-size:17px;max-width:520px;margin:0 auto}
+.sec-label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:48px}
+.guide-card{display:block;text-decoration:none;color:inherit;border:1px solid var(--border);border-radius:14px;background:var(--surface-1);padding:20px 20px 18px;transition:border-color .15s,box-shadow .15s,transform .12s}
+.guide-card:hover{border-color:var(--border-strong);box-shadow:0 4px 18px rgba(0,0,0,.07);transform:translateY(-2px)}
+.gc-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.gc-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;background:var(--bg);color:var(--fg)}
+.gc-badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;letter-spacing:.03em;background:var(--bg);color:var(--fg)}
+.gc-title{font-size:16px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+.gc-desc{font-size:13px;color:var(--text-2);line-height:1.55;margin:0 0 16px}
+.gc-tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.gc-tag{font-size:11px;padding:2px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface-0);color:var(--text-2)}
+.gc-arrow{margin-left:auto;color:var(--border-strong);font-size:18px;line-height:1;flex-shrink:0}
+/* multi-link cards (two buttons) */
+.guide-card.multi{cursor:default}
+.guide-card.multi:hover{transform:none;box-shadow:none;border-color:var(--border)}
+.gc-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.gc-btn{flex:1 1 130px;text-align:center;text-decoration:none;font-size:12.5px;font-weight:600;padding:9px 12px;border-radius:9px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);transition:border-color .12s,background .12s,transform .12s}
+.gc-btn:hover{border-color:var(--fg);transform:translateY(-1px)}
+.gc-btn.primary{background:var(--bg);color:var(--fg);border-color:var(--fg)}
+/* color themes */
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}
+.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}
+.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}
+.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}
+.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}
+.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}
+.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+/* stack */
+.stack-wrap{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:48px}
+.stack-layer{border-radius:10px;padding:12px 16px;margin:3px 0}
+.stack-arrow{text-align:center;font-size:16px;color:var(--text-3);line-height:1;padding:2px 0}
+.sl-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.sl-name{font-size:15px;font-weight:600;margin:0}
+.sl-desc{font-size:12px;color:var(--text-2);margin:2px 0 0}
+.sl-purple{background:var(--mp-bg);border:1px solid #7F77DD}.sl-purple .sl-label,.sl-purple .sl-name{color:var(--mp-fg)}
+.sl-blue{background:var(--mb-bg);border:1px solid #378ADD}.sl-blue .sl-label,.sl-blue .sl-name{color:var(--mb-fg)}
+.sl-teal{background:var(--mt-bg);border:1px solid #1D9E75}.sl-teal .sl-label,.sl-teal .sl-name{color:var(--mt-fg)}
+.sl-gray{background:var(--mg-bg);border:1px solid #888780}.sl-gray .sl-label,.sl-gray .sl-name{color:var(--mg-fg)}
+.foot{text-align:center;font-size:13px;color:var(--text-3);padding-top:32px;border-top:1px solid var(--border)}
+.foot .owner{color:var(--text-2);font-weight:600;font-size:14px;margin-bottom:5px}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">
+      <div class="logo" title="hehehe 🐒">
+        <svg class="mk-idle" viewBox="0 0 32 32" aria-hidden="true"><circle cx="6" cy="14" r="4" fill="#7B4B2A"/><circle cx="26" cy="14" r="4" fill="#7B4B2A"/><circle cx="6" cy="14" r="2" fill="#D8B183"/><circle cx="26" cy="14" r="2" fill="#D8B183"/><circle cx="16" cy="15" r="9" fill="#8A5A34"/><ellipse cx="16" cy="17.6" rx="7" ry="6.4" fill="#EBCB9E"/><path d="M8.5 12.5c2-3.5 5-4.5 7.5-4.5s5.5 1 7.5 4.5c-2.5-1.8-4.8-2.3-7.5-2.3s-5 .5-7.5 2.3z" fill="#8A5A34"/><circle cx="12.8" cy="13.8" r="1.3" fill="#3A2A1A"/><circle cx="19.2" cy="13.8" r="1.3" fill="#3A2A1A"/><circle cx="14.9" cy="17.2" r=".6" fill="#7A5230"/><circle cx="17.1" cy="17.2" r=".6" fill="#7A5230"/><path d="M12.5 18.6q3.5 3 7 0" fill="none" stroke="#7A5230" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <svg class="mk-laugh" viewBox="0 0 32 32" aria-hidden="true"><circle cx="6" cy="14" r="4" fill="#7B4B2A"/><circle cx="26" cy="14" r="4" fill="#7B4B2A"/><circle cx="6" cy="14" r="2" fill="#D8B183"/><circle cx="26" cy="14" r="2" fill="#D8B183"/><circle cx="16" cy="15" r="9" fill="#8A5A34"/><ellipse cx="16" cy="17.6" rx="7" ry="6.4" fill="#EBCB9E"/><path d="M8.5 12.5c2-3.5 5-4.5 7.5-4.5s5.5 1 7.5 4.5c-2.5-1.8-4.8-2.3-7.5-2.3s-5 .5-7.5 2.3z" fill="#8A5A34"/><circle cx="10.6" cy="18.6" r="1.7" fill="#E27C6B" opacity=".45"/><circle cx="21.4" cy="18.6" r="1.7" fill="#E27C6B" opacity=".45"/><path d="M10.8 14.4q1.9-2.6 3.8 0" fill="none" stroke="#3A2A1A" stroke-width="1.5" stroke-linecap="round"/><path d="M17.4 14.4q1.9-2.6 3.8 0" fill="none" stroke="#3A2A1A" stroke-width="1.5" stroke-linecap="round"/><path d="M8.6 14.9q-1.5 2 0 3.6q1.5-1.6 0-3.6z" fill="#7CC6F2"/><path d="M23.4 14.9q1.5 2 0 3.6q-1.5-1.6 0-3.6z" fill="#7CC6F2"/><path d="M10.6 16.6q5.4 7.4 10.8 0q-5.4 3 -10.8 0z" fill="#5C331C"/><path d="M11.3 16.8q4.7 1.5 9.4 0l0 1.3q-4.7 1-9.4 0z" fill="#FFF"/><path d="M12.9 20.9q3.1 2.4 6.2 0q-3.1-1.3-6.2 0z" fill="#E4665A"/></svg>
+      </div>
+      <div class="brand-text">
+        <h1>much. Integrations</h1>
+        <p>Technical support specialist guide for new joiners</p>
+      </div>
+    </div>
+    <div class="btns"><button onclick="toggleDark()">Dark mode</button></div>
+  </div>
+
+  <div class="hero">
+    <h2>Onboarding guides</h2>
+    <p>New joiner guide — step-by-step walkthroughs for setting up, using, and extending much. products.</p>
+  </div>
+
+  <div class="sec-label">Available guides</div>
+  <div class="grid" id="grid"></div>
+
+  <div class="sec-label">Testing</div>
+  <div class="grid" id="testing-grid"></div>
+
+  <div class="sec-label">How the layers fit together</div>
+  <div class="stack-wrap" id="stack"></div>
+
+  <div class="sec-label">Products &amp; Training</div>
+  <div class="grid" id="extras-grid"></div>
+
+  <div class="foot">
+    <div class="owner">📄 Documentation created &amp; maintained by Joaquim Vicente</div>
+    much. Consulting · Onboarding guides · Open <code>index.html</code> in any browser — no internet required
+  </div>
+
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   GUIDES
+   To add a new guide, copy one object below and fill it in.
+
+   Fields:
+     icon   — any emoji
+     color  — m-purple | m-blue | m-teal | m-coral | m-amber | m-pink | m-gray
+     badge  — short label shown on the card (e.g. "Developer", "Consultant")
+     title  — guide title
+     desc   — one or two sentences about what the guide covers
+     tags   — small chips shown at the bottom (audience, number of workflows, etc.)
+     href   — filename of the HTML file (must be in the same folder as index.html)
+───────────────────────────────────────────────────────────── */
+const GUIDES = [
+  {
+    icon:  '⚙️',
+    color: 'm-purple',
+    badge: 'Developer',
+    title: 'Integration Hub and Order Base integration',
+    desc:  'Overview of iHub — integrations, scheduled jobs, background jobs, logs, mappers, queues and webhooks.',
+    tags:  ['Technical', '7 workflows'],
+       links: [
+      { label: 'Guide',        href: 'ihub-onboarding.html' }
+    ]
+  },
+  {
+    icon:  '🔌',
+    color: 'm-blue',
+    badge: 'Consultant',
+    title: 'Shopware Connector',
+    desc:  'Setup and daily use of the Shopware ↔ Odoo connector — orders, products, stock, shipments and returns. Pick your level below.',
+    tags:  ['Beginner + Advanced', '7 workflows'],
+    // Two buttons instead of one link: give a `links` array (first = primary).
+    links: [
+      { label: 'Guide',        href: 'shopware-Onboarding.html' }
+    ]
+  },
+
+  /* ADD NEW GUIDES HERE — copy a block above and change the fields.
+     • Single page:  give an `href`.
+     • Two (or more) pages: give a `links` array of { label, href } — first one is highlighted. */
+
+];
+
+/* ─────────────────────────────────────────────────────────────
+   TESTING
+   Cards shown under the "Testing" section (same card format as GUIDES).
+───────────────────────────────────────────────────────────── */
+const TESTING = [
+  {
+    icon:  '💻',
+    color: 'm-teal',
+    badge: 'How-to',
+    title: 'Visual Studio Code',
+    desc:  'Terminal steps to update a git submodule to its latest version — the two-step “pull, then update the bookmark” dance.',
+    tags:  ['Git', '7 steps'],
+    href:  'vscode-submodule-update.html'
+  },
+  {
+    icon:  '🔗',
+    color: 'm-amber',
+    badge: 'Reference',
+    title: 'Links',
+    desc:  'Test environments and websites you\'ll use day to day — Shoovels, Odoo.sh, staging hosts and Runbot — with what each one is for.',
+    tags:  ['Environments', '4 links'],
+    href:  'links.html'
+  }
+];
+
+/* ── Overview pages (one card each) ── */
+const PRODUCTS_NAV = [
+  {
+    icon:  '📦',
+    color: 'm-teal',
+    badge: 'Overview',
+    title: 'much. Products',
+    desc:  'What each much. product does, who it\'s for, its status and resources — AI Automated Actions, Integration Hub, Order Base and Shopware.',
+    tags:  ['4 products'],
+    href:  'much-products.html'
+  }
+];
+const TRAINING_NAV = [
+  {
+    icon:  '🎓',
+    color: 'm-pink',
+    badge: 'Onboarding',
+    title: 'Training Track',
+    desc:  'Your onboarding path — self-paced trainings and live sessions, with status and links.',
+    tags:  ['Checklist'],
+    href:  'training-track.html'
+  }
+];
+
+/* ─────────────────────────────────────────────────────────────
+   STACK LAYERS
+   Shows how the integration layers relate to each other.
+   Order: top layer first (most specific), bottom last (foundation).
+───────────────────────────────────────────────────────────── */
+const STACK = [
+  {
+    style: 'sl-gray',
+    label: 'Platform connectors',
+    name:  'Shopware Connector, Shopify Connector, …',
+    desc:  'Platform-specific API calls, credential handling, and field mapping'
+  },
+  {
+    style: 'sl-blue',
+    label: 'Integration framework',
+    name:  'Shop Base Connector',
+    desc:  'Shared models, cron runners, dataclasses, and lifecycle hooks for all connectors'
+  },
+  {
+    style: 'sl-purple',
+    label: 'Foundation',
+    name:  'iHub — Integration Hub',
+    desc:  'Integrations, Scheduled Jobs, Background Jobs, Logs, Mappers, Queues, Webhooks, Cronwatch'
+  }
+];
+
+/* ── render ── */
+function cardHTML(g) {
+  const head = `
+      <div class="gc-top">
+        <div class="gc-icon">${g.icon}</div>
+        <span class="gc-badge">${g.badge}</span>
+      </div>
+      <div class="gc-title">${g.title}</div>
+      <div class="gc-desc">${g.desc}</div>`;
+  // Card with several destinations → render buttons instead of a whole-card link.
+  if (g.links) {
+    return `
+      <div class="guide-card multi ${g.color}">
+        ${head}
+        <div class="gc-tags">${g.tags.map(t => `<span class="gc-tag">${t}</span>`).join('')}</div>
+        <div class="gc-btns">
+          ${g.links.map((l, i) => `<a class="gc-btn ${i === 0 ? 'primary' : ''}" href="${l.href}">${l.label} →</a>`).join('')}
+        </div>
+      </div>`;
+  }
+  // Single destination → whole card is one link.
+  return `
+      <a class="guide-card ${g.color}" href="${g.href}">
+        ${head}
+        <div class="gc-tags">
+          ${g.tags.map(t => `<span class="gc-tag">${t}</span>`).join('')}
+          <span class="gc-arrow">→</span>
+        </div>
+      </a>`;
+}
+
+function render() {
+  document.getElementById('grid').innerHTML = GUIDES.map(cardHTML).join('');
+  document.getElementById('extras-grid').innerHTML = PRODUCTS_NAV.concat(TRAINING_NAV).map(cardHTML).join('');
+  document.getElementById('testing-grid').innerHTML = TESTING.map(cardHTML).join('');
+
+  document.getElementById('stack').innerHTML = STACK.map((s, i) => `
+    ${i > 0 ? '<div class="stack-arrow">↑ builds on</div>' : ''}
+    <div class="stack-layer ${s.style}">
+      <div class="sl-label">${s.label}</div>
+      <div class="sl-name">${s.name}</div>
+      <div class="sl-desc">${s.desc}</div>
+    </div>`).join('');
+}
+
+function toggleDark() {
+  const h = document.documentElement;
+  h.classList.toggle('dark');
+  document.querySelector('button').textContent = h.classList.contains('dark') ? 'Light mode' : 'Dark mode';
+}
+
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.classList.add('dark');
+  document.querySelector('button').textContent = 'Light mode';
+}
+
+render();
+</script>
+</body>
+</html>
