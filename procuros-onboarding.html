@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procuros Connector — Onboarding Process Map</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:40px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.card-svg{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:16px;margin:14px 0}
+svg{max-width:100%;height:auto;display:block}
+text.t{font-family:var(--sans);font-size:14px;fill:var(--text)}
+text.th{font-family:var(--sans);font-weight:500;font-size:14px;fill:var(--text)}
+text.ts{font-family:var(--sans);font-size:12px;fill:var(--text-2)}
+.box>rect{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:.5}
+.arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
+.c-purple>rect{fill:var(--mp-bg);stroke:#7F77DD;stroke-width:.5}.c-purple text{fill:var(--mp-fg)}
+.c-teal>rect{fill:var(--mt-bg);stroke:#1D9E75;stroke-width:.5}.c-teal text{fill:var(--mt-fg)}
+.c-blue>rect{fill:var(--mb-bg);stroke:#378ADD;stroke-width:.5}.c-blue text{fill:var(--mb-fg)}
+.c-coral>rect{fill:var(--mc-bg);stroke:#D85A30;stroke-width:.5}.c-coral text{fill:var(--mc-fg)}
+.c-amber>rect{fill:var(--ma-bg);stroke:#EF9F27;stroke-width:.5}.c-amber text{fill:var(--ma-fg)}
+.c-pink>rect{fill:var(--mk-bg);stroke:#D4537E;stroke-width:.5}.c-pink text{fill:var(--mk-fg)}
+.c-gray>rect{fill:var(--mg-bg);stroke:#888780;stroke-width:.5}.c-gray text{fill:var(--mg-fg)}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+.dir{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scn{color:var(--text-2);font-size:15px;margin:10px 0}
+.scn b{color:var(--text);font-weight:500}
+.rail{position:relative;margin:16px 0 4px}
+.rail:before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:var(--border)}
+.stg{display:flex;gap:14px;align-items:stretch;margin-bottom:10px;position:relative}
+.node{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;border:2px solid var(--fg);z-index:1}
+.card{flex:1;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:10px 14px;cursor:pointer}
+.card:hover{border-color:var(--border-strong)}
+.stg.sel .card{border-color:var(--fg);background:var(--surface-2)}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);color:var(--fg);font-size:12px;padding:2px 9px;border-radius:999px;white-space:nowrap;font-family:var(--mono)}
+.ttl{font-weight:500;font-size:15px}
+.ex{color:var(--text-2);font-size:13px;margin-top:3px}
+.det{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:14px 16px;margin-top:6px}
+.det h4{margin:0 0 2px;font-size:15px;font-weight:500}
+.det .lab{font-size:12px;color:var(--text-3);margin:10px 0 3px}
+.det p{margin:0;font-size:14px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border)}
+.chip.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.chip.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.chip.bad{background:var(--bg-danger);color:var(--text-danger);border-color:var(--border-danger)}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;padding-top:12px;border-top:1px solid var(--border)}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.dot{width:11px;height:11px;border-radius:3px;background:var(--fg)}
+.doc{display:none}
+.docmode #live{display:none}
+.docmode .doc{display:block}
+.doc h3{border-top:1px solid var(--border);padding-top:16px}
+footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{
+.noprint{display:none!important}
+body{background:#fff;font-size:12px}
+.wrap{max-width:none;padding:0}
+#live{display:none!important}
+.doc{display:block!important}
+.card-svg{break-inside:avoid;border:1px solid #ddd}
+.stg,.det,h3{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<h1>Procuros Connector — Onboarding Process Map</h1>
+<p class="lead">How Odoo exchanges EDI trade documents with partners over the Procuros network — the business flows and the code behind them.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="document.body.classList.toggle('docmode')">Handout view</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>Why this connector exists</h2>
+<p>Large retailers and grocery chains do not accept PDF orders or emailed invoices — they trade over <b>EDI</b> (Electronic Data Interchange), where every document is a structured message and every partner, product and pack is a standardised <b>GS1</b> code (partner = GLN, product = GTIN). <b>Procuros</b> is the network that carries those messages between trading partners. This module is the bridge that lets an Odoo company speak that language: it turns Odoo purchase orders, sales orders, deliveries, invoices, credit notes and payments into Procuros EDI documents and back again — automatically, on a schedule, with full logging.</p>
+<p>It is <b>symmetric</b>, so the same module serves two personas depending on which side of a deal you are on:</p>
+<ul>
+<li><b>Purchase-to-Pay (P2P) — you are the buyer.</b> You <i>send</i> Orders to a supplier and <i>receive</i> back Shipping Notices, Invoices and Credit Notes; when you pay, a Remittance Advice goes out.</li>
+<li><b>Order-to-Cash (O2C) — you are the supplier.</b> You <i>receive</i> Orders from a customer and <i>send</i> Order Responses, Shipping Notices, Invoices and Credit Notes; you <i>receive</i> Remittance Advice when they pay.</li>
+</ul>
+<p>Audience for this map: new engineers and support/PM colleagues. Every step below reads at two levels — a plain-English sentence for the business, and the exact Odoo model, method or API path for the engineer. One concrete deal runs through all of it: buyer <b>ACME Co. Ltd.</b> (GLN <code>1100001016310</code>, Berlin) ordering from supplier <b>Testsupplier</b> (GLN <code>1100001016312</code>) on order <b>PO9383-R45</b>.</p>
+
+<h2>1. The big picture</h2>
+<p>Odoo sits on one side, the Procuros EDI network (and, behind it, your trading partners) on the other. In between sits this single module, <code>procuros_connector</code>. Everything it does is built from just four kinds of building block, and <b>colour means the block</b> throughout this whole map: the <span style="color:var(--mp-fg)">connector &amp; cron</span> that drives it, the <span style="color:var(--mc-fg)">GS1 mapper</span> that translates codes to Odoo records, the <span style="color:var(--mg-fg)">records &amp; API calls</span> that do the work, and the <span style="color:var(--ma-fg)">logs</span> that make every exchange auditable.</p>
+<div class="card-svg">
+<svg viewBox="0 0 680 300" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Procuros Connector — big picture</title>
+<desc>Odoo on the left connects through the Procuros Connector (connector and cron, GS1 mapper, records and API calls, logs) to the Procuros EDI network and trading partners on the right, with bidirectional arrows.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a8980"/></marker></defs>
+<g class="box"><rect x="40" y="64" width="140" height="180" rx="12"/></g>
+<text class="th" x="110" y="100" text-anchor="middle">Odoo</text>
+<text class="ts" x="110" y="120" text-anchor="middle">Your ERP</text>
+<text class="t" x="110" y="152" text-anchor="middle">Sales · Purchase</text>
+<text class="t" x="110" y="178" text-anchor="middle">Inventory</text>
+<text class="t" x="110" y="204" text-anchor="middle">Accounting</text>
+<g class="box"><rect x="232" y="44" width="216" height="224" rx="14"/></g>
+<text class="th" x="340" y="70" text-anchor="middle">Procuros Connector</text>
+<g class="c-purple"><rect x="248" y="84" width="184" height="34" rx="8"/><text class="ts" x="340" y="105" text-anchor="middle">Connector &amp; cron</text></g>
+<g class="c-coral"><rect x="248" y="128" width="184" height="34" rx="8"/><text class="ts" x="340" y="149" text-anchor="middle">GS1 mapper · GLN / GTIN / UoM</text></g>
+<g class="c-gray"><rect x="248" y="172" width="184" height="34" rx="8"/><text class="ts" x="340" y="193" text-anchor="middle">Records &amp; API calls</text></g>
+<g class="c-amber"><rect x="248" y="216" width="184" height="34" rx="8"/><text class="ts" x="340" y="237" text-anchor="middle">Logs &amp; acknowledge</text></g>
+<g class="box"><rect x="500" y="64" width="140" height="180" rx="12"/></g>
+<text class="th" x="570" y="100" text-anchor="middle">Procuros</text>
+<text class="ts" x="570" y="120" text-anchor="middle">EDI network</text>
+<text class="t" x="570" y="152" text-anchor="middle">Trading partners</text>
+<text class="ts" x="570" y="178" text-anchor="middle">buyers · suppliers</text>
+<text class="t" x="570" y="204" text-anchor="middle">GS1 / EDI</text>
+<line class="arr" x1="182" y1="150" x2="228" y2="150" marker-end="url(#ar)"/>
+<line class="arr" x1="230" y1="182" x2="184" y2="182" marker-end="url(#ar)"/>
+<line class="arr" x1="450" y1="150" x2="496" y2="150" marker-end="url(#ar)"/>
+<line class="arr" x1="498" y1="182" x2="452" y2="182" marker-end="url(#ar)"/>
+</svg>
+</div>
+
+<h2>2. The architecture</h2>
+<p>Under the hood the module is two mirror-image lanes driven by scheduled actions. <b>Inbound</b>, the Auto-Process cron calls <code>GET /v2/transactions</code>, then dispatches each document to a handler by its <code>type</code> string (<code>process_incoming_order</code>, <code>process_incoming_invoice</code>, …), resolving GS1 codes to Odoo records as it goes. <b>Outbound</b>, each Odoo document serialises itself with a <code>generate_*_payload()</code> method and is POSTed back. A single <code>connector.configuration</code> record plus three <code>ir.cron</code> jobs are the engine; <code>connector.log</code> records every step and the Auto-Mark cron acknowledges handled transactions back to Procuros so they are never re-sent.</p>
+<div class="card-svg">
+<svg viewBox="0 0 680 360" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Procuros Connector — architecture</title>
+<desc>Two lanes. Inbound: Procuros to fetch, dispatch by type, GS1 resolve, into Odoo. Outbound: Odoo to serialize, send, writeback status, to Procuros. A connector and cron engine band and a logging and acknowledge band span both lanes.</desc>
+<defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a8980"/></marker></defs>
+<g class="box"><rect x="24" y="66" width="94" height="150" rx="12"/></g>
+<text class="th" x="71" y="126" text-anchor="middle">Procuros</text>
+<text class="ts" x="71" y="146" text-anchor="middle">EDI network</text>
+<g class="box"><rect x="562" y="66" width="94" height="150" rx="12"/></g>
+<text class="th" x="609" y="126" text-anchor="middle">Odoo</text>
+<text class="ts" x="609" y="146" text-anchor="middle">records</text>
+<text class="ts" x="126" y="58">Inbound · Procuros → Odoo</text>
+<g class="c-purple"><rect x="126" y="68" width="128" height="48" rx="8"/><text class="th" x="190" y="90" text-anchor="middle">Fetch</text><text class="ts" x="190" y="107" text-anchor="middle">GET /v2/transactions</text></g>
+<g class="c-gray"><rect x="275" y="68" width="128" height="48" rx="8"/><text class="th" x="339" y="90" text-anchor="middle">Dispatch by type</text><text class="ts" x="339" y="107" text-anchor="middle">process_incoming_*</text></g>
+<g class="c-coral"><rect x="424" y="68" width="128" height="48" rx="8"/><text class="th" x="488" y="90" text-anchor="middle">GS1 resolve</text><text class="ts" x="488" y="107" text-anchor="middle">partner · product</text></g>
+<line class="arr" x1="118" y1="92" x2="124" y2="92" marker-end="url(#ar2)"/>
+<line class="arr" x1="254" y1="92" x2="273" y2="92" marker-end="url(#ar2)"/>
+<line class="arr" x1="403" y1="92" x2="422" y2="92" marker-end="url(#ar2)"/>
+<line class="arr" x1="552" y1="92" x2="560" y2="92" marker-end="url(#ar2)"/>
+<text class="ts" x="126" y="150">Outbound · Odoo → Procuros</text>
+<g class="c-gray"><rect x="424" y="160" width="128" height="48" rx="8"/><text class="th" x="488" y="182" text-anchor="middle">Serialize</text><text class="ts" x="488" y="199" text-anchor="middle">generate_*_payload</text></g>
+<g class="c-gray"><rect x="275" y="160" width="128" height="48" rx="8"/><text class="th" x="339" y="182" text-anchor="middle">Send</text><text class="ts" x="339" y="199" text-anchor="middle">POST /v2/transactions</text></g>
+<g class="c-purple"><rect x="126" y="160" width="128" height="48" rx="8"/><text class="th" x="190" y="182" text-anchor="middle">Writeback</text><text class="ts" x="190" y="199" text-anchor="middle">status → TRANSMITTED</text></g>
+<line class="arr" x1="560" y1="184" x2="554" y2="184" marker-end="url(#ar2)"/>
+<line class="arr" x1="424" y1="184" x2="405" y2="184" marker-end="url(#ar2)"/>
+<line class="arr" x1="275" y1="184" x2="256" y2="184" marker-end="url(#ar2)"/>
+<line class="arr" x1="126" y1="184" x2="120" y2="184" marker-end="url(#ar2)"/>
+<g class="c-purple"><rect x="24" y="232" width="632" height="46" rx="10"/><text class="th" x="340" y="253" text-anchor="middle">connector.configuration · ir.cron</text><text class="ts" x="340" y="270" text-anchor="middle">one validated connector per company · scheduled actions every 10 / 10 / 20 min</text></g>
+<g class="c-amber"><rect x="24" y="290" width="632" height="46" rx="10"/><text class="th" x="340" y="311" text-anchor="middle">connector.log — every step logged</text><text class="ts" x="340" y="328" text-anchor="middle">info · data issue · response error · Auto-Mark → transactions/bulk/mark-processed</text></g>
+</svg>
+</div>
+
+<h2>3. The workflows</h2>
+<p>Pick a workflow to walk its numbered steps. Each step's colour is its building block; click a step for the business meaning, the exact model / method / endpoint, the states it moves through, and config notes. The one deal — <b>ACME</b> buying from <b>Testsupplier</b> on <b>PO9383-R45</b> — runs through every workflow, closing the full procure-to-pay / order-to-cash loop.</p>
+
+<div id="live" class="noprint">
+<div class="bar">
+<select id="wf"></select>
+<span class="dir" id="dir"></span>
+</div>
+<div class="scn" id="scn"></div>
+<div class="rail" id="rail"></div>
+<div class="det" id="det"></div>
+</div>
+
+<div class="lg">
+<div class="lgi m-purple"><span class="dot"></span>Connector &amp; cron</div>
+<div class="lgi m-coral"><span class="dot"></span>GS1 mapper (GLN · GTIN · UoM)</div>
+<div class="lgi m-gray"><span class="dot"></span>Record / API call</div>
+<div class="lgi m-amber"><span class="dot"></span>Log &amp; acknowledge</div>
+</div>
+
+<div class="doc" id="doc"></div>
+
+<footer>Generated as an onboarding aid for the <code>procuros_connector</code> Odoo module (v19). Identifiers, methods, cron ids and API paths are quoted from the module source; the running example (ACME / Testsupplier / PO9383-R45) is drawn from the module's own mock data. This file is self-contained, works offline, and is untracked by git — move or share it freely. Print or use "Handout view" for slides.</footer>
+
+</div>
+<script>
+const WF = [
+{
+id:'setup', label:'0 · Setup & first run', dir:'Odoo ⇄ Procuros · one-time',
+scn:'You bring up a brand-new connector for <b>ACME Co. Ltd.</b>: enter the Procuros URL &amp; token, validate, mirror the GS1 master data (GLN, GTIN, UoM) onto Odoo records, then switch on the three crons.',
+steps:[
+{m:'m-purple',t:'Create the connector',ex:'One connector per company',mo:'connector.configuration',st:['Draft'],
+biz:'The connector record is the single bridge to Procuros. It stores the API host and token plus every default an incoming order needs — warehouse, payment term, salesperson, sales team. You create exactly one per Odoo company.',
+cfg:'Menu <code>Procuros Connector → Connectors</code>. Set <code>host_url</code> = <code>https://api.procuros.io</code>, <code>api_token</code> (used as a Bearer token), <code>external_identifier</code> = your own GS1 account name, <code>api_version</code> = <code>v2</code>. A <code>_company_unique</code> index enforces one connector per company.'},
+{m:'m-purple',t:'Test connection & validate',ex:'Draft → Validated flips it live',mo:'test_connection() · action_validate_connector()',st:['Draft','Validated'],
+biz:'Test Connection pings Procuros with your token so you catch a bad URL or key immediately. Validate then makes the connector live — only validated connectors are ever picked up by the crons, and its config fields become read-only.',
+cfg:'<code>test_connection</code> is the television-icon button. <b>Validate</b> sets <code>state=\'validated\'</code>. Two required fields: <code>payment_term_id</code> (Sales Settings tab) and <code>payment_journal_id</code> (Incoming Transactions tab — needed for remittance advice, else payments log a data issue).'},
+{m:'m-coral',t:'Mirror GS1 master data',ex:'ACME GLN 1100001016310 → res.partner.ref',mo:'res.partner.ref · product.product.barcode · uom.uom.unit_type',st:[],
+biz:'Procuros speaks GS1: every partner is a GLN, every product a GTIN, every unit an EDI code. You copy those identifiers onto the matching Odoo records so inbound and outbound documents resolve to the right partner, product and quantity. This is the single most common source of errors if skipped.',
+cfg:'Partner GLN → <code>res.partner.ref</code> (the Reference field). Product GTIN → <code>product.product.barcode</code>; carton/pack GTIN → <code>product.uom.barcode</code> (v19) or <code>product.packaging.barcode</code> (v17/18). UoM: Odoo "Units" ↔ partner "EA" via <code>uom.uom.unit_type</code> (unique per UoM, enforced by a constraint).'},
+{m:'m-coral',t:'Set partner flags',ex:'Testsupplier: Require Order Response ✓',mo:'res.partner (procuros_connector_ids, send_invoice, …)',st:[],
+biz:'Each partner carries switches deciding which documents flow to or from them — whether you expect an order response, auto-send invoices, send shipping notices, and so on. These gate every automated exchange, so a missing flag simply means "nothing happens".',
+cfg:'On the partner\'s <b>Sales &amp; Purchase</b> tab: <code>procuros_connector_ids</code>, <code>require_order_response</code> (auto-confirms sent POs), <code>send_invoice</code>, <code>send_shipping_notice</code>, <code>send_order_response</code>, <code>order_response_comment</code>, <code>send_credit_note_reason</code>.'},
+{m:'m-purple',t:'Activate the three crons',ex:'Every 10 / 10 / 20 min',mo:'ir.cron (procuros_connector.*)',st:['Inactive','Active'],
+biz:'Three scheduled actions run the day-to-day: pull inbound documents, mark them processed back on Procuros, and push outbound documents. They ship switched off — you enable them from the connector\'s Scheduled Actions button.',
+cfg:'<code>ir_cron_auto_process_incoming_transactions</code> (10 min) → <code>_auto_process_incoming_transactions()</code>; <code>ir_cron_auto_mark_incoming_transactions</code> (10 min); <code>ir_cron_auto_process_outgoing_transactions</code> (20 min) → <code>cron_send_outgoing_transactions()</code>. All shipped <code>active=False</code>.'},
+{m:'m-amber',t:'First run & read logs',ex:'Get Incoming Transactions → Info / Data Issue',mo:'connector.log',st:['Info','Data issue','Response Error'],
+biz:'You do one manual pull and read the logs. Green Info means it worked; a Data Issue means a GLN or GTIN did not match and needs fixing on the receiving record. The full JSON of every exchange is on the log for debugging.',
+cfg:'Button <b>Get Incoming Transactions</b> → <code>action_process_incoming_transactions()</code>. Logs at <code>Procuros Connector → Logs</code>; <code>level</code> ∈ <code>info</code> / <code>data_issue</code> / <code>data_issue_error</code> / <code>response_error</code> / <code>connection_issue</code>. Critical logs email the connector\'s salesperson.'}
+]},
+{
+id:'order', label:'1 · Order handshake (PO → Sales Order)', dir:'Buyer Odoo → Procuros → Supplier Odoo',
+scn:'<b>ACME</b> raises PO <b>PO9383-R45</b> to <b>Testsupplier</b> for 20 × GTIN <code>4300348765432</code>. It leaves ACME\'s Odoo as an EDI <b>ORDER</b> and lands in Testsupplier\'s Odoo as a sales quotation.',
+steps:[
+{m:'m-gray',t:'Buyer raises & sends the PO',ex:'PO9383-R45 draft → Send Order to Procuros',mo:'purchase.order.action_send_order_to_procuros()',st:['Draft'],
+biz:'The buyer creates an ordinary RFQ/PO to the Procuros vendor and clicks Send Order to Procuros. The connector validates first, so a half-configured product or partner is caught before anything is sent.',
+cfg:'<code>check_order_validity</code>: PO must be <code>draft</code>, <code>partner_id</code> must carry this connector in <code>procuros_connector_ids</code>, and every line\'s <code>product_uom.unit_type</code> must be set.'},
+{m:'m-coral',t:'Serialize to ORDER payload',ex:'name → orderIdentifier, barcode → GS1',mo:'generate_order_payload() → {"type":"ORDER"}',st:[],
+biz:'Odoo translates the PO into the Procuros EDI ORDER shape: your own GS1 as buyer, the vendor\'s GLN as supplier, and each line\'s GTIN, quantity, unit type and price.',
+cfg:'<code>name→orderIdentifier</code>, <code>date_planned→requestedDeliveryDate</code>, <code>partner_id.ref→supplier</code> (GS1), <code>external_identifier→buyer</code>, <code>company.partner_id.ref→billTo</code>, warehouse partner → <code>shipTo</code>. Lines: <code>product_id.barcode→identifiers</code> (GS1), <code>product_uom_id.unit_type→unitOfMeasure</code>, discount → <code>modificationGroups</code>.'},
+{m:'m-gray',t:'POST to Procuros',ex:'HTTP 201 → TRANSMITTED',mo:'POST /v2/transactions',st:['TRANSMITTED','NO_ACTION'],
+biz:'The outgoing cron POSTs the order. On success the PO is stamped with its transaction id and status. If the partner does not require an order response, the PO auto-confirms right away.',
+cfg:'<code>action_send_orders</code> → <code>POST /v2/transactions</code> (expect 201/202). 201 → <code>TRANSMITTED</code>; 202 → <code>NO_ACTION</code> + <code>procuros_retry_disabled</code>. If <code>not require_order_response</code> → automatic <code>button_confirm()</code>.'},
+{m:'m-coral',t:'Supplier resolves who & what',ex:'GLN 1100001016310 → ACME · GTIN → product',mo:'process_incoming_order → _get_partner_by_identifier / _get_product_by_gs1_identifier',st:['Info','Data issue'],
+biz:'On the supplier\'s side the inbound cron reads the ORDER and looks up the buyer by GLN and each line by GTIN (falling back to a carton GTIN). Ambiguous or missing matches stop the order and log a data issue rather than guessing.',
+cfg:'Buyer / shipTo / billTo GS1 → <code>res.partner.ref</code>. GTIN → <code>product.product.barcode</code>, then carton <code>product.uom.barcode</code> (payload qty × carton size). A duplicate GLN/GTIN, or an unmatched shipTo/billTo, is fatal — the order is skipped.'},
+{m:'m-gray',t:'Create the sales quotation',ex:'Draft SO for ACME, 20 × line 1',mo:'sale.order.create() · state=draft',st:['Draft'],
+biz:'A draft sales order is created with ACME as customer, the resolved products and quantities, and the connector\'s salesperson, team and payment term. It is idempotent — the same Procuros transaction never creates two orders.',
+cfg:'Seeds <code>partner_id</code> / <code>partner_shipping_id</code> / <code>partner_invoice_id</code>, <code>order_identifier</code>, <code>procuros_transaction_id</code>, and <code>user_id</code>/<code>team_id</code>/<code>payment_term_id</code> from the partner or, as fallback, the connector. Deduplicates on <code>procuros_transaction_id</code>.'},
+{m:'m-amber',t:'Log & acknowledge',ex:'Info "SO Created" → mark-processed',mo:'connector.log → transactions/bulk/mark-processed',st:['Info','Processed'],
+biz:'Every outcome is logged, and the Auto-Mark cron tells Procuros the transaction was handled so it moves from In Progress to Delivered and is never re-sent.',
+cfg:'<code>_auto_action_mark_transaction_processed</code> → <code>POST transactions/bulk/mark-processed</code>. The connector\'s <code>transaction_to_be_marked</code> chooses "Only Succeeded" vs "All Transactions".'}
+]},
+{
+id:'response', label:'2 · Order response (accept / change / reject)', dir:'Supplier Odoo → Procuros → Buyer Odoo',
+scn:'<b>Testsupplier</b> answers the imported order for <b>ACME</b>: confirming it unchanged sends <b>ACCEPT</b>; trimming a line sends <b>CHANGE</b> with the confirmed quantity; cancelling sends <b>REJECT</b>. ACME\'s PO updates to match.',
+steps:[
+{m:'m-gray',t:'Supplier acts on the order',ex:'Confirm / modify / cancel the SO',mo:'sale.order.action_confirm() · action_cancel()',st:['Draft','Sale','Cancelled'],
+biz:'The supplier confirms, edits or cancels the imported quotation exactly as they would any order. The connector quietly remembers the quantities and dates it originally received so it can tell what changed.',
+cfg:'On import the connector stored <code>procuros_original_qty</code> and <code>procuros_original_commitment_date</code>. <code>_has_order_changes()</code> compares the current line values against those originals.'},
+{m:'m-purple',t:'Determine the response type',ex:'line 19 → 15 ⇒ CHANGE',mo:'_determine_order_response_type()',st:['ACCEPT','CHANGE','REJECT'],
+biz:'Odoo decides the answer automatically — cancelled → REJECT, confirmed-with-edits → CHANGE, confirmed-untouched → ACCEPT — so the user never has to pick a document type by hand.',
+cfg:'cancel → <code>REJECT</code>; state <code>sale</code> + changes → <code>CHANGE</code>; otherwise <code>ACCEPT</code>. If the partner has <code>order_response_comment</code> set, a wizard prompts for a reason on CHANGE / REJECT.'},
+{m:'m-gray',t:'Send the order response',ex:'CHANGE with confirmedQuantity 15',mo:'generate_order_response_payload() → {"type":"ORDER_RESPONSE"}',st:['TRANSMITTED'],
+biz:'The response is serialised and posted. For a CHANGE it carries the confirmed quantities and delivery dates line by line, so the buyer sees exactly what will actually be delivered.',
+cfg:'Button <b>Send Order Response to Procuros</b> (needs a transaction id + <code>send_order_response</code> + a confirmed/cancelled state + no prior response). CHANGE items map <code>orderedQuantity=procuros_original_qty</code>, <code>confirmedQuantity=product_uom_qty</code>. Sent via <code>action_send_order_responses</code>.'},
+{m:'m-coral',t:'Buyer matches PO & lines',ex:'orderIdentifier PO9383-R45 → draft PO',mo:'process_incoming_order_response',st:['Info','Data issue'],
+biz:'Back on the buyer\'s side, the inbound cron finds the original draft PO by its identifier and routes the message to the right handler for accept, change or reject.',
+cfg:'PO found by <code>orderIdentifier → purchase.order.name</code>. Dispatches <code>order_response_handle_{accept|change|reject}</code>. For CHANGE, each line is matched by product barcode + ordered qty + unit_type.'},
+{m:'m-gray',t:'Apply to the purchase order',ex:'ACCEPT → confirm · CHANGE → qty 15 · REJECT → cancel',mo:'button_confirm() / button_cancel() / write(product_qty)',st:['Sale','Cancelled'],
+biz:'The buyer\'s PO is updated to reflect the supplier\'s answer — confirmed, quantity-adjusted, or cancelled — and a chatter note records what happened.',
+cfg:'<code>order_response_handle_accept</code> → <code>button_confirm()</code>; <code>_change</code> writes <code>product_qty=confirmedQuantity</code> then confirms; <code>_reject</code> → <code>button_cancel()</code>. Payment terms validated via <code>compare_payment_term_payload</code>.'},
+{m:'m-amber',t:'Log & acknowledge',ex:'Info + chatter note on the PO',mo:'connector.log · mark-processed',st:['Info','Processed'],
+biz:'The outcome and any payment-term mismatch are logged, and the transaction is marked processed on Procuros.',
+cfg:'A note is posted to the PO chatter; a term mismatch raises a data issue. Acknowledged via the Auto-Mark cron.'}
+]},
+{
+id:'ship', label:'3 · Shipping notice (despatch → receipt)', dir:'Supplier Odoo → Procuros → Buyer Odoo',
+scn:'<b>Testsupplier</b> ships against the order for <b>ACME</b>: 20 of line 1 in full, but only 15 of 19 for line 2 (the other 4 discarded). Despatch <b>SN9383-R45</b>, with carrier and tracking, becomes a goods receipt in ACME\'s warehouse.',
+steps:[
+{m:'m-gray',t:'Validate the delivery',ex:'Picking done · 20 + 15 shipped',mo:'stock.picking.action_send_picking_to_procuros()',st:['Done'],
+biz:'The supplier picks and validates the outgoing delivery, then clicks Send Picking to Procuros. Only a done picking for a send-shipping-notice partner is allowed.',
+cfg:'<code>check_picking_validity</code>: state <code>done</code> + <code>partner.send_shipping_notice</code>. Shipping 15 of 19 leaves a backorder open for the 4 short units.'},
+{m:'m-coral',t:'Build transport units & batches',ex:'SSCC package · CARTON / EURO_PALLET · lot + expiry',mo:'get_transport_unit_list_payload() · get_stock_move_lots()',st:[],
+biz:'The physical shipment is described the way EDI needs it: pallets and cartons with their SSCC ids and unit types, and — for tracked goods — the batch numbers and expiry dates inside each.',
+cfg:'<code>result_package_id.name→unitIdentifier</code>, <code>package_type_id.unit_type→unitType</code> (<code>EURO_PALLET</code>/<code>CARTON</code>). Lots: <code>lot_id.name→batchIdentifier</code>, <code>expiration_date→expirationDate</code> (why <code>product_expiry</code> is a dependency).'},
+{m:'m-gray',t:'Send the shipping notice',ex:'SN9383-R45 · tracking + openQuantityAction',mo:'generate_picking_payload() → {"type":"SHIPPING_NOTICE"}',st:['TRANSMITTED'],
+biz:'The despatch advice is posted with carrier and tracking and, where less was shipped than ordered, whether the remainder follows later or is dropped.',
+cfg:'<code>name→shippingNoticeIdentifier</code>, <code>carrier_id.name→carrier</code>, <code>carrier_tracking_ref→trackingNumber</code>. A short line adds <code>openQuantityAction</code> = <code>DELIVERED_LATER</code> (backorder exists) else <code>DISCARDED</code>.'},
+{m:'m-coral',t:'Buyer matches PO & products',ex:'orderIdentifier → PO · GTIN → product',mo:'process_incoming_shipping_notice',st:['Info','Data issue'],
+biz:'On the buyer\'s side the notice is matched to the original purchase order and each shipped line to its product, converting carton GTINs to base units.',
+cfg:'PO found by <code>orderIdentifier</code>. Copies the draft receipt picking, splits <code>shippedQuantity</code> per transport-unit item, matching by product or carton barcode.'},
+{m:'m-gray',t:'Create the receipt',ex:'Receipt in ACME warehouse · 20 + 15',mo:'stock.picking (incoming, carrier stamped)',st:['Processed'],
+biz:'A goods receipt appears in the buyer\'s warehouse, linked to the PO and pre-filled with the shipped quantities, carrier and tracking — ready to receive.',
+cfg:'<code>shippedQuantity→stock.move.product_uom_qty</code>; <code>carrier_id</code> / <code>carrier_tracking_ref</code> from the header. <code>procuros_inc_transaction_status=\'Processed\'</code>.'},
+{m:'m-amber',t:'Log & acknowledge',ex:'Info → Delivered on Procuros',mo:'connector.log · mark-processed',st:['Info','Processed'],
+biz:'Success is logged and acknowledged; the Procuros shipping-notice transaction moves to Delivered.',
+cfg:'Acknowledged via the Auto-Mark cron.'}
+]},
+{
+id:'invoice', label:'4 · Invoice → vendor bill', dir:'Supplier Odoo → Procuros → Buyer Odoo',
+scn:'<b>Testsupplier</b> invoices <b>ACME</b> as <b>IV9383-R45</b> — 20 × line 1 plus 15 × line 2 at 19% VAT, on 28-day / 3% skonto terms. It arrives as a vendor bill on ACME\'s purchase order.',
+steps:[
+{m:'m-gray',t:'Post & send the invoice',ex:'IV9383-R45 posted → Send Invoice',mo:'account.move.action_send_invoice_to_procuros()',st:['Posted'],
+biz:'The supplier creates the customer invoice from the sales order, posts it, and sends it. The connector requires a posted invoice for a send-invoice partner, backed by a completed delivery.',
+cfg:'<code>check_invoice_validity</code>: <code>posted</code> + <code>partner.send_invoice</code>. The header needs a source SO (<code>invoice_origin</code>) and a done delivery, else a "not delivered" ValidationError.'},
+{m:'m-coral',t:'Serialize INVOICE + taxes + terms',ex:'barcode → GS1 · 19% tax · 28d/3% terms',mo:'generate_invoice_payload(_type="inv")',st:[],
+biz:'The invoice is translated to EDI: line GTINs, gross unit prices, per-line tax, discounts as ALLOWANCE blocks, and full totals — plus the payment terms with any early-payment (skonto) discount.',
+cfg:'Gross <code>unitPrice</code> (discount only via <code>modificationGroups</code> ALLOWANCE/DISCOUNT), per-line <code>tax</code>, <code>summary.grossAmount/netAmount/dueAmount</code>, <code>paymentTerms</code> from the SO term. <code>orderLineNumber</code> links each item back to the order line.'},
+{m:'m-gray',t:'Send the invoice',ex:'HTTP 201 → TRANSMITTED',mo:'POST /v2/transactions · {"type":"INVOICE"}',st:['TRANSMITTED','NO_ACTION'],
+biz:'The invoice is posted to Procuros and stamped TRANSMITTED. Credit notes reuse this exact path.',
+cfg:'Via <code>action_send_invoices</code> (credit notes: same method with <code>_type="cn"</code>).'},
+{m:'m-coral',t:'Buyer matches PO, lines & tax',ex:'orderIdentifier → PO · barcode → line · tax check',mo:'process_incoming_invoice → parse_inv_to_vbill',st:['Info','Data issue'],
+biz:'On the buyer\'s side the invoice is matched to its purchase order, each line to a PO line by GTIN, and taxes validated against the buyer\'s own product configuration.',
+cfg:'<code>orderIdentifier→purchase.order</code>, supplier GS1 → <code>partner_id</code>, line product by barcode then carton; <code>purchase_line_id.taxes_id</code> applied; a tax-% mismatch is logged.'},
+{m:'m-gray',t:'Create the vendor bill',ex:'Draft vendor bill on ACME\'s PO',mo:'account.move · move_type="in_invoice"',st:['Processed'],
+biz:'A vendor bill is created in the buyer\'s accounting, linked to the purchase order and ready to check and pay.',
+cfg:'<code>move_type=\'in_invoice\'</code>, <code>purchase_id</code> set, <code>procuros_inc_transaction_status=\'Processed\'</code>. With no matching PO the bill is still created, unlinked, plus a data issue.'},
+{m:'m-amber',t:'Log & acknowledge',ex:'Info → Delivered',mo:'connector.log · mark-processed',st:['Info','Processed'],
+biz:'Logged and acknowledged back to Procuros.',
+cfg:'Acknowledged via the Auto-Mark cron.'}
+]},
+{
+id:'creditnote', label:'5 · Credit note', dir:'Supplier Odoo → Procuros → Buyer Odoo',
+scn:'<b>Testsupplier</b> issues a credit note against <b>IV9383-R45</b> — a <b>CORRECTION</b> for a wrong quantity, or a <b>VALUE_CREDIT</b> for a rebate. ACME receives a vendor credit note that reverses the original bill.',
+steps:[
+{m:'m-gray',t:'Reverse invoice → credit note',ex:'Credit Note wizard · pick the reason',mo:'account.move.reversal (cn_type)',st:['CORRECTION','VALUE_CREDIT'],
+biz:'The supplier reverses the posted invoice. The reversal type sets the EDI credit-note type: a full/partial correction of a wrong invoice, or a standalone commercial credit like a rebate.',
+cfg:'<code>refund_moves→cn_type=\'VALUE_CREDIT\'</code>, <code>modify_moves→cn_type=\'CORRECTION\'</code>. <code>cn_type</code> and <code>procuros_connector_id</code> propagate onto the reversal move.'},
+{m:'m-coral',t:'Serialize CREDIT_NOTE',ex:'creditNoteIdentifier + reason + orig invoice',mo:'generate_invoice_payload(_type="cn")',st:[],
+biz:'The same invoice serializer, credit-note flavour: it references the original invoice and carries the type and the reason text.',
+cfg:'<code>type=\'CREDIT_NOTE\'</code>, <code>reversed_entry_id.name→invoiceIdentifier</code>, <code>cn_type→type</code>, <code>ref→reason</code> (format "Reversal of: …, Reason"). Items carry <code>isInvoicedItem: true</code>.'},
+{m:'m-gray',t:'Send the credit note',ex:'201 → TRANSMITTED',mo:'POST /v2/transactions · {"type":"CREDIT_NOTE"}',st:['TRANSMITTED'],
+biz:'Posted to Procuros and stamped.',
+cfg:'Via <code>action_send_invoices(_type="cn")</code>. Needs <code>partner.send_invoice</code> (and optionally <code>send_credit_note_reason</code>).'},
+{m:'m-coral',t:'Buyer resolves the original bill',ex:'invoiceIdentifier → original vendor bill',mo:'process_incoming_credit_note → parse_vendorbill_creditnote',st:['Info','Data issue'],
+biz:'The buyer finds the original vendor bill that the credit note refers back to.',
+cfg:'Original bill searched by <code>invoiceIdentifier</code>; the reversal is built through the <code>account.move.reversal</code> wizard.'},
+{m:'m-gray',t:'Create vendor credit note',ex:'Draft vendor credit note · bill reversed',mo:'_revserse_vendor_bill() · in_refund',st:['Processed'],
+biz:'A vendor credit note is created as draft and, for corrections, offsets the original bill.',
+cfg:'Created move status <code>Processed</code>. CORRECTION links to and reverses the original bill; VALUE_CREDIT stands alone.'},
+{m:'m-amber',t:'Log & acknowledge',ex:'Info → Delivered',mo:'connector.log · mark-processed',st:['Info','Processed'],
+biz:'Logged and acknowledged.',
+cfg:'Acknowledged via the Auto-Mark cron.'}
+]},
+{
+id:'remittance', label:'6 · Remittance advice (payment)', dir:'Buyer Odoo → Procuros → Supplier Odoo',
+scn:'<b>ACME</b> pays vendor bill <b>IV9383-R45</b> (less the 3% skonto). Procuros carries the remittance to <b>Testsupplier</b>, where it becomes a customer payment reconciled against the invoice — closing the loop.',
+steps:[
+{m:'m-gray',t:'Buyer registers the payment',ex:'Register Payment on IV9383-R45',mo:'account.payment (register)',st:['Posted'],
+biz:'The buyer pays the vendor bill in Odoo as normal. That payment becomes the remittance advice Procuros forwards to the supplier — no separate document to raise.',
+cfg:'The outgoing remittance is transmitted on the next outgoing cron run. Any skonto / early-payment discount is reflected in the amounts.'},
+{m:'m-coral',t:'Supplier resolves partner & currency',ex:'buyer GLN → ACME · EUR',mo:'process_incoming_remittance_advice → _remittance_resolve_partner',st:['Info','Data issue'],
+biz:'On the supplier\'s side the inbound cron identifies who paid — by GLN, falling back to name — and in which currency.',
+cfg:'Partner from <code>items[0].buyer</code> / <code>header.buyer</code> / <code>header.payFrom</code> GS1 → <code>res.partner.ref</code>. Requires <code>payment_journal_id</code> on the connector, else a data issue and no payment.'},
+{m:'m-coral',t:'Match the invoices',ex:'documentNumber IV9383-R45 → out_invoice',mo:'_remittance_resolve_invoices()',st:['Info','Data issue'],
+biz:'Each referenced document is matched to the supplier\'s open invoices (or credit notes) so the payment can be reconciled against them.',
+cfg:'<code>documentNumber</code> / <code>externalDocumentNumber</code> → <code>account.move.name/ref</code>, posted + not fully paid + same company. <code>documentType=\'CREDIT_NOTE\'</code> → <code>out_refund</code>.'},
+{m:'m-gray',t:'Create & reconcile the payment',ex:'Customer payment · amount = remittedTotal',mo:'account.payment (_remittance_create_payment)',st:['Processed'],
+biz:'A customer payment is created and reconciled against the matched invoices. Several invoices in one remittance become a single grouped payment; no match means a standalone inbound payment for the total.',
+cfg:'Matched → <code>account.payment.register</code> (<code>group_payment</code> when &gt;1) + <code>_create_payments()</code>. Amount from <code>summary.remittedTotal</code>. Negative amounts are rejected.'},
+{m:'m-amber',t:'Chatter breakdown & log',ex:'Invoice refs, amounts, skonto table',mo:'connector.log + _remittance_build_chatter_html',st:['Info','Processed'],
+biz:'The payment\'s chatter shows a full breakdown — which invoices, what amounts, any skonto/correction — and the outcome is logged and acknowledged.',
+cfg:'An HTML chatter table of documents / corrections / summary is posted. Acknowledged via the Auto-Mark cron.'}
+]}
+];
+let wi=0,sel=0;
+const selEl=document.getElementById('wf');
+WF.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;selEl.appendChild(o);});
+function tone(s){s=s.toLowerCase();if(/fail|error|critical|down|archiv|cancel|retour|unchanged|reject/.test(s))return'bad';if(/done|active|linked|info|shipped|ship|changed|checked|success|transmit|processed|deliver|posted|validated|sale|accept/.test(s)&&!/not checked/.test(s))return'ok';if(/progress|retry|partial|warning|manual|inactive|draft|open|not checked|no_action|change/.test(s))return'warn';return'';}
+function chipHtml(st){return st&&st.length?'<div class="lab">States</div><div class="chips">'+st.map(x=>'<span class="chip '+tone(x)+'">'+x+'</span>').join('')+'</div>':'';}
+function render(){
+const w=WF[wi];
+document.getElementById('dir').textContent=w.dir;
+document.getElementById('scn').innerHTML=w.scn;
+const rail=document.getElementById('rail');rail.innerHTML='';
+w.steps.forEach((s,i)=>{
+const stg=document.createElement('div');stg.className='stg '+s.m+(i===sel?' sel':'');
+stg.innerHTML='<div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div></div>';
+stg.querySelector('.card').onclick=()=>{sel=i;render();};
+rail.appendChild(stg);
+});
+const s=w.steps[sel];
+document.getElementById('det').innerHTML='<h4>'+s.t+'</h4><p>'+s.biz+'</p><div class="lab">Under the hood</div><p><code>'+s.mo+'</code></p>'+chipHtml(s.st)+'<div class="lab">Good to know</div><p>'+s.cfg+'</p>';
+}
+selEl.onchange=()=>{wi=+selEl.value;sel=0;render();};
+render();
+function renderDoc(){
+const doc=document.getElementById('doc');let h='';
+WF.forEach(w=>{
+h+='<h3>'+w.label+' &nbsp;·&nbsp; '+w.dir+'</h3><p class="scn">'+w.scn+'</p><div class="rail">';
+w.steps.forEach((s,i)=>{
+h+='<div class="stg '+s.m+'"><div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div><div class="det" style="margin-top:8px"><p>'+s.biz+'</p>'+chipHtml(s.st)+'<div class="lab">Good to know</div><p>'+s.cfg+'</p></div></div></div>';
+});
+h+='</div>';
+});
+doc.innerHTML=h;
+}
+renderDoc();
+</script>
+</body>
+</html>
