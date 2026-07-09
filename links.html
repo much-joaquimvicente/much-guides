@@ -125,7 +125,9 @@ const NOTES=[
  html:'The Odoo container runs inside <b>Shoovels QA</b>. If the server is down, post in <span class="chan">#dev-ops-questions</span> — or reach out directly to:',
  people:['Robinson Pompeu','David Akalugo','Frank Mogbuk']},
 {ic:'🎛️',color:'m-coral',t:'Odoo Studio — do customers use it?',
- html:'<b>We don\'t recommend it.</b> We normally prefer to be the ones who add the features and do the coding, rather than letting customers build with Studio.'}
+ html:'<b>We don\'t recommend it.</b> We normally prefer to be the ones who add the features and do the coding, rather than letting customers build with Studio.'},
+{ic:'✉️',color:'m-amber',t:'Email testing',
+ html:'<b>Emails don\'t work in the testing environment.</b> The current way to test email is an <b>Odoo.sh replica</b> (using the <code>main</code> branch).'}
 ];
 document.getElementById('notes').innerHTML=NOTES.map(n=>`
   <div class="qa ${n.color}">

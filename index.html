@@ -45,6 +45,19 @@ button:hover{border-color:var(--text-3)}
 .hero{text-align:center;padding:24px 0 48px}
 .hero h2{font-size:32px;font-weight:600;margin:0 0 10px;letter-spacing:-.02em}
 .hero p{color:var(--text-2);font-size:17px;max-width:520px;margin:0 auto}
+.search{position:relative;margin:0 0 22px}
+.search input{width:100%;font:inherit;font-size:15px;padding:12px 16px 12px 42px;border-radius:12px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text)}
+.search input:focus{outline:none;border-color:var(--text-3);box-shadow:0 2px 14px rgba(0,0,0,.05)}
+.search:before{content:"\1F50E";position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.65;pointer-events:none}
+.search .hint{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text-3);pointer-events:none}
+.results{margin-bottom:48px}
+.res{display:block;text-decoration:none;color:inherit;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:13px 16px;margin-bottom:10px}
+.res:hover{border-color:var(--border-strong)}
+.res-t{font-weight:600;font-size:15px;color:var(--text)}
+.res-s{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.55}
+.res-s mark{background:rgba(255,193,80,.4);color:inherit;padding:0 2px;border-radius:3px}
+.res-h{font-family:var(--mono);font-size:11.5px;color:var(--text-3);margin-top:5px}
+.res-empty{color:var(--text-2);font-size:14px;padding:12px 2px}
 .sec-label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:48px}
 .guide-card{display:block;text-decoration:none;color:inherit;border:1px solid var(--border);border-radius:14px;background:var(--surface-1);padding:20px 20px 18px;transition:border-color .15s,box-shadow .15s,transform .12s}
@@ -87,6 +100,7 @@ button:hover{border-color:var(--text-3)}
 .foot .owner{color:var(--text-2);font-weight:600;font-size:14px;margin-bottom:5px}
 code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
 </style>
+<script src="search-index.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -110,6 +124,13 @@ code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding
     <p>New joiner guide — step-by-step walkthroughs for setting up, using, and extending much. products.</p>
   </div>
 
+  <div class="search noprint">
+    <input id="q" type="search" placeholder="Search all guides…" autocomplete="off" spellcheck="false">
+    <span class="hint" id="qhint"></span>
+  </div>
+  <div id="results" class="results noprint" hidden></div>
+
+  <div id="browse">
   <div class="sec-label">Available guides</div>
   <div class="grid" id="grid"></div>
 
@@ -121,6 +142,7 @@ code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding
 
   <div class="sec-label">Products &amp; Training</div>
   <div class="grid" id="extras-grid"></div>
+  </div>
 
   <div class="foot">
     <div class="owner">📄 Documentation created &amp; maintained by Joaquim Vicente</div>
@@ -176,7 +198,19 @@ const GUIDES = [
     desc:  'How Odoo exchanges EDI trade documents with trading partners over the Procuros network — purchase orders, order responses, shipping notices, invoices → vendor bills, credit notes and remittance advice.',
     tags:  ['EDI', '7 workflows'],
     links: [
-      { label: 'Guide',        href: 'procuros-onboarding.html' }
+      { label: 'Guide',        href: 'procuros-onboarding.html' },
+      { label: 'Testing',      href: 'procuros-testing.html' }
+    ]
+  },
+  {
+    icon:  '🤖',
+    color: 'm-teal',
+    badge: 'Developer',
+    title: 'AI Assistant (MCP)',
+    desc:  'Connect Claude (Desktop) to Odoo over MCP so the AI can read and act on your data — what MCP is, why we use it, and the full setup.',
+    tags:  ['MCP', 'Setup'],
+    links: [
+      { label: 'Guide',        href: 'mcp-claude-odoo.html' }
     ]
   },
 
@@ -338,6 +372,58 @@ if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 }
 
 render();
+</script>
+
+<script>
+try{(function(){
+  var q=document.getElementById('q'),results=document.getElementById('results'),browse=document.getElementById('browse'),qhint=document.getElementById('qhint');
+  if(!q||!results||!browse) return;
+  var byHref={};
+  Array.prototype.forEach.call(browse.querySelectorAll('a[href$=".html"]'),function(a){
+    var href=a.getAttribute('href'); if(!href) return;
+    var card=a.closest('.guide-card');
+    var title=card&&card.querySelector('.gc-title')?card.querySelector('.gc-title').textContent:a.textContent;
+    var desc=card&&card.querySelector('.gc-desc')?card.querySelector('.gc-desc').textContent:'';
+    var tags=card?Array.prototype.map.call(card.querySelectorAll('.gc-tag'),function(t){return t.textContent;}).join(' '):'';
+    if(!byHref[href]) byHref[href]={href:href,title:(title||href).trim(),meta:((title||'')+' '+desc+' '+tags+' '+(a.textContent||'')).toLowerCase(),text:''};
+  });
+  (window.SEARCH_INDEX||[]).forEach(function(p){
+    if(byHref[p.href]) byHref[p.href].text=p.text||'';
+    else byHref[p.href]={href:p.href,title:p.title||p.href,meta:(p.title||'').toLowerCase(),text:p.text||''};
+  });
+  var PAGES=Object.keys(byHref).map(function(k){return byHref[k];});
+  function esc(x){return (x||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function snip(p,terms){
+    var body=p.text; if(!body) return '';
+    var low=body.toLowerCase(),pos=-1,term='';
+    terms.forEach(function(t){var i=low.indexOf(t); if(i>=0&&(pos<0||i<pos)){pos=i;term=t;}});
+    if(pos<0) return '';
+    var st=Math.max(0,pos-70),en=Math.min(body.length,pos+term.length+100);
+    var s=esc((st>0?'… ':'')+body.slice(st,en).trim()+(en<body.length?' …':''));
+    terms.forEach(function(t){s=s.replace(new RegExp('('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'),'<mark>$1</mark>');});
+    return s;
+  }
+  function run(){
+    var raw=(q.value||'').trim().toLowerCase();
+    if(!raw){browse.hidden=false;results.hidden=true;results.innerHTML='';qhint.textContent='';return;}
+    var terms=raw.split(/\s+/).filter(Boolean),hits=[];
+    PAGES.forEach(function(p){
+      var hay=(p.title+' '+p.meta+' '+p.text).toLowerCase();
+      for(var k=0;k<terms.length;k++){if(hay.indexOf(terms[k])<0)return;}
+      var score=0,tl=p.title.toLowerCase();
+      terms.forEach(function(t){if(tl.indexOf(t)>=0)score+=6;if(p.meta.indexOf(t)>=0)score+=3;score+=Math.min(p.text.toLowerCase().split(t).length-1,6);});
+      hits.push({p:p,score:score,snip:snip(p,terms)});
+    });
+    hits.sort(function(a,b){return b.score-a.score;});
+    browse.hidden=true;results.hidden=false;
+    qhint.textContent=hits.length?(hits.length+' result'+(hits.length>1?'s':'')):'';
+    results.innerHTML=hits.length?hits.map(function(h){
+      return '<a class="res" href="'+h.p.href+'"><div class="res-t">'+esc(h.p.title)+'</div>'+(h.snip?'<div class="res-s">'+h.snip+'</div>':'')+'<div class="res-h">'+h.p.href+'</div></a>';
+    }).join(''):'<div class="res-empty">No pages match “'+esc(q.value.trim())+'”.</div>';
+  }
+  q.addEventListener('input',run);
+  q.addEventListener('keydown',function(e){if(e.key==='Escape'){q.value='';run();q.blur();}});
+})();}catch(e){}
 </script>
 </body>
 </html>

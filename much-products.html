@@ -112,6 +112,14 @@ const PRODUCTS=[
  who:'Customers running a Shopware 6 online store integrated with Odoo.',
  features:'The Shopware Connector is much.\'s platform-specific integration layer, built on top of Order Base Integration (OBI) and iHub. Key features: <b>OAuth-based credentials</b> & connection management, <b>Order Import</b> (Standard mode for regular volume; High Volume mode for large catalogues, running in 6 background phases), <b>Product Import</b> (variants, images, SKUs, barcodes), <b>Product Export</b> (manual or automatic on save), <b>Stock Export</b> (daily batch sync; auto-archives products deleted from Shopware), <b>Shipment Export</b> (tracking numbers on delivery validation), <b>Return Export</b> (on return-receipt validation) and <b>Tax Import & Currency Mapping</b> (one-time setup buttons). Without the Shopware Connector, no Shopware ↔ Odoo integration runs.',
  resources:[{label:'Knowledge article',url:'https://erp.muchconsulting.de/odoo/knowledge/1541'},{label:'Git Repository',url:'https://github.com/much-GmbH/much-order-shopware-integration'},{label:'Sales Product Page',url:''}],meeting:'08/07'
+},
+{
+ ic:'🔄',color:'m-coral',name:'Procuros Connector',status:'',statusCls:'',
+ sub:'EDI trade documents over the Procuros network',
+ desc:'Lets an Odoo company trade over EDI (Electronic Data Interchange) — the way large retailers and grocery chains require, since they don\'t accept PDF orders or emailed invoices. It turns Odoo purchase orders, sales orders, deliveries, invoices, credit notes and payments into Procuros EDI documents and back again — automatically, on a schedule, with full logging.',
+ who:'Odoo companies trading with large retailers / grocery chains over EDI — either as a buyer (Purchase-to-Pay) or a supplier (Order-to-Cash).',
+ features:'Built on iHub (scheduling, logging, mappers) and symmetric — the same module serves both sides of a deal. Key documents / flows: Order handshake (PO → Sales Order), Order Response (accept / change / reject), Shipping Notice (despatch → receipt), Invoice → vendor bill, Credit Note, and Remittance Advice (payment). Trading partners are identified by GLN and products by GTIN (GS1 standards). Without it, an Odoo company cannot exchange EDI documents over Procuros.',
+ resources:[{label:'GitHub Repository',url:'https://github.com/much-GmbH/procuros-connector'},{label:'Knowledge article',url:''}],meeting:'to be scheduled'
 }
 ];
 function resChip(r){return r.url?`<a class="chip" href="${r.url}" target="_blank" rel="noopener">${r.label} ↗</a>`:`<span class="chip">${r.label}</span>`;}

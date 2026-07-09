@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Assistant (MCP) — Claude ↔ Odoo</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:840px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:600;margin:0 0 4px}
+h2{font-size:19px;font-weight:600;margin:34px 0 8px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+a.inline{color:var(--mp-fg)}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid #7F77DD;border-radius:10px;padding:14px 18px;margin:16px 0}
+.callout.tip{border-left-color:var(--border-warning);background:var(--bg-warning)}
+.callout.ok{border-left-color:var(--border-success);background:var(--bg-success)}
+.callout b{font-weight:600}
+.diagram{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin:16px 0}
+.dbox{flex:1;min-width:150px;text-align:center;border:1px solid var(--border-strong);border-radius:12px;background:var(--surface-1);padding:14px 10px}
+.dbox .n{font-weight:600;font-size:14.5px}
+.dbox .s{font-size:12px;color:var(--text-2);margin-top:2px}
+.darr{display:flex;align-items:center;justify-content:center;padding:0 8px;color:var(--text-3);font-size:18px}
+.rail{position:relative;margin:20px 0}
+.rail:before{content:"";position:absolute;left:17px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.step{display:flex;gap:16px;align-items:flex-start;margin-bottom:16px;position:relative}
+.snum{flex:0 0 36px;width:36px;height:36px;border-radius:50%;background:var(--mt-bg);color:var(--mt-fg);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;border:2px solid #1D9E75;z-index:1}
+.sbody{flex:1;min-width:0;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:12px 16px}
+.stitle{font-weight:600;font-size:15px;margin-bottom:2px}
+.swhere{font-size:12px;color:var(--text-3);margin-bottom:8px}
+.swhere b{color:var(--text-2);font-weight:600}
+.saction{margin:0 0 4px;font-size:14.5px}
+.plat{font-size:11px;font-weight:600;color:var(--text-3);margin:10px 0 3px;text-transform:uppercase;letter-spacing:.04em}
+.cmd,.code{background:#161514;color:#eeece4;border-radius:8px;padding:9px 12px;font-family:var(--mono);font-size:13px;overflow-x:auto;position:relative}
+.dark .cmd,.dark .code{background:#000}
+.cmd{display:flex;align-items:center;gap:8px;margin:4px 0}
+.cmd .p{color:#7c9;flex-shrink:0}
+.cmd .t{white-space:pre;flex:1}
+.code{white-space:pre;margin:6px 0;line-height:1.5}
+.copy{margin-left:auto;flex-shrink:0;font:inherit;font-size:11px;font-family:var(--sans);padding:3px 9px;border-radius:6px;border:1px solid #444;background:#26251f;color:#b4b2a9;cursor:pointer}
+.code .copy{position:absolute;top:8px;right:8px;margin:0}
+.copy:hover{border-color:#666;color:#eee}
+.snote{margin:9px 0 0;font-size:13.5px;color:var(--text-2);border-top:1px dashed var(--border);padding-top:8px}
+.snote b{color:var(--text);font-weight:600}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+td code{white-space:nowrap}
+.req-y{color:var(--text-success);font-weight:600}
+.req-n{color:var(--text-3)}
+footer{margin-top:40px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{.noprint{display:none!important}body{background:#fff}.cmd,.code{background:#f0efe8;color:#000;border:1px solid #ccc}.copy{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>AI Assistant (MCP) — connect Claude to Odoo</h1>
+<p class="lead">What MCP is, why we use it, and the full setup to let Claude read &amp; act on your Odoo data. Written for a junior technical joiner.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>1. What is MCP, in plain words</h2>
+<p><b>MCP = Model Context Protocol.</b> It's a technical standard introduced by <b>Anthropic</b> (the company behind Claude). It's a common way to connect an AI assistant — Claude, but also other AI tools — to an <b>external system</b>, so the AI can actually <b>read and work with that system's data</b>.</p>
+<div class="diagram">
+  <div class="dbox"><div class="n">Claude Desktop</div><div class="s">the AI assistant</div></div>
+  <div class="darr">↔</div>
+  <div class="dbox"><div class="n">MCP server</div><div class="s">runs on <b>your</b> computer</div></div>
+  <div class="darr">↔</div>
+  <div class="dbox"><div class="n">Odoo</div><div class="s">your data + code</div></div>
+</div>
+<p><b>Example:</b> connected to Odoo, you can ask <i>"give me all January invoices above €10,000"</i> and Claude pulls the data and summarises it for you.</p>
+
+<h2>2. Why we set this up</h2>
+<p>Today you have the <b>code</b> and the <b>test environments</b> — but the AI can't see the <b>data</b>. MCP adds that data layer, so Claude can <b>combine code + real data</b>. That's far better for <b>investigating issues</b> (e.g. <i>"explain why this code was written this way, using the code and the data"</i>).</p>
+<div class="callout">
+<b>Permissions.</b> much. also publishes a free Odoo Marketplace module that sits on top of this and controls <b>what the AI can touch</b> (e.g. Sales but not Accounting; read-only vs create/update). That's configured on the Odoo side. Through MCP, you get <b>exactly the permissions your own Odoo user already has</b> in the UI — nothing more.
+</div>
+<div class="callout tip">
+<b>💡 Which client?</b> The MCP server runs <b>locally</b> (on the machine where Claude Desktop is installed), not on the Odoo server. Claude Desktop is recommended for <b>releases</b> (it holds reusable <b>skills</b> — pre-made prompts). Any MCP-compatible client is configured in a similar way.
+</div>
+
+<h2>3. Set up the AI assistant with Claude Desktop</h2>
+<div class="rail">
+
+  <div class="step"><div class="snum">1</div><div class="sbody">
+    <div class="stitle">Install UV on your computer</div>
+    <div class="swhere">📍 <b>Terminal</b></div>
+    <div class="plat">macOS</div>
+    <div class="cmd"><span class="p">$</span><span class="t" id="c1">curl -LsSf https://astral.sh/uv/install.sh | sh</span><button class="copy noprint" onclick="cp('c1',this)">Copy</button></div>
+    <div class="plat">Windows</div>
+    <div class="cmd"><span class="p">&gt;</span><span class="t" id="c2">powershell -c "irm https://astral.sh/uv/install.ps1 | iex"</span><button class="copy noprint" onclick="cp('c2',this)">Copy</button></div>
+    <p class="snote">💡 UV gives you <code>uvx</code>, which Claude will use to run the Odoo MCP server.</p>
+  </div></div>
+
+  <div class="step"><div class="snum">2</div><div class="sbody">
+    <div class="stitle">Find the <code>uvx</code> path</div>
+    <div class="swhere">📍 <b>Terminal</b></div>
+    <p class="saction">You'll need the <b>full path</b> in the config later.</p>
+    <div class="cmd"><span class="p">$</span><span class="t" id="c3">which uvx</span><button class="copy noprint" onclick="cp('c3',this)">Copy</button></div>
+    <p class="snote">Usually returns something like <code>/Users/yourusername/.local/bin/uvx</code>. Copy it.</p>
+  </div></div>
+
+  <div class="step"><div class="snum">3</div><div class="sbody">
+    <div class="stitle">Restart your terminal</div>
+    <div class="swhere">📍 <b>Terminal</b></div>
+    <p class="saction">Close and reopen your terminal so the new <code>uv</code> is on your PATH.</p>
+  </div></div>
+
+  <div class="step"><div class="snum">4</div><div class="sbody">
+    <div class="stitle">Open the Claude Desktop config</div>
+    <div class="swhere">📍 <b>Claude Desktop → User ▸ Settings ▸ Developer</b></div>
+    <p class="saction">Click <b>Edit Config</b> to open <code>claude_desktop_config.json</code>. Open it in <b>VS Code</b> so the JSON stays correctly formatted.</p>
+  </div></div>
+
+  <div class="step"><div class="snum">5</div><div class="sbody">
+    <div class="stitle">Add the <code>odoo</code> server to <code>mcpServers</code></div>
+    <div class="swhere">📍 <b>claude_desktop_config.json</b></div>
+    <p class="saction">Add (or merge) this block, then fill in your own values:</p>
+    <div class="code" id="c4"><button class="copy noprint" onclick="cp('c4',this)">Copy</button>{
+  "mcpServers": {
+    "odoo": {
+      "command": "YOUR_UVX_PATH",
+      "args": ["mcp-server-odoo"],
+      "env": {
+        "ODOO_URL": "YOUR_ODOO_URL",
+        "ODOO_DB": "YOUR_ODOO_DB",
+        "ODOO_USER": "YOUR_ODOO_USER_EMAIL",
+        "ODOO_API_KEY": "YOUR_ODOO_API_KEY"
+      }
+    }
+  }
+}</div>
+    <p class="snote"><b>Values:</b> <code>command</code> = the <code>uvx</code> path from step 2 · <code>ODOO_URL</code> = your Odoo instance URL (mind the trailing slash) · <code>ODOO_DB</code> = database name (optional, auto-detected if omitted) · <code>ODOO_USER</code> = your Odoo login email · <code>ODOO_API_KEY</code> = the key from the next step.</p>
+  </div></div>
+
+  <div class="step"><div class="snum">6</div><div class="sbody">
+    <div class="stitle">Generate your Odoo API key</div>
+    <div class="swhere">📍 <b>Odoo → Settings → Users → (your user) → Account Security</b></div>
+    <p class="saction">Click <b>New API Key</b> (you may need to confirm your password first). Name it e.g. <code>Claude Desktop</code>, set an expiry (~1 year), and <b>copy the key</b> into <code>ODOO_API_KEY</code>.</p>
+    <p class="snote">💡 A key is the recommended auth. Alternatively you can use <code>ODOO_USER</code> + <code>ODOO_PASSWORD</code> instead of a key.</p>
+  </div></div>
+
+  <div class="step"><div class="snum">7</div><div class="sbody">
+    <div class="stitle">Optional trick — grant read access to everything you can see</div>
+    <div class="swhere">📍 <b>Same config, inside <code>env</code></b></div>
+    <p class="saction">Because the exact Odoo-side permission config may be unknown, you can add this line so Claude can read anything <b>your user</b> already has access to. Add it <b>right after</b> <code>ODOO_API_KEY</code> (watch the JSON commas!):</p>
+    <div class="code" id="c5"><button class="copy noprint" onclick="cp('c5',this)">Copy</button>"ODOO_YOLO": "read"</div>
+    <p class="snote">This only lets the AI do what <b>you</b> are already allowed to do — it doesn't grant new permissions.</p>
+  </div></div>
+
+  <div class="step"><div class="snum">8</div><div class="sbody">
+    <div class="stitle">Save &amp; restart Claude Desktop</div>
+    <div class="swhere">📍 <b>Claude Desktop</b></div>
+    <p class="saction">Save the file and fully restart Claude Desktop.</p>
+  </div></div>
+
+  <div class="step"><div class="snum">9</div><div class="sbody">
+    <div class="stitle">Check the status</div>
+    <div class="swhere">📍 <b>Settings ▸ Developer</b></div>
+    <p class="saction"><b>Running</b> ✅ = success, start asking Claude about your Odoo data. <b>Failed</b> ❌ = click <b>View Logs</b>, copy the text, and paste it to Claude — it'll help you troubleshoot.</p>
+  </div></div>
+
+</div>
+
+<h2>4. Environment variables</h2>
+<table>
+<tr><th>Variable</th><th>Required</th><th>Description</th></tr>
+<tr><td><code>ODOO_URL</code></td><td class="req-y">Yes</td><td>Your Odoo instance URL.</td></tr>
+<tr><td><code>ODOO_API_KEY</code></td><td class="req-y">Yes*</td><td>API key (recommended auth method).</td></tr>
+<tr><td><code>ODOO_USER</code></td><td class="req-y">Yes*</td><td>Login email (with <code>ODOO_PASSWORD</code>, if not using a key).</td></tr>
+<tr><td><code>ODOO_PASSWORD</code></td><td class="req-y">Yes*</td><td>Password (if not using a key).</td></tr>
+<tr><td><code>ODOO_DB</code></td><td class="req-n">No</td><td>Database name (auto-detected if omitted).</td></tr>
+</table>
+<p style="font-size:13px;color:var(--text-2)">* Use <b>either</b> <code>ODOO_API_KEY</code>, <b>or</b> both <code>ODOO_USER</code> and <code>ODOO_PASSWORD</code>.</p>
+<div class="callout">
+<b>Remote / web clients.</b> Add <code>"--transport", "streamable-http", "--port", "8000"</code> to <code>args</code> and connect the client to <code>http://localhost:8000/mcp/</code>.
+</div>
+
+<h2>5. Verify the scheduled action</h2>
+<p>In Odoo, go to <b>Settings ▸ Technical ▸ Automation ▸ Scheduled Actions</b> and confirm <b>MCP Log Cleanup</b> exists and is active. It runs once a day and deletes log entries older than the <b>Log Retention (days)</b> setting (nothing is deleted if retention is <code>0</code>).</p>
+<div class="callout ok">
+<b>✅ You're ready.</b> You can now query and manage your Odoo data through your AI assistant — within the permissions your user has.
+</div>
+
+<footer>much. Consulting · Onboarding · Connecting Claude to Odoo via MCP · Based on the "MCP server for Odoo" documentation and the setup session with Lou Prevot.</footer>
+
+</div>
+<script>
+function cp(id,btn){
+  var el=document.getElementById(id);
+  var txt=el.querySelector('.copy') ? el.textContent.replace(btn.textContent,'').trim() : el.textContent;
+  navigator.clipboard.writeText(txt).then(function(){var o=btn.textContent;btn.textContent='Copied!';setTimeout(function(){btn.textContent=o;},1200);});
+}
+</script>
+</body>
+</html>
