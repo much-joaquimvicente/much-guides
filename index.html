@@ -222,6 +222,17 @@ const TRAINING_NAV = [
     href:  'training-track.html'
   }
 ];
+const SCRIPTS_NAV = [
+  {
+    icon:  '🎙️',
+    color: 'm-blue',
+    badge: 'Transcripts',
+    title: 'Training Meetings Scripts',
+    desc:  'Full transcripts of the onboarding calls — Product knowledge base, Test environment & tools, Helpdesk & project overview.',
+    tags:  ['3 sessions'],
+    href:  'meeting-scripts.html'
+  }
+];
 
 /* ─────────────────────────────────────────────────────────────
    STACK LAYERS
@@ -282,7 +293,7 @@ function cardHTML(g) {
 
 function render() {
   document.getElementById('grid').innerHTML = GUIDES.map(cardHTML).join('');
-  document.getElementById('extras-grid').innerHTML = PRODUCTS_NAV.concat(TRAINING_NAV).map(cardHTML).join('');
+  document.getElementById('extras-grid').innerHTML = PRODUCTS_NAV.concat(TRAINING_NAV, SCRIPTS_NAV).map(cardHTML).join('');
   document.getElementById('testing-grid').innerHTML = TESTING.map(cardHTML).join('');
 
   document.getElementById('stack').innerHTML = STACK.map((s, i) => `
