@@ -42,7 +42,24 @@ body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);l
 .btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
 button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
 button:hover{border-color:var(--text-3)}
-.hero{text-align:center;padding:24px 0 48px}
+.hero{text-align:center;padding:24px 0 48px;position:relative;overflow:hidden}
+.bfly{position:absolute;top:0;left:0;width:26px;height:26px;pointer-events:none;z-index:5;animation:bflyPath 30s ease-in-out infinite;will-change:transform}
+.bfly .w{transform-box:fill-box}
+.bfly .wl{transform-origin:bottom right;animation:flapL .32s ease-in-out infinite alternate}
+.bfly .wr{transform-origin:bottom left;animation:flapR .32s ease-in-out infinite alternate}
+@keyframes flapL{from{transform:rotate(-4deg)}to{transform:rotate(-30deg)}}
+@keyframes flapR{from{transform:rotate(4deg)}to{transform:rotate(30deg)}}
+@keyframes bflyPath{
+0%{transform:translate(620px,30px) rotate(-8deg)}
+15%{transform:translate(500px,92px) rotate(10deg)}
+30%{transform:translate(360px,18px) rotate(-10deg)}
+45%{transform:translate(220px,84px) rotate(8deg)}
+60%{transform:translate(80px,26px) rotate(-6deg)}
+72%{transform:translate(250px,98px) rotate(10deg)}
+86%{transform:translate(470px,24px) rotate(-8deg)}
+100%{transform:translate(620px,30px) rotate(-8deg)}
+}
+@media (prefers-reduced-motion:reduce){.bfly{animation:none;left:auto;right:14px;top:8px}.bfly .w{animation:none}}
 .hero h2{font-size:32px;font-weight:600;margin:0 0 10px;letter-spacing:-.02em}
 .hero p{color:var(--text-2);font-size:17px;max-width:520px;margin:0 auto}
 .search{position:relative;margin:0 0 22px}
@@ -122,6 +139,23 @@ code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding
   <div class="hero">
     <h2>Onboarding guides</h2>
     <p>New joiner guide — step-by-step walkthroughs for setting up, using, and extending much. products.</p>
+    <svg class="bfly noprint" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M21 19 q6 1.5 8.5 -2.5 q.3 5.2 -4.6 6.4 q2.6 .2 3.7 2 q-5 1.4 -8 -2.2 z" fill="#F2C037"/>
+      <path d="M28.6 15.6 l3.4 -1.3 -1.5 3.3 z" fill="#E23B2E"/>
+      <g class="w wl"><path d="M15 14 C 10 6 4 6 2 9 L 5.5 10.4 L 2.6 12 L 6.6 12.6 L 4.2 14.6 L 8.4 14 L 6.4 16.4 C 11 15 14 14.6 15 14.6 Z" fill="#E23B2E"/></g>
+      <g class="w wr"><path d="M17 14 C 22 6 28 6 30 9 L 26.5 10.4 L 29.4 12 L 25.4 12.6 L 27.8 14.6 L 23.6 14 L 25.6 16.4 C 21 15 18 14.6 17 14.6 Z" fill="#E23B2E"/></g>
+      <path d="M13 12 l1.4 -2.6 1.4 2.6 z M16.4 12 l1.4 -2.6 1.4 2.6 z" fill="#E23B2E"/>
+      <ellipse cx="16" cy="18" rx="7" ry="5.2" fill="#F2C037"/>
+      <ellipse cx="16" cy="19.6" rx="4.2" ry="3.2" fill="#FADE7E"/>
+      <path d="M13 22.6 l-.7 3 M18.5 22.8 l.7 3" stroke="#F2C037" stroke-width="2.1" stroke-linecap="round"/>
+      <circle cx="10" cy="14" r="4.3" fill="#F2C037"/>
+      <path d="M5.8 14 q-2.4 0 -3.6 1.6 q1.8 1.1 3.4 .8 z" fill="#F2C037"/>
+      <circle cx="4.6" cy="15" r=".5" fill="#8a5a00"/>
+      <path d="M11 10 l.8 -2.8 1.1 2.6 z" fill="#E23B2E"/>
+      <path d="M13.6 10.6 l1.3 -2.1 .6 2.3 z" fill="#E23B2E"/>
+      <circle cx="9.4" cy="13.1" r="1.1" fill="#2b2016"/>
+      <circle cx="9.8" cy="12.7" r=".38" fill="#fff"/>
+    </svg>
   </div>
 
   <div class="search noprint">

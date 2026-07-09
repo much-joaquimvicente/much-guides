@@ -67,6 +67,7 @@ footer{margin-top:40px;color:var(--text-3);font-size:13px;border-top:1px solid v
 @media (max-width:560px){.f.date,.f.link{width:120px}}
 @media print{.noprint{display:none!important}body{background:#fff}.f{border-color:transparent!important}.del,.add,.st-sel{display:none!important}}
 </style>
+<script src="training-data.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -81,6 +82,7 @@ footer{margin-top:40px;color:var(--text-3);font-size:13px;border-top:1px solid v
 <button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
 <button onclick="window.print()">Print / PDF</button>
 <button onclick="resetAll()">Reset</button>
+<button onclick="exportData()">⤓ Export for git</button>
 </div>
 </div>
 
@@ -94,14 +96,14 @@ footer{margin-top:40px;color:var(--text-3);font-size:13px;border-top:1px solid v
 <div id="list-sessions"></div>
 <button class="add noprint" onclick="addRow('sessions')">＋ Add a session</button>
 
-<div class="hint noprint">💾 Your changes are saved in this browser only (nothing leaves your machine). Use <b>Reset</b> to restore the original list. The 🔗 field takes a URL — paste one and the ↗ opens it.</div>
+<div class="hint noprint">💾 Your live edits are saved in <b>this browser</b> only. To put the list <b>in the code</b> and share it on GitHub, click <b>⤓ Export for git</b>, replace <code>training-data.js</code> in much-guides, then commit &amp; push. <b>Reset</b> reloads the committed list. The 🔗 field takes a URL.</div>
 
 <footer>much. Consulting · Onboarding · Training Track</footer>
 
 </div>
 <script>
 const KEY='muchTrainingTrack.v1';
-const DEFAULTS={
+const DEFAULTS = window.TRAINING_DATA || {
  trainings:[
   {name:'Odoo Getting Started',desc:'Learn about Odoo (vanilla).',status:'done',link:''},
   {name:'Project & Timesheets',desc:'How we run project work and log time.',status:'done',link:''},
@@ -211,6 +213,18 @@ function resetAll(){
   if(!confirm('Reset the Training Track to the original list? Your edits in this browser will be lost.'))return;
   data=JSON.parse(JSON.stringify(DEFAULTS));
   save(); renderList('trainings'); renderList('sessions');
+}
+
+function exportData(){
+  var out = 'window.TRAINING_DATA = ' + JSON.stringify(data, null, 2) + ';\n';
+  try{ if(navigator.clipboard) navigator.clipboard.writeText(out); }catch(e){}
+  try{
+    var blob=new Blob([out],{type:'text/javascript'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='training-data.js';
+    document.body.appendChild(a); a.click(); a.remove();
+  }catch(e){}
+  alert('Exported training-data.js (also copied to your clipboard).\n\nTo share it with the team: replace the training-data.js file in much-guides with this one, then commit & push to GitHub.');
 }
 
 renderList('trainings');
