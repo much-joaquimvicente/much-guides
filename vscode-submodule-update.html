@@ -86,6 +86,19 @@ Updating a submodule is a two-step dance:
 If you skip step 2, teammates pulling the main project won't get the submodule update — they'll still be pointing at the old version!
 </div>
 
+<h2 style="font-size:20px;font-weight:600;margin:38px 0 4px">Before testing: pull the docs into each environment</h2>
+<p class="lead">Do this once per testing-environment version, before you run any test.</p>
+
+<div class="callout">
+<b>Why this step matters.</b> A freshly cloned version folder only holds <b>bookmarks</b> to the product submodules — not their actual code or documentation. Until you initialise them, those folders sit empty. Pulling the submodules in is what gives each testing environment the <b>proper product documentation</b> to test against.
+</div>
+
+<p>For <b>each</b> testing-environment version, open its <b>main folder</b> and initialise the submodules once:</p>
+
+<div class="cmd" style="margin:12px 0"><span class="prompt">$</span><span class="txt">git submodule update --init</span><button class="copy noprint" onclick="copyCmd(this,'git submodule update --init')">Copy</button></div>
+
+<p class="sexp">This checks out every submodule the version links to and downloads its content — bringing in each product's code and documentation. Once it finishes, the environment has everything it needs and you're ready to test. <i>Tip: add <code>--recursive</code> if a product has submodules of its own.</i></p>
+
 <footer>much. Consulting · Onboarding · Updating a git submodule (VS Code / terminal)</footer>
 
 </div>
