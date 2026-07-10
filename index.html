@@ -176,6 +176,9 @@ code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding
 
   <div class="sec-label">Products &amp; Training</div>
   <div class="grid" id="extras-grid"></div>
+
+  <div class="sec-label">Training Odoo sections</div>
+  <div class="grid" id="odoo-training-grid"></div>
   </div>
 
   <div class="foot">
@@ -245,6 +248,18 @@ const GUIDES = [
     tags:  ['MCP', 'Setup'],
     links: [
       { label: 'Guide',        href: 'mcp-claude-odoo.html' }
+    ]
+  },
+
+  {
+    icon:  '🧾',
+    color: 'm-amber',
+    badge: 'Consultant',
+    title: 'DATEV',
+    desc:  'How our much. DATEV modules hand Odoo accounting data to DATEV — Buchungsstapel (CSV) & XML export, DATEV import, and automatic syncing over the DATEV API.',
+    tags:  ['Accounting', 'Germany'],
+    links: [
+      { label: 'Odoo → DATEV Integration', href: 'much-datev-training.html' }
     ]
   },
 
@@ -322,6 +337,17 @@ const SCRIPTS_NAV = [
     href:  'meeting-scripts.html'
   }
 ];
+const ODOO_TRAINING_NAV = [
+  {
+    icon:  '📊',
+    color: 'm-teal',
+    badge: 'Odoo Training',
+    title: 'Accounting & Invoicing',
+    desc:  'Odoo Accounting & Invoicing explained for new joiners — the full course as a handbook: setup, chart of accounts, invoices, bills, payments, bank, taxes, reporting and more.',
+    tags:  ['Odoo', '15 chapters'],
+    href:  'odoo-accounting-getting-started.html'
+  }
+];
 
 /* ─────────────────────────────────────────────────────────────
    STACK LAYERS
@@ -383,6 +409,7 @@ function cardHTML(g) {
 function render() {
   document.getElementById('grid').innerHTML = GUIDES.map(cardHTML).join('');
   document.getElementById('extras-grid').innerHTML = PRODUCTS_NAV.concat(TRAINING_NAV, SCRIPTS_NAV).map(cardHTML).join('');
+  document.getElementById('odoo-training-grid').innerHTML = ODOO_TRAINING_NAV.map(cardHTML).join('');
   document.getElementById('testing-grid').innerHTML = TESTING.map(cardHTML).join('');
 
   document.getElementById('stack').innerHTML = STACK.map((s, i) => `

@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odoo Accounting &amp; Invoicing — New Joiner Handbook</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--mt-fg);--brand-soft:var(--mt-bg);--brand-solid:#0d7d78;--accent:#0d7d78;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+
+  /* Header (flat — matches the guide pages) */
+  header.hero{max-width:1160px;margin:0 auto;padding:34px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:30px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+
+  /* Layout: sidebar + content */
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1160px;margin:0 auto;padding:16px 20px 90px}
+  aside.sidebar{position:sticky;top:20px;flex:0 0 250px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;max-height:calc(100vh - 40px);overflow:auto}
+  aside.sidebar h3{margin:4px 8px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  aside.sidebar a{display:block;padding:8px 10px;border-radius:9px;color:var(--text);text-decoration:none;font-size:14.5px;font-weight:500}
+  aside.sidebar a .n{display:inline-block;width:22px;color:var(--text-3);font-weight:700;font-size:13px}
+  aside.sidebar a:hover{background:var(--brand-soft)}
+  aside.sidebar a.active{background:var(--brand-solid);color:#fff}
+  aside.sidebar a.active .n{color:rgba(255,255,255,.8)}
+  .content{flex:1 1 auto;min-width:0}
+
+  /* Welcome + big idea */
+  .welcome{background:var(--surface-1);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+  .welcome h2{margin:0 0 8px;font-size:20px}
+  .welcome p{margin:0;color:var(--text-2)}
+  .welcome .wave{font-size:22px}
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+
+  /* Sections */
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:24px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+
+  /* Steps */
+  .steps{display:grid;gap:12px;margin-top:6px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .step .dot{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center}
+  .step h4{margin:2px 0 4px;font-size:16px}
+  .step p{margin:0;color:var(--text-2)}
+  .step .hint{display:inline-block;margin-top:8px;font-size:13px;background:var(--blue-soft);color:var(--blue);padding:3px 10px;border-radius:8px;font-weight:600}
+
+  /* Type grid */
+  .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-top:8px}
+  .type{border-radius:12px;padding:15px;border:1px solid var(--border)}
+  .type .icon{font-size:22px}
+  .type h4{margin:8px 0 4px;font-size:15px}
+  .type p{margin:0;font-size:13.5px;color:var(--text-2)}
+  .type.own,.type.income{background:var(--green-soft);border-color:var(--border-success)}
+  .type.owe{background:var(--red-soft);border-color:var(--border-danger)}
+  .type.equity{background:var(--blue-soft);border-color:#8fbcec}
+  .type.expense{background:var(--amber-soft);border-color:var(--border-warning)}
+  .pill{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px}
+  .pill.g{background:var(--green);color:#fff}.pill.r{background:var(--red);color:#fff}.pill.b{background:var(--blue);color:#fff}.pill.a{background:var(--amber);color:#fff}
+
+  /* Menu path */
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#8fe3ea;font-weight:600}
+
+  /* Mini cards */
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+
+  /* Flow (numbered process) */
+  .flow{display:grid;gap:10px;margin-top:8px}
+  .flow .f{display:flex;gap:14px;align-items:flex-start}
+  .flow .f b{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .flow .f span{color:var(--text-2)}
+
+  /* Lifecycle chips */
+  .life{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 4px}
+  .life .s{padding:7px 14px;border-radius:999px;font-weight:700;font-size:14px}
+  .life .s.d{background:var(--surface-0);color:var(--text-2)}
+  .life .s.p{background:var(--blue-soft);color:var(--blue)}
+  .life .s.paid{background:var(--green-soft);color:var(--green)}
+  .life .arrow{color:var(--text-3);font-weight:700}
+
+  /* Why grid */
+  .why{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+  .why .w{background:var(--brand-soft);border-radius:10px;padding:12px;font-size:14px;font-weight:600;color:var(--brand)}
+  .why .w small{display:block;font-weight:400;color:var(--text-2);margin-top:3px}
+
+  /* Table */
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:460px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+
+  /* Callouts */
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+
+  /* Glossary */
+  dl.glossary{margin:0}
+  dl.glossary div{padding:13px 0;border-bottom:1px solid var(--border)}
+  dl.glossary div:last-child{border-bottom:0}
+  dl.glossary dt{font-weight:700;color:var(--brand)}
+  dl.glossary dd{margin:4px 0 0;color:var(--text-2);font-size:15px}
+
+  /* Footer */
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+  .links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 18px}
+  .links a{background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:8px 15px}
+
+  /* Back to top */
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+
+  @media (max-width:900px){
+    .layout{flex-direction:column;padding-top:12px}
+    aside.sidebar{position:static;flex:none;width:100%;max-height:none}
+    aside.sidebar nav{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+  }
+  @media (max-width:560px){
+    .hero h1{font-size:25px}
+    .mini{grid-template-columns:1fr}
+    aside.sidebar nav{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <a class="backlink" href="index.html">← Back to Guide Hub</a>
+  <span class="kicker">New Joiner Handbook · Odoo eLearning</span>
+  <h1>Odoo Accounting &amp; Invoicing</h1>
+  <p>The complete beginner's guide — every lesson of the course in one place, in plain English. No accounting background needed.</p>
+  <div class="badge-v">Odoo 19 · Accounting &amp; Invoicing</div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR NAV -->
+  <aside class="sidebar">
+    <h3>Chapters</h3>
+    <nav>
+      <a href="#c1"><span class="n">1</span>Getting Started</a>
+      <a href="#c2"><span class="n">2</span>Fiscal Localization</a>
+      <a href="#c3"><span class="n">3</span>Chart of Accounts</a>
+      <a href="#c4"><span class="n">4</span>Journal Entries &amp; Items</a>
+      <a href="#c5"><span class="n">5</span>Customer Invoices</a>
+      <a href="#c6"><span class="n">6</span>Vendor Bills</a>
+      <a href="#c7"><span class="n">7</span>Payments</a>
+      <a href="#c8"><span class="n">8</span>Bank &amp; Cash</a>
+      <a href="#c9"><span class="n">9</span>Taxes &amp; Fiscal Positions</a>
+      <a href="#c10"><span class="n">10</span>Reporting</a>
+    </nav>
+    <h3 style="margin-top:16px">Advanced</h3>
+    <nav>
+      <a href="#c11"><span class="n">11</span>Multi-Currency</a>
+      <a href="#c12"><span class="n">12</span>Analytic Accounting</a>
+      <a href="#c13"><span class="n">13</span>Assets &amp; Deferrals</a>
+      <a href="#c14"><span class="n">14</span>Budgets &amp; Year-End</a>
+      <a href="#c15"><span class="n">15</span>E-Invoicing &amp; Online Pay</a>
+      <a href="#glossary"><span class="n">★</span>Glossary</a>
+    </nav>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="welcome">
+      <h2><span class="wave">👋</span> Welcome aboard!</h2>
+      <p>Odoo Accounting is where the business tracks <strong>every euro that comes in and goes out</strong> — customer invoices, supplier bills, bank movements, taxes and reports. This handbook walks you through the whole <strong>Accounting &amp; Invoicing</strong> course, chapter by chapter, written for someone who has <strong>never done accounting before</strong>. Read top to bottom, or jump around using the menu on the left. Take it slow — you don't need to memorise anything.</p>
+    </div>
+
+    <div class="bigidea">
+      <span class="tag">🧠 Read this first — the one big idea</span>
+      <p>When the database was created, someone picked a <strong>country</strong>. That choice automatically installed a <strong>“fiscal localization package”</strong> — which loads a ready-made, legally-compliant <strong>Chart of Accounts</strong> and a set of <strong>taxes</strong>. So <strong>a lot is already done for you.</strong> Your real job is to <em>record the daily documents</em> (invoices, bills, payments) correctly — Odoo does the accounting math behind the scenes.</p>
+    </div>
+
+    <!-- 1 GETTING STARTED -->
+    <section id="c1">
+      <h2><span class="num">1</span> Getting Started</h2>
+      <p class="lead">When you open <b>Accounting</b> for the first time, an onboarding banner walks you through four setup steps. Do them in order.</p>
+      <div class="steps">
+        <div class="step"><div class="dot">1</div><div>
+          <h4>📅 Accounting Periods</h4>
+          <p>Tell Odoo when your <strong>fiscal year</strong> starts and ends (default <strong>Jan 1 → Dec 31</strong>). Also set how often you file taxes — <strong>monthly, quarterly or yearly</strong> — so Odoo reminds you before deadlines.</p>
+          <span class="hint">Sets your reporting calendar</span></div></div>
+        <div class="step"><div class="dot">2</div><div>
+          <h4>🏦 Bank Account</h4>
+          <p><strong>Automatic:</strong> find your bank → <em>Connect</em> → follow prompts. <strong>Manual:</strong> type <strong>Name</strong>, <strong>Account Number (IBAN)</strong> and <strong>BIC/SWIFT</strong>.</p>
+          <span class="hint">Feeds real bank data into Odoo</span></div></div>
+        <div class="step"><div class="dot">3</div><div>
+          <h4>🧾 Taxes</h4>
+          <p>Your country's tax rates are usually <strong>already loaded</strong> by the localization. Here you create, edit or switch off individual rates. For most people: just check they look right.</p>
+          <span class="hint">Mostly pre-filled for you</span></div></div>
+        <div class="step"><div class="dot">4</div><div>
+          <h4>📗 Chart of Accounts</h4>
+          <p>Review the list of accounts, set any <strong>opening balances</strong> (starting numbers when you begin using Odoo), and open <strong>Setup</strong> to see details. More in Chapter 3 👇</p>
+          <span class="hint">Review, don't rebuild</span></div></div>
+      </div>
+    </section>
+
+    <!-- 2 FISCAL LOCALIZATION -->
+    <section id="c2">
+      <h2><span class="num">2</span> Fiscal Localization</h2>
+      <p class="lead">A country "starter pack" that makes Odoo comply with your local tax and accounting laws automatically.</p>
+      <p class="para">A <strong>fiscal localization package</strong> is a country-specific module Odoo installs based on the company's country. Instead of building accounting rules from scratch, you inherit a package built to match your country's regulations. It includes:</p>
+      <div class="mini">
+        <div class="m"><h4>📗 Chart of Accounts</h4><p>Account structure matching local standards.</p></div>
+        <div class="m"><h4>🧾 Taxes</h4><p>Country-specific tax rates and rules.</p></div>
+        <div class="m"><h4>🔀 Fiscal Positions</h4><p>Rules that auto-adjust taxes &amp; accounts by situation (see Ch. 9).</p></div>
+        <div class="m"><h4>📊 Legal Reports</h4><p>Templates for mandatory tax filings and statements.</p></div>
+      </div>
+      <h3 class="sub">How it's installed &amp; changed</h3>
+      <p class="para">When the Accounting app is installed, Odoo <strong>detects the company's country and installs the right package automatically</strong> — no manual work. To view or change it:</p>
+      <div class="path">Accounting <b>→</b> Configuration <b>→</b> Settings <b>→</b> Fiscal Localization <b>→</b> Package</div>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>You can only switch packages before posting any accounting entries.</strong> Once real transactions exist, the localization is locked in — this keeps your financial data compliant and consistent.</p></div>
+    </section>
+
+    <!-- 3 CHART OF ACCOUNTS -->
+    <section id="c3">
+      <h2><span class="num">3</span> Chart of Accounts</h2>
+      <p class="lead">The master list of every account used to record transactions — your company's <strong>financial roadmap</strong>.</p>
+      <p class="para">Every account belongs to one of <strong>five types</strong>. In plain English:</p>
+      <div class="types">
+        <div class="type own"><div class="icon">💰</div><span class="pill g">Owns</span><h4>Assets</h4><p>What you <strong>own</strong> — cash, equipment, money customers owe you.</p></div>
+        <div class="type owe"><div class="icon">📤</div><span class="pill r">Owes</span><h4>Liabilities</h4><p>What you <strong>owe</strong> — supplier bills, loans, credit cards.</p></div>
+        <div class="type equity"><div class="icon">🏛️</div><span class="pill b">Stake</span><h4>Equity</h4><p>The <strong>owner's share</strong> — assets minus liabilities.</p></div>
+        <div class="type income"><div class="icon">📈</div><span class="pill g">Earns</span><h4>Income</h4><p>Money the business <strong>earns</strong> — sales and revenue.</p></div>
+        <div class="type expense"><div class="icon">💸</div><span class="pill a">Spends</span><h4>Expenses</h4><p>Money <strong>spent</strong> to operate — rent, salaries, supplies.</p></div>
+      </div>
+      <h3 class="sub">Find it &amp; add an account</h3>
+      <div class="path">Accounting <b>→</b> Configuration <b>→</b> Chart of Accounts <b>→</b> Create</div>
+      <p class="para" style="margin-top:0">Fill three required fields: <strong>Code</strong> (an identifying number), <strong>Account Name</strong>, and <strong>Type</strong>.</p>
+      <h3 class="sub">Two settings worth knowing</h3>
+      <div class="mini">
+        <div class="m"><h4>🔗 Reconciliation</h4><p>Tick this and the account becomes matchable against bank transactions. Only reconcilable accounts appear when matching.</p></div>
+        <div class="m"><h4>🧾 Default Taxes</h4><p>Taxes set here apply automatically whenever this account is used in a sale or purchase.</p></div>
+      </div>
+      <div class="tip"><span class="i">💡</span><p><strong>You rarely start from zero.</strong> The localization already filled this list with your country's standard accounts. Day-to-day you're reviewing and occasionally adding — not building it all yourself.</p></div>
+    </section>
+
+    <!-- 4 JOURNAL ENTRIES -->
+    <section id="c4">
+      <h2><span class="num">4</span> Journal Entries &amp; Items</h2>
+      <p class="lead">How every transaction is actually recorded behind the scenes. This is the engine of accounting — and Odoo runs it for you.</p>
+      <p class="para">Every financial document — an invoice, a bill, a bank payment, a payslip — becomes a <strong>journal entry</strong>: the formal bookkeeping record of that transaction. Each entry is made of individual lines called <strong>journal items</strong>, and every item is either a <strong>debit</strong> or a <strong>credit</strong> to a specific account.</p>
+      <h3 class="sub">The golden rule: debits = credits</h3>
+      <p class="para">Accounting is <strong>double-entry</strong>: every transaction touches at least two accounts — one goes up, another goes down — and the two sides always balance.</p>
+      <div class="tip note"><span class="i">⚖️</span><p><strong>For any journal entry, total debits must equal total credits.</strong> That's what keeps the books accurate. If they don't match, Odoo won't let you post the entry.</p></div>
+      <h3 class="sub">A worked example</h3>
+      <p class="para">A customer pays you €100. Odoo records one entry with two items:</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Account</th><th>Debit</th><th>Credit</th></tr>
+        <tr><td>Bank (money coming in ↑)</td><td>€100</td><td>—</td></tr>
+        <tr><td>Accounts Receivable (customer owes less ↓)</td><td>—</td><td>€100</td></tr>
+      </table></div>
+      <p class="para">Both sides are €100 — balanced. ✅</p>
+      <h3 class="sub">What's a "journal"?</h3>
+      <p class="para">A <strong>journal</strong> is simply a logbook that groups one category of transactions — e.g. the <em>Sales</em> journal (customer invoices), the <em>Purchases</em> journal (vendor bills), the <em>Bank</em> journal, the <em>Cash</em> journal.</p>
+      <div class="tip"><span class="i">💡</span><p><strong>You almost never write journal entries by hand.</strong> When you post an invoice, bill or payment, Odoo builds the balanced journal entry for you. Understanding this just helps you read reports and know what's happening under the hood.</p></div>
+    </section>
+
+    <!-- 5 CUSTOMER INVOICES -->
+    <section id="c5">
+      <h2><span class="num">5</span> Customer Invoices</h2>
+      <p class="lead">A document you send a customer to request payment for what you sold. It creates a <strong>receivable</strong> — money owed to you.</p>
+      <h3 class="sub">The invoice lifecycle</h3>
+      <div class="life"><span class="s d">Draft</span><span class="arrow">→</span><span class="s p">Posted</span><span class="arrow">→</span><span class="s paid">Paid</span></div>
+      <ul class="clean">
+        <li><strong>Draft</strong> — a work-in-progress. Edit or delete freely; nothing has hit your accounts yet.</li>
+        <li><strong>Posted</strong> (confirmed) — Odoo locks it, assigns an official number (e.g. <code>INV/2025/0001</code>), and creates the journal entry.</li>
+        <li><strong>Paid</strong> — the customer's payment has been matched (reconciled) to the invoice.</li>
+      </ul>
+      <h3 class="sub">Create an invoice</h3>
+      <div class="path">Accounting <b>→</b> Customers <b>→</b> Invoices <b>→</b> New</div>
+      <ul class="clean">
+        <li><strong>Customer</strong> — pick who you're billing. Auto-fills their address, payment terms and accounts.</li>
+        <li><strong>Invoice Date</strong> — drives the due date and the accounting period.</li>
+        <li><strong>Invoice Lines</strong> — one line per item: pick a <strong>Product</strong> (auto-fills price, description, taxes), set <strong>Quantity</strong>, <strong>Price</strong>, <strong>Taxes</strong>.</li>
+      </ul>
+      <p class="para">Click <strong>Confirm</strong> to post. This assigns the official number and records the accounting: <em>Accounts Receivable ↑, Income ↑, Tax recorded</em>.</p>
+      <h3 class="sub">Payment terms</h3>
+      <p class="para">Payment terms define <strong>when</strong> a customer must pay. Common examples: <em>Immediate</em>, <em>Net 30</em> (30 days after invoice), <em>installments</em> (e.g. 30% now / 70% end of month), or <em>2/10 Net 30</em> (2% off if paid within 10 days). Set a default on the customer so it applies automatically. Configure under <span style="white-space:nowrap">Accounting → Configuration → Payment Terms</span>.</p>
+      <h3 class="sub">Credit notes (refunds &amp; corrections)</h3>
+      <p class="para">A <strong>credit note</strong> reverses an amount a customer owes — the <em>only legal way</em> to cancel or correct a posted invoice (you can't just delete it). Use it for mistakes, returns, or refunds. On the invoice click <strong>Credit Note</strong>, then choose <em>Reverse</em> (editable draft, good for partial refunds) or <em>Reverse and Create Invoice</em> (cancel &amp; re-bill).</p>
+      <h3 class="sub">Send it</h3>
+      <p class="para">Once posted, open the invoice and click <strong>Send</strong> — by <strong>Email</strong> (PDF to the customer), <strong>Download</strong>, or <strong>Print</strong>.</p>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>Draft = safe, Posted = official.</strong> Do all editing in Draft. To fix a posted invoice, use <em>Reset to Draft</em> (if not yet paid) or issue a <em>credit note</em> — never try to delete it.</p></div>
+    </section>
+
+    <!-- 6 VENDOR BILLS -->
+    <section id="c6">
+      <h2><span class="num">6</span> Vendor Bills</h2>
+      <p class="lead">A supplier's invoice <strong>to your company</strong> — money you owe. The mirror image of a customer invoice.</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th></th><th>Vendor Bill</th><th>Customer Invoice</th></tr>
+        <tr><td>Direction</td><td>Money you <strong>owe</strong> (out)</td><td>Money owed <strong>to you</strong> (in)</td></tr>
+        <tr><td>Who issues it</td><td>Your supplier</td><td>You</td></tr>
+        <tr><td>Accounting effect</td><td>Accounts <strong>Payable</strong> ↑</td><td>Accounts <strong>Receivable</strong> ↑</td></tr>
+        <tr><td>Found under</td><td>Accounting → Vendors</td><td>Accounting → Customers</td></tr>
+      </table></div>
+      <h3 class="sub">Lifecycle</h3>
+      <div class="life"><span class="s d">Draft</span><span class="arrow">→</span><span class="s p">Posted</span><span class="arrow">→</span><span class="s paid">Paid</span></div>
+      <p class="para">Posting records the debt (Accounts Payable) but <strong>moves no money</strong> — paying is a separate step (Chapter 7).</p>
+      <h3 class="sub">Create a bill</h3>
+      <div class="path">Accounting <b>→</b> Vendors <b>→</b> Bills <b>→</b> New</div>
+      <ul class="clean">
+        <li><strong>Vendor</strong> — the supplier.</li>
+        <li><strong>Bill Reference</strong> — the supplier's own invoice number. <em>Important:</em> lets Odoo warn you about duplicates.</li>
+        <li><strong>Bill Date</strong> (supplier's date) vs <strong>Accounting Date</strong> (when it hits your books).</li>
+        <li><strong>Lines</strong> — products or free-text charges, quantities, prices, taxes.</li>
+      </ul>
+      <h3 class="sub">Four ways bills get into Odoo</h3>
+      <div class="flow">
+        <div class="f"><b>1</b><span><strong>Manual entry</strong> — type it in (best for learning).</span></div>
+        <div class="f"><b>2</b><span><strong>Upload/scan a PDF</strong> — Odoo's AI reads the document and auto-fills it; you just review.</span></div>
+        <div class="f"><b>3</b><span><strong>Email alias</strong> — suppliers email invoices to a dedicated address; Odoo creates drafts automatically.</span></div>
+        <div class="f"><b>4</b><span><strong>From a Purchase Order</strong> — a confirmed PO generates a matching draft bill.</span></div>
+      </div>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>Always fill the Bill Reference</strong> — it stops you paying the same bill twice. And remember: <em>posting ≠ paying</em>.</p></div>
+    </section>
+
+    <!-- 7 PAYMENTS -->
+    <section id="c7">
+      <h2><span class="num">7</span> Payments</h2>
+      <p class="lead">"Registering a payment" tells Odoo money changed hands and links it to the right invoice or bill.</p>
+      <div class="mini">
+        <div class="m"><h4>⬇️ Customer payment</h4><p>Money you <strong>received</strong>. Open the invoice → <strong>Register Payment</strong>.</p></div>
+        <div class="m"><h4>⬆️ Vendor payment</h4><p>Money you <strong>paid out</strong>. Open the bill → <strong>Register Payment</strong>.</p></div>
+      </div>
+      <p class="para">In the pop-up set the <strong>Journal</strong> (Bank/Cash), <strong>Payment Date</strong>, <strong>Payment Method</strong> and <strong>Amount</strong> (lower it for a partial payment — Odoo tracks the remaining balance), then <strong>Create Payment</strong>.</p>
+      <h3 class="sub">"In Payment" vs "Paid" — the two-stage idea</h3>
+      <ul class="clean">
+        <li><strong>Outstanding account</strong> — when you register a payment, Odoo parks it in a temporary holding account. The document shows <strong>In Payment</strong> = "we've noted it."</li>
+        <li><strong>Bank reconciliation</strong> — later you match it to the real bank statement line. Only then does it become <strong>Paid</strong> = "the bank proves it."</li>
+      </ul>
+      <div class="tip note"><span class="i">ℹ️</span><p>This protects accuracy — a check might bounce or a transfer might take days. If everything is stuck at <em>In Payment</em>, you still need to do bank reconciliation (Chapter 8).</p></div>
+      <h3 class="sub">Payment methods &amp; batches</h3>
+      <p class="para"><strong>Methods:</strong> Manual (cash/transfers — the simple default), Checks, SEPA (European bank file), or online providers (Stripe, PayPal). <strong>Batch payments</strong> bundle many payments into one file/record — handy when the bank shows a single lump sum, so you reconcile the whole batch at once. Enable under <span style="white-space:nowrap">Settings → Batch Payments</span> (one payment method per batch).</p>
+      <h3 class="sub">Follow-ups (chasing overdue invoices)</h3>
+      <p class="para">Automatic reminders to customers with overdue invoices, escalating by <strong>levels</strong> (gentle → firm → final) based on days overdue. Configure under <span style="white-space:nowrap">Accounting → Configuration → Follow-up Levels</span>. Send via email, SMS, WhatsApp, letter or print.</p>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>Reconcile your bank before sending follow-ups</strong> — otherwise you'll chase customers who already paid.</p></div>
+    </section>
+
+    <!-- 8 BANK & CASH -->
+    <section id="c8">
+      <h2><span class="num">8</span> Bank &amp; Cash</h2>
+      <p class="lead">Getting your real bank activity into Odoo and matching it to your books.</p>
+      <h3 class="sub">Bank accounts</h3>
+      <p class="para">Each bank account you add creates a <strong>journal</strong> (its logbook) and a ledger <strong>account</strong> (its running balance). Add one from the <strong>Accounting Dashboard → Search over 26,000 banks</strong>, then either <em>Connect</em> (auto-sync) or <em>Record transactions manually</em>.</p>
+      <h3 class="sub">Bank synchronization</h3>
+      <p class="para">Odoo pulls transactions straight from your bank — no typing. It <strong>syncs every 12 hours</strong> (click <strong>Fetch Transactions</strong> to refresh now). Your bank login is <strong>never stored on Odoo's servers</strong>; secure providers (Plaid, Yodlee, Salt Edge…) handle it. <em>Requires Odoo Enterprise.</em></p>
+      <p class="para"><strong>No sync?</strong> Import a statement file from your bank instead — <strong>CSV</strong>, <strong>OFX</strong> or <strong>QIF</strong>. Odoo flags likely duplicates automatically.</p>
+      <h3 class="sub">Bank reconciliation</h3>
+      <p class="para">Reconciliation = confirming your bank's records match your Odoo books. Why it matters:</p>
+      <div class="why">
+        <div class="w">🔍 Catches errors<small>Before they pile up</small></div>
+        <div class="w">🛡️ Spots fraud<small>Unfamiliar transactions</small></div>
+        <div class="w">💵 True cash view<small>Know what you have</small></div>
+        <div class="w">✅ Stays compliant<small>Required for most</small></div>
+      </div>
+      <div class="flow" style="margin-top:14px">
+        <div class="f"><b>1</b><span><strong>Review</strong> unmatched lines from the bank.</span></div>
+        <div class="f"><b>2</b><span><strong>Match</strong> each to the right invoice, bill or payment.</span></div>
+        <div class="f"><b>3</b><span><strong>Balance</strong> anything left over to the correct account.</span></div>
+      </div>
+      <h3 class="sub">Reconciliation models (time-savers)</h3>
+      <p class="para">A <strong>model</strong> is a saved rule for a recurring transaction — build it once, Odoo reuses it. E.g. a <em>Bank Fees</em> model auto-books the bank's charge every time. Models can be <strong>manual</strong> (a button you click) or <strong>automated</strong> (fire by themselves on a match). Find them via the bank journal's menu → <strong>Reconciliation Models</strong>.</p>
+      <h3 class="sub">Cash</h3>
+      <p class="para">A <strong>cash journal</strong> tracks physical cash (a till or petty-cash box). Unlike bank journals it must be created <strong>manually</strong> under <span style="white-space:nowrap">Accounting → Configuration → Journals</span> (type: Cash).</p>
+    </section>
+
+    <!-- 9 TAXES & FISCAL POSITIONS -->
+    <section id="c9">
+      <h2><span class="num">9</span> Taxes &amp; Fiscal Positions</h2>
+      <p class="lead">Odoo calculates tax for you, records what's owed, and produces the reports you file with the government.</p>
+      <p class="para">Add a product to an invoice and Odoo applies the right tax, calculates the amount, creates the accounting record, and keeps a running total for your tax return. Three tax types:</p>
+      <div class="types">
+        <div class="type income"><div class="icon">🧾</div><span class="pill g">On sales</span><h4>Sales</h4><p>Applied to <strong>customer invoices</strong>.</p></div>
+        <div class="type owe"><div class="icon">🛒</div><span class="pill r">On purchases</span><h4>Purchase</h4><p>Applied to <strong>vendor bills</strong>.</p></div>
+        <div class="type equity"><div class="icon">🔧</div><span class="pill b">Internal</span><h4>None</h4><p>Used only inside <strong>tax groups</strong>.</p></div>
+      </div>
+      <div class="flow" style="margin-top:16px">
+        <div class="f"><b>1</b><span>Turn on any company-wide tax settings your country needs.</span></div>
+        <div class="f"><b>2</b><span>Activate the pre-built taxes from your localization — enable only the ones you use.</span></div>
+        <div class="f"><b>3</b><span>Set default sales &amp; purchase taxes on each product.</span></div>
+      </div>
+      <h3 class="sub">Fiscal positions (automatic tax swapping)</h3>
+      <p class="para">A <strong>fiscal position</strong> is a rule that automatically changes the taxes and accounts on a transaction depending on <em>who</em> the customer is or <em>where</em> they are — domestic vs EU vs export, B2B vs B2C. Without it you'd edit every invoice by hand.</p>
+      <div class="tip note"><span class="i">🌍</span><p><strong>Example — "EU B2B":</strong> enable <em>Detect Automatically → Country Group: Europe</em>, map <em>21% VAT → 0% VAT</em> and the domestic revenue account → EU revenue account. Now every EU-business invoice is zero-rated automatically. Set it up under <span style="white-space:nowrap">Accounting → Configuration → Fiscal Positions</span>. Your localization already ships sensible defaults.</p></div>
+    </section>
+
+    <!-- 10 REPORTING -->
+    <section id="c10">
+      <h2><span class="num">10</span> Reporting</h2>
+      <p class="lead">Automatic summaries of your financial data. You never do the math — Odoo builds these from the invoices, bills and payments you record.</p>
+      <div class="path">Accounting <b>→</b> Reporting</div>
+      <div class="mini">
+        <div class="m"><h4>⚖️ Balance Sheet</h4><p>A <strong>snapshot</strong> on one day: what you own vs owe. Always <em>Assets = Liabilities + Equity</em>.</p></div>
+        <div class="m"><h4>📈 Profit &amp; Loss</h4><p>A <strong>period</strong> view: <em>Income − Expenses = Profit or Loss</em>. "Did we make money?"</p></div>
+        <div class="m"><h4>🧾 Tax Report</h4><p>Tax collected vs paid — the figures you file with the government.</p></div>
+        <div class="m"><h4>⏳ Aged Receivable</h4><p>Money customers owe you, grouped by how overdue.</p></div>
+        <div class="m"><h4>⏳ Aged Payable</h4><p>Money you owe suppliers, grouped by how overdue.</p></div>
+        <div class="m"><h4>📚 General Ledger</h4><p>Every transaction, by account — the master logbook.</p></div>
+      </div>
+      <h3 class="sub">Tools on every report</h3>
+      <ul class="clean">
+        <li><strong>Date filter</strong> — choose the period (a "wrong-looking" report is usually just the wrong date range).</li>
+        <li><strong>Comparison</strong> — put two periods side by side to see trends.</li>
+        <li><strong>Drill-down</strong> — click a line to expand it, all the way down to the original invoice.</li>
+        <li><strong>Export</strong> — PDF (print-ready) or XLSX (Excel, for your accountant).</li>
+      </ul>
+      <h3 class="sub">Filing your tax return (the short version)</h3>
+      <div class="flow">
+        <div class="f"><b>1</b><span><strong>Review</strong> the tax return and fix any warnings (draft entries, missing bills).</span></div>
+        <div class="f"><b>2</b><span><strong>Lock</strong> the period with a Tax Lock Date so figures can't change after reporting.</span></div>
+        <div class="f"><b>3</b><span><strong>Validate</strong> — Odoo posts the closing entry and moves the lock date forward.</span></div>
+        <div class="f"><b>4</b><span><strong>Export &amp; file</strong> — Odoo prepares it, but you submit to the tax office yourself.</span></div>
+      </div>
+      <div class="tip"><span class="i">💡</span><p><strong>Start with two reports:</strong> the Balance Sheet ("what we own vs owe") and the Profit &amp; Loss ("did we make money"). They tell you most of what you need.</p></div>
+    </section>
+
+    <!-- 11 MULTI-CURRENCY -->
+    <section id="c11">
+      <h2><span class="num">11</span> Multi-Currency</h2>
+      <p class="lead">Invoicing, billing and getting paid in currencies other than your company's main currency.</p>
+      <p class="para">Your <strong>main (company) currency</strong> is what your books and reports are expressed in. With multi-currency on, you can trade in others (e.g. bill a US client in USD). The key idea: Odoo always stores <strong>two values</strong> for a foreign transaction — the foreign amount <em>and</em> its company-currency equivalent — so your official books stay in one currency.</p>
+      <h3 class="sub">Enable it &amp; add currencies</h3>
+      <div class="path">Accounting <b>→</b> Configuration <b>→</b> Settings <b>→</b> Currencies</div>
+      <p class="para" style="margin-top:0">Turn on multi-currency, then activate the currencies you use under <span style="white-space:nowrap">Configuration → Currencies</span> (every currency exists but is off by default).</p>
+      <h3 class="sub">Exchange rates</h3>
+      <p class="para">An <strong>exchange rate</strong> is how much one currency is worth in another (1 EUR = 1.08 USD). Enter rates manually, or — recommended — enable <strong>Automatic Currency Rates</strong> (daily/weekly/monthly) from a source like the European Central Bank.</p>
+      <h3 class="sub">Exchange gains &amp; losses</h3>
+      <p class="para">Rates move between invoicing and payment. Invoice 1,000 USD worth €920 today; if it's worth €935 when paid, that €15 is an <strong>exchange gain</strong> (or a <strong>loss</strong> if less). Odoo posts this automatically to the gain/loss accounts you set once — you never calculate it by hand.</p>
+      <div class="tip"><span class="i">💡</span><p>Set up the <strong>Exchange Difference journal + gain/loss accounts</strong> before invoicing in foreign currencies, and give a foreign bank account its <em>own</em> journal locked to that currency.</p></div>
+    </section>
+
+    <!-- 12 ANALYTIC ACCOUNTING -->
+    <section id="c12">
+      <h2><span class="num">12</span> Analytic Accounting</h2>
+      <p class="lead">A parallel way to track <strong>where</strong> money is earned and spent — by project, department or cost center — without touching your legal books.</p>
+      <div class="mini">
+        <div class="m"><h4>📚 Regular accounting</h4><p>The <strong>legal books</strong> — required by law. Answers "how much did we earn and spend?"</p></div>
+        <div class="m"><h4>🏷️ Analytic accounting</h4><p>Internal <strong>labels/tags</strong> on transactions. Answers "which project or department did this belong to?"</p></div>
+      </div>
+      <p class="para">Adding an analytic tag does <strong>not</strong> change your legal numbers — it just enriches them. Example: a €1,000 consultant bill still lands in "Consulting Expenses" (legal), but you also tag it <em>Project Alpha</em> to see what that project really cost.</p>
+      <h3 class="sub">Plans &amp; accounts</h3>
+      <ul class="clean">
+        <li><strong>Analytic Plan</strong> = a category, e.g. "Departments" or "Projects".</li>
+        <li><strong>Analytic Account</strong> = a value within it (Sales, Marketing, Project Alpha…). Despite the name, it's really a <em>tag</em>, not a legal account.</li>
+      </ul>
+      <h3 class="sub">Tagging (analytic distribution)</h3>
+      <p class="para">On an invoice/bill line, use the <strong>Analytic Distribution</strong> column — and you can <strong>split by percentage</strong> (e.g. an electricity bill 60% Warehouse / 40% Head Office). Automate repetitive tagging with <strong>Distribution Models</strong>. Enable it all under <span style="white-space:nowrap">Settings → Analytics → Analytic Accounting</span>.</p>
+      <div class="tip note"><span class="i">ℹ️</span><p><strong>Start small</strong> — one plan (e.g. "Projects") with a few accounts, kept <em>Optional</em> at first. Switch a plan to <em>Mandatory</em> only when the team is ready (it blocks posting until a tag is added).</p></div>
+    </section>
+
+    <!-- 13 ASSETS & DEFERRALS -->
+    <section id="c13">
+      <h2><span class="num">13</span> Assets &amp; Deferrals</h2>
+      <p class="lead">Three features that spread a lump sum across many months or years, so your books match reality instead of showing one giant spike.</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Feature</th><th>Money direction</th><th>Sits on books as</th><th>Example</th></tr>
+        <tr><td><strong>Asset / Depreciation</strong></td><td>You pay for a long-lived thing</td><td>Asset you own</td><td>€27k van over 5 years</td></tr>
+        <tr><td><strong>Deferred Revenue</strong></td><td>Customer pays you up front</td><td>Liability (you owe service)</td><td>€1,200 subscription over 12 months</td></tr>
+        <tr><td><strong>Deferred Expense</strong></td><td>You pay a supplier up front</td><td>Asset (prepaid benefit)</td><td>€1,200 insurance over 12 months</td></tr>
+      </table></div>
+      <h3 class="sub">Assets &amp; depreciation</h3>
+      <p class="para">A <strong>fixed asset</strong> is something expensive that lasts years (vehicle, machine). <strong>Depreciation</strong> spreads its cost across those years instead of expensing it all at once. In <span style="white-space:nowrap">Accounting → Assets</span> you create an asset (linkable to its vendor bill), and Odoo builds a <strong>depreciation board</strong> and posts each slice automatically. Methods: <em>Straight Line</em> (equal amounts — simplest), <em>Declining</em>, or a mix.</p>
+      <h3 class="sub">Deferred revenues &amp; expenses</h3>
+      <p class="para">Both work the same way: on the invoice/bill line, add a <strong>start &amp; end date</strong>, and Odoo recognizes a slice each period. <strong>Deferred revenue</strong> = income received before it's earned (a yearly subscription → €100/month). <strong>Deferred expense</strong> = a cost paid ahead of the benefit (annual insurance → €100/month). Configure the accounts under <span style="white-space:nowrap">Accounting → Configuration → Settings</span>.</p>
+      <div class="tip"><span class="i">💡</span><p><strong>One takeaway:</strong> enter the document once, tell Odoo the time span, and it quietly posts the monthly slices — keeping your Profit &amp; Loss honest instead of lumpy.</p></div>
+    </section>
+
+    <!-- 14 BUDGETS & YEAR-END -->
+    <section id="c14">
+      <h2><span class="num">14</span> Budgets &amp; Year-End Closing</h2>
+      <p class="lead">Planning your money ahead of time, then finalizing and locking the year when it's done.</p>
+      <h3 class="sub">Budgets</h3>
+      <p class="para">A <strong>budget</strong> is a plan for money: what you <em>expect</em> to earn and spend. Odoo compares plan vs reality so you spot overspending while you can still react. Two kinds: <strong>Analytic budgets</strong> (per project/department) and <strong>Financial budgets</strong> (per account, shown on the Profit &amp; Loss). Set up via <span style="white-space:nowrap">Accounting → Accounting → Analytic Budgets</span>, then track in the <strong>Budget Report</strong>.</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Column</th><th>Plain meaning</th></tr>
+        <tr><td><strong>Budgeted</strong></td><td>What you planned.</td></tr>
+        <tr><td><strong>Achieved</strong></td><td>What actually happened so far.</td></tr>
+        <tr><td><strong>Committed</strong></td><td>Achieved + money already promised (e.g. approved purchase orders).</td></tr>
+        <tr><td><strong>Theoretical</strong></td><td>Where you should be by today if spending were even — "am I ahead or behind pace?"</td></tr>
+      </table></div>
+      <h3 class="sub">Year-end closing</h3>
+      <p class="para">"Closing the year" means finalizing and <strong>locking</strong> all accounts for the fiscal year, so the figures become official and tamper-proof. The checklist:</p>
+      <div class="flow">
+        <div class="f"><b>1</b><span><strong>Reconcile</strong> every bank account against its statement.</span></div>
+        <div class="f"><b>2</b><span><strong>Finish</strong> all invoices, bills and payments for the year.</span></div>
+        <div class="f"><b>3</b><span><strong>Review</strong> outstanding receivables &amp; payables (chase the overdue).</span></div>
+        <div class="f"><b>4</b><span><strong>Check taxes</strong> in the reports.</span></div>
+        <div class="f"><b>5</b><span><strong>Post adjusting entries</strong> (depreciation, deferrals, year-end earnings).</span></div>
+        <div class="f"><b>6</b><span><strong>Lock the period</strong> with a lock date.</span></div>
+      </div>
+      <h3 class="sub">Lock dates</h3>
+      <p class="para">A <strong>lock date</strong> is a cutoff: any transaction dated on or before it becomes <strong>read-only</strong>. Set it under <span style="white-space:nowrap">Accounting → Accounting → Lock Dates</span>. It only freezes the <em>past</em> — your work on current dates is unaffected.</p>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>Reconcile as you go</strong> — monthly, not all in December — and set the lock date only once your checklist is complete. Unsure about an adjusting entry like depreciation? Ask your accountant; it affects official figures.</p></div>
+    </section>
+
+    <!-- 15 E-INVOICING & ONLINE PAYMENTS -->
+    <section id="c15">
+      <h2><span class="num">15</span> E-Invoicing &amp; Online Payments</h2>
+      <p class="lead">Sending invoices in a legal machine-readable format, and letting customers pay you online.</p>
+      <h3 class="sub">Electronic invoicing</h3>
+      <p class="para">An <strong>e-invoice</strong> is a structured digital file (usually XML) another system can read automatically — not just a PDF a human retypes. Governments increasingly <strong>require</strong> it (faster tax reporting, less fraud). Odoo supports many regional formats — <em>Factur-X</em> (FR/DE), <em>Peppol/UBL</em> (Europe-wide, free even in Community), <em>XRechnung</em>, <em>NLCIUS</em>. Set the format per customer in their <strong>Accounting</strong> tab; general settings under <span style="white-space:nowrap">Settings → Peppol Electronic Invoicing</span>. Odoo then attaches the right file automatically.</p>
+      <h3 class="sub">Online payment providers</h3>
+      <p class="para">Services like <strong>Stripe</strong> and <strong>PayPal</strong> let customers pay invoices online by card. Odoo marks the invoice paid automatically, and the provider handles the card data — so <strong>your business never stores card numbers</strong>. Configure under <span style="white-space:nowrap">Accounting → Configuration → Payment Providers</span>.</p>
+      <div class="mini">
+        <div class="m"><h4>⛔ Disabled</h4><p>Off — customers can't use it.</p></div>
+        <div class="m"><h4>🧪 Test mode</h4><p>Safe sandbox with fake credentials — <strong>no real money</strong>. Always test here first.</p></div>
+      </div>
+      <div class="tip"><span class="i">💡</span><p><strong>Rule of thumb:</strong> online payment providers make money come <em>in</em> faster; e-invoicing keeps you <em>legally compliant</em> in how invoices are sent. Set a provider to <em>Test mode</em>, run a fake payment, then switch to <strong>Enabled</strong> for real money.</p></div>
+    </section>
+
+    <!-- GLOSSARY -->
+    <section id="glossary">
+      <h2><span class="num">★</span> Plain-English glossary</h2>
+      <p class="lead">The words you'll keep hearing — decoded.</p>
+      <dl class="glossary">
+        <div><dt>Journal entry</dt><dd>The bookkeeping record of a transaction — money moving between accounts.</dd></div>
+        <div><dt>Journal item</dt><dd>One debit or credit line inside a journal entry.</dd></div>
+        <div><dt>Journal</dt><dd>A logbook grouping one kind of transaction (Sales, Purchases, Bank, Cash).</dd></div>
+        <div><dt>Debit &amp; Credit</dt><dd>The two sides of every entry. They must be equal — that keeps the books balanced.</dd></div>
+        <div><dt>Accounts Receivable</dt><dd>Money customers owe you.</dd></div>
+        <div><dt>Accounts Payable</dt><dd>Money you owe suppliers.</dd></div>
+        <div><dt>Reconciliation</dt><dd>Matching a real bank movement to its record in Odoo, so both agree.</dd></div>
+        <div><dt>Posting</dt><dd>Confirming a document so it becomes official and creates its journal entry.</dd></div>
+        <div><dt>Credit note</dt><dd>A reverse-invoice used to cancel, correct or refund a posted invoice.</dd></div>
+        <div><dt>Payment terms</dt><dd>The rules for when a customer must pay (e.g. Net 30).</dd></div>
+        <div><dt>Fiscal localization</dt><dd>A country starter pack: chart of accounts + taxes + reports.</dd></div>
+        <div><dt>Fiscal position</dt><dd>A rule that auto-swaps taxes/accounts based on the customer's situation.</dd></div>
+        <div><dt>IBAN / BIC (SWIFT)</dt><dd>Your international bank account number and your bank's identifier code.</dd></div>
+        <div><dt>Opening balance</dt><dd>The starting figure in an account on the day you begin using Odoo.</dd></div>
+        <div><dt>Exchange rate</dt><dd>How much one currency is worth in another (1 EUR = 1.08 USD).</dd></div>
+        <div><dt>Analytic account</dt><dd>An internal tag (project, department…) for tracking where money goes — separate from the legal books.</dd></div>
+        <div><dt>Depreciation</dt><dd>Spreading a long-lived asset's cost across the years you use it.</dd></div>
+        <div><dt>Deferred revenue / expense</dt><dd>Income or cost spread over future periods instead of counted all at once.</dd></div>
+        <div><dt>Lock date</dt><dd>A cutoff date; transactions on or before it become read-only, freezing the past.</dd></div>
+        <div><dt>E-invoice</dt><dd>An invoice sent as a structured file a computer can read, not just a PDF.</dd></div>
+      </dl>
+    </section>
+
+    <footer>
+      <p>Official Odoo 19 sources:</p>
+      <div class="links">
+        <a href="https://www.odoo.com/documentation/19.0/applications/finance/accounting.html" target="_blank" rel="noopener">📖 Accounting docs</a>
+        <a href="https://www.odoo.com/documentation/19.0/applications/finance/fiscal_localizations.html" target="_blank" rel="noopener">🌍 Fiscal Localizations</a>
+        <a href="https://www.odoo.com/documentation/19.0/applications/finance/accounting/customer_invoices.html" target="_blank" rel="noopener">🧾 Customer Invoices</a>
+        <a href="https://www.odoo.com/documentation/19.0/applications/finance/accounting/payments.html" target="_blank" rel="noopener">💳 Payments</a>
+        <a href="https://www.odoo.com/documentation/19.0/applications/finance/accounting/reporting.html" target="_blank" rel="noopener">📊 Reporting</a>
+        <a href="https://www.youtube.com/watch?v=CZOXYz73gZM" target="_blank" rel="noopener">▶️ Getting Started video</a>
+      </div>
+      <p>Made for new joiners · Odoo 19 Accounting &amp; Invoicing · You've got this 💪</p>
+    </footer>
+
+  </div><!-- /content -->
+</div><!-- /layout -->
+
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+
+<script>
+  // Back-to-top button
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}
+  });
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+  // Scroll-spy: highlight the current chapter in the sidebar
+  var links=Array.prototype.slice.call(document.querySelectorAll('aside.sidebar a'));
+  var map={};
+  links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.remove('active')});
+        var a=map[e.target.id]; if(a){a.classList.add('active')}
+      }
+    })
+  },{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+</script>
+
+</body>
+</html>

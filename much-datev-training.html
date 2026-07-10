@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. DATEV Integration — New Joiner Handbook</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --ma-bg:#FAEEDA;--ma-fg:#633806;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--ma-fg);--brand-soft:var(--ma-bg);--brand-solid:#b45309;--accent:#b45309;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --ma-bg:#633806;--ma-fg:#FAC775;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+
+  /* Header (flat — matches the guide pages) */
+  header.hero{max-width:1180px;margin:0 auto;padding:30px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .logo{font-size:21px;font-weight:800;letter-spacing:-.4px;color:var(--brand);margin-bottom:10px}
+  .hero .logo b{color:var(--accent)}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:29px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1180px;margin:0 auto;padding:16px 20px 90px}
+  aside.sidebar{position:sticky;top:20px;flex:0 0 258px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;max-height:calc(100vh - 40px);overflow:auto}
+  aside.sidebar h3{margin:4px 8px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  aside.sidebar a{display:block;padding:8px 10px;border-radius:9px;color:var(--text);text-decoration:none;font-size:14.5px;font-weight:500}
+  aside.sidebar a .n{display:inline-block;width:22px;color:var(--text-3);font-weight:700;font-size:13px}
+  aside.sidebar a:hover{background:var(--brand-soft)}
+  aside.sidebar a.active{background:var(--brand-solid);color:#fff}
+  aside.sidebar a.active .n{color:rgba(255,255,255,.8)}
+  .content{flex:1 1 auto;min-width:0}
+
+  .welcome{background:var(--surface-1);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+  .welcome h2{margin:0 0 8px;font-size:20px}
+  .welcome p{margin:0 0 8px;color:var(--text-2)}
+  .welcome p:last-child{margin:0}
+  .welcome .wave{font-size:22px}
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:24px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+
+  .steps{display:grid;gap:12px;margin-top:6px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .step .dot{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center}
+  .step h4{margin:2px 0 4px;font-size:16px}
+  .step p{margin:0;color:var(--text-2)}
+  .step .hint{display:inline-block;margin-top:8px;font-size:13px;background:var(--blue-soft);color:var(--blue);padding:3px 10px;border-radius:8px;font-weight:600}
+
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#f0c88a;font-weight:600}
+  code.k{font-family:var(--mono);background:var(--brand-soft);color:var(--brand);padding:1px 6px;border-radius:5px;font-size:13px}
+
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+
+  .flow{display:grid;gap:10px;margin-top:8px}
+  .flow .f{display:flex;gap:14px;align-items:flex-start}
+  .flow .f b{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .flow .f span{color:var(--text-2)}
+
+  .life{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 4px}
+  .life .s{padding:7px 14px;border-radius:999px;font-weight:700;font-size:14px}
+  .life .s.d{background:var(--surface-0);color:var(--text-2)}
+  .life .s.p{background:var(--blue-soft);color:var(--blue)}
+  .life .s.paid{background:var(--green-soft);color:var(--green)}
+  .life .arrow{color:var(--text-3);font-weight:700}
+
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:480px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+  table.t td code{font-family:var(--mono);font-size:12.5px;background:var(--surface-0);padding:1px 5px;border-radius:4px}
+
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+
+  dl.glossary{margin:0}
+  dl.glossary div{padding:13px 0;border-bottom:1px solid var(--border)}
+  dl.glossary div:last-child{border-bottom:0}
+  dl.glossary dt{font-weight:700;color:var(--brand)}
+  dl.glossary dt .de{color:var(--text-2);font-weight:500;font-style:italic}
+  dl.glossary dd{margin:4px 0 0;color:var(--text-2);font-size:15px}
+
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+
+  @media (max-width:900px){
+    .layout{flex-direction:column;padding-top:12px}
+    aside.sidebar{position:static;flex:none;width:100%;max-height:none}
+    aside.sidebar nav{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+  }
+  @media (max-width:560px){
+    .hero h1{font-size:24px}
+    .mini{grid-template-columns:1fr}
+    aside.sidebar nav{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <a class="backlink" href="index.html">← Back to Guide Hub</a>
+  <div class="logo">much<b>.</b> DATEV</div>
+  <span class="kicker">New Joiner Handbook · Internal</span>
+  <h1>Odoo → DATEV Integration</h1>
+  <p>How our much. DATEV modules connect Odoo accounting to DATEV — explained for someone new to both Odoo and German bookkeeping.</p>
+  <div class="badge-v">much. GmbH · Odoo 19 · SKR03/04</div>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <h3>Chapters</h3>
+    <nav>
+      <a href="#c1"><span class="n">1</span>What is DATEV?</a>
+      <a href="#c2"><span class="n">2</span>The much. Modules</a>
+      <a href="#c3"><span class="n">3</span>DATEV Vocabulary</a>
+      <a href="#c4"><span class="n">4</span>Configuration</a>
+      <a href="#c5"><span class="n">5</span>Debitor &amp; Kreditor</a>
+      <a href="#c6"><span class="n">6</span>Export: Buchungsstapel (CSV)</a>
+      <a href="#c7"><span class="n">7</span>Export: CSV + PDF &amp; Bills</a>
+      <a href="#c8"><span class="n">8</span>Export: XML (Belege)</a>
+      <a href="#c9"><span class="n">9</span>Import from DATEV</a>
+      <a href="#c10"><span class="n">10</span>DATEV API (DATEVconnect)</a>
+      <a href="#c11"><span class="n">11</span>Buttons &amp; Status Cheat-Sheet</a>
+      <a href="#glossary"><span class="n">★</span>Glossary</a>
+    </nav>
+  </aside>
+
+  <div class="content">
+
+    <div class="welcome">
+      <h2><span class="wave">👋</span> Welcome — start here</h2>
+      <p>This handbook builds on the <strong>Odoo Accounting &amp; Invoicing</strong> handbook. If invoices, journal entries, debits/credits and reconciliation are still fuzzy, read that one first — everything here assumes you know what a <em>journal entry</em> is.</p>
+      <p>Here we cover the piece that's specific to <strong>Germany and to us</strong>: getting Odoo's accounting data into <strong>DATEV</strong>, the software our clients' tax advisors (Steuerberater) use. These are the <strong>much. DATEV</strong> modules our team builds and maintains.</p>
+    </div>
+
+    <div class="bigidea">
+      <span class="tag">🧠 The one big idea</span>
+      <p>In Germany, the <strong>Steuerberater</strong> (tax advisor) does the official books in <strong>DATEV</strong>. Odoo is where the business actually works day-to-day. So Odoo needs to <strong>hand its bookings over to DATEV</strong> in DATEV's exact format. That handover is the <em>only</em> thing these modules do — three ways: <strong>download a file</strong>, <strong>import a file</strong>, or <strong>push automatically over the DATEV API</strong>.</p>
+    </div>
+
+    <!-- 1 WHAT IS DATEV -->
+    <section id="c1">
+      <h2><span class="num">1</span> What is DATEV?</h2>
+      <p class="lead">The accounting standard at the heart of German bookkeeping.</p>
+      <p class="para"><strong>DATEV</strong> is a large German cooperative that makes the accounting and tax software used by almost every German <strong>Steuerberater</strong> (tax advisor) and many companies. When a German business keeps its books, the numbers almost always end up in DATEV so the tax advisor can review them, file taxes, and prepare the annual accounts.</p>
+      <p class="para">A typical setup: the <strong>company</strong> runs Odoo (sales, invoices, bills, bank), and its <strong>tax advisor</strong> runs DATEV. Every month the company's bookings must travel from Odoo to DATEV. Historically that meant printing lists or copying files by hand. Our modules automate it.</p>
+      <div class="mini">
+        <div class="m"><h4>🏢 In Odoo</h4><p>The business records invoices, bills, payments and bank entries — the daily work.</p></div>
+        <div class="m"><h4>🧑‍💼 In DATEV</h4><p>The Steuerberater reviews the bookings, files VAT, and prepares official year-end accounts.</p></div>
+      </div>
+      <div class="tip note"><span class="i">ℹ️</span><p><strong>Why not just use one system?</strong> German tax advisors are deeply standardised on DATEV, and the law/audit trail lives there. So the practical answer is: keep working in Odoo, but speak DATEV's language when handing data over.</p></div>
+    </section>
+
+    <!-- 2 MODULES -->
+    <section id="c2">
+      <h2><span class="num">2</span> The much. DATEV Modules</h2>
+      <p class="lead">Six modules that layer on top of Odoo's standard German localization (<code class="k">l10n_de</code>). You don't need all of them — you enable what a client needs.</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Module</th><th>What it does</th></tr>
+        <tr><td><strong>much. DATEV: Base</strong></td><td>The foundation. Adds the DATEV settings tab, the Debitor/Kreditor numbers on customers &amp; vendors, and the shared <em>Download DATEV File</em> + <em>Download Bills</em> tools.</td></tr>
+        <tr><td><strong>CSV Export</strong></td><td>Exports Odoo journal entries &amp; partner master data as DATEV CSV files (the <em>Buchungsstapel</em>, EXTF format), optionally zipped with invoice PDFs.</td></tr>
+        <tr><td><strong>CSV Import</strong></td><td>Imports DATEV booking files (EXTF CSV) back into Odoo as <em>draft</em> journal entries.</td></tr>
+        <tr><td><strong>XML Export</strong></td><td>Exports individual invoices/bills as DATEV XML records (<em>Belegverwaltung online</em>) so DATEV can book them automatically.</td></tr>
+        <tr><td><strong>API Integration</strong></td><td>Connects Odoo directly to the DATEV cloud (DATEVconnect) so bookings, master data &amp; PDFs push automatically — no manual files.</td></tr>
+        <tr><td><strong>SDD Change Tracking</strong></td><td>Small auto-installed helper: watches SEPA Direct Debit mandate changes and flags that partner for DATEV re-export.</td></tr>
+      </table></div>
+      <div class="tip"><span class="i">💡</span><p>Think of it as a ladder: <strong>Base</strong> is required, <strong>CSV Export</strong> is the workhorse, and you add <strong>Import</strong>, <strong>XML</strong> or the <strong>API</strong> depending on how the client's Steuerberater wants to receive the data.</p></div>
+    </section>
+
+    <!-- 3 VOCABULARY -->
+    <section id="c3">
+      <h2><span class="num">3</span> DATEV Vocabulary</h2>
+      <p class="lead">DATEV is German and uses its own terms. Learn these eight and everything else clicks. (Full list in the <a href="#glossary" style="color:var(--brand);font-weight:600">glossary</a>.)</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>DATEV term</th><th>Plain English</th><th>= In Odoo</th></tr>
+        <tr><td><strong>Berater-Nr.</strong> (Consultant No.)</td><td>Number identifying the tax firm</td><td>Set on the Company</td></tr>
+        <tr><td><strong>Mandant-Nr.</strong> (Client No.)</td><td>Number identifying this client's file</td><td>Set on the Company</td></tr>
+        <tr><td><strong>SKR03 / SKR04</strong></td><td>The two standard German charts of accounts</td><td>Chart of Accounts</td></tr>
+        <tr><td><strong>Sachkonto</strong></td><td>A general-ledger account</td><td>Account (in the CoA)</td></tr>
+        <tr><td><strong>Debitor</strong></td><td>A customer sub-account (range 10000+)</td><td>Customer + DATEV number</td></tr>
+        <tr><td><strong>Kreditor</strong></td><td>A vendor sub-account (range 70000+)</td><td>Vendor + DATEV number</td></tr>
+        <tr><td><strong>Soll / Haben</strong></td><td>Debit / Credit (<code>S</code> / <code>H</code>)</td><td>Debit / Credit</td></tr>
+        <tr><td><strong>Buchungsstapel</strong></td><td>A batch of bookings (the CSV file)</td><td>Posted journal entries</td></tr>
+      </table></div>
+      <div class="tip note"><span class="i">🇩🇪</span><p><strong>EXTF</strong> is the name of DATEV's file format. The first line of every DATEV CSV is the "EXTF header" — a fingerprint telling DATEV the firm, client, period and file type. You never type it; the module builds it.</p></div>
+    </section>
+
+    <!-- 4 CONFIGURATION -->
+    <section id="c4">
+      <h2><span class="num">4</span> Configuration</h2>
+      <p class="lead">Set up once per client. Get these right and exports "just work"; get them wrong and DATEV rejects the file.</p>
+
+      <h3 class="sub">Step 1 — Consultant &amp; Client numbers (required!)</h3>
+      <p class="para">The <strong>Consultant Number (Berater-Nr.)</strong> and <strong>Client Number (Mandanten-Nr.)</strong> live on the <strong>Company</strong> (standard German-localization fields, not our custom tab). <strong>Every export refuses to run without them</strong> — you'll see: <em>"Please configure the DATEV consultant number and client number in the company form settings."</em></p>
+      <div class="path">Settings <b>→</b> Users &amp; Companies <b>→</b> Companies <b>→</b> (your company) <b>→</b> DATEV fields</div>
+
+      <h3 class="sub">Step 2 — The "DATEV Export" settings tab</h3>
+      <p class="para">Everything else is on our tab:</p>
+      <div class="path">Settings <b>→</b> DATEV Export</div>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Setting</th><th>What it means</th></tr>
+        <tr><td><strong>Length General Accounts</strong> <span style="color:var(--muted)">(default 4)</span></td><td>How many digits your G/L accounts (Sachkonten) have. Must match your SKR chart. Minimum 4.</td></tr>
+        <tr><td><strong>Personal Accounts → Direct Booking</strong></td><td>How customer/vendor sub-accounts are numbered. When on, reveals <strong>Length Personal Accounts</strong>.</td></tr>
+        <tr><td><strong>Receivable Format</strong> <span style="color:var(--muted)">(default 10000)</span></td><td>Starting number for auto-assigned <strong>Debitor</strong> (customer) accounts — DATEV convention.</td></tr>
+        <tr><td><strong>Payable Format</strong> <span style="color:var(--muted)">(default 70000)</span></td><td>Starting number for auto-assigned <strong>Kreditor</strong> (vendor) accounts.</td></tr>
+        <tr><td><strong>DATEV partner number generation</strong></td><td>When Debitor/Kreditor numbers get assigned: <em>On posting of first entry</em> (default) or <em>During export</em>.</td></tr>
+        <tr><td><strong>Edit Columns / Edit Partner Columns</strong></td><td>Fine-tune exactly which DATEV columns appear in the bookings CSV and the partner CSV. Defaults are the standard DATEV layout — rarely changed.</td></tr>
+        <tr><td><strong>KOST1 / KOST2</strong> <span style="color:var(--muted)">(if Analytic on)</span></td><td>Map two Odoo analytic plans to DATEV cost centres (<em>Kostenstellen</em>). Set once — can't be changed later.</td></tr>
+        <tr><td><strong>G/L Export Batch Size</strong> <span style="color:var(--muted)">(default 1000)</span></td><td>Max journal entries per file when exporting big date ranges.</td></tr>
+        <tr><td><strong>Export Encoding</strong></td><td><code>Latin-1 (CP1252)</code> or <code>UTF-8</code>. Default CP1252 — which is what DATEV expects.</td></tr>
+        <tr><td><strong>DATEV Key</strong> <span style="color:var(--muted)">(default 40)</span></td><td>The BU-Schlüssel (booking key) used to switch off DATEV's automatic tax calculation on a line.</td></tr>
+      </table></div>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>SKR03 vs SKR04</strong> is chosen when the company is set up (via Odoo's German localization) — there's no separate selector in our tab. <strong>Length General Accounts must match that chart</strong>, or account numbers won't line up in DATEV.</p></div>
+    </section>
+
+    <!-- 5 DEBITOR KREDITOR -->
+    <section id="c5">
+      <h2><span class="num">5</span> Debitor &amp; Kreditor (Customer/Vendor numbers)</h2>
+      <p class="lead">DATEV doesn't book against "the customer" — it books against a numbered <strong>sub-account</strong>. Each customer and vendor needs a DATEV number.</p>
+      <div class="mini">
+        <div class="m"><h4>⬇️ Debitor = Customer</h4><p>Field <strong>DATEV Customer Identifier</strong>. Auto-assigned from the <em>Receivable Format</em> range (10000, 10001…).</p></div>
+        <div class="m"><h4>⬆️ Kreditor = Vendor</h4><p>Field <strong>DATEV Supplier Identifier</strong>. Auto-assigned from the <em>Payable Format</em> range (70000, 70001…).</p></div>
+      </div>
+      <p class="para">On any customer/vendor you'll find these fields (under the <em>Set DATEV Identifier</em> permission). Leave a number blank and the system assigns the next free one automatically; or <strong>paste an existing DATEV number</strong> to keep continuity with what the Steuerberater already uses. Numbers must be unique.</p>
+      <h3 class="sub">Actions on a partner</h3>
+      <ul class="clean">
+        <li><strong>Generate Customer Identifier</strong> / <strong>Generate Supplier Identifier</strong> — assign a number now.</li>
+        <li><strong>Download DATEV CSV</strong> — export just this partner's master-data record.</li>
+        <li><strong>Exported to DATEV</strong> / <strong>DATEV Export Date</strong> — read-only status. A <strong>DATEV Update Required</strong> flag re-includes the partner in the next export whenever a watched field (name, address, VAT, bank, receivable/payable account…) changes — so master data in DATEV stays current.</li>
+      </ul>
+      <div class="tip note"><span class="i">🔁</span><p>This is what the <strong>SDD Change Tracking</strong> module extends: change a customer's SEPA mandate and it automatically flags them for re-export, so DATEV always has the latest bank/mandate details.</p></div>
+    </section>
+
+    <!-- 6 CSV EXPORT -->
+    <section id="c6">
+      <h2><span class="num">6</span> Export: Buchungsstapel (CSV)</h2>
+      <p class="lead">The workhorse. Turn Odoo's posted bookings into a DATEV booking batch the Steuerberater can import.</p>
+      <p class="para"><strong>What's exported:</strong> your <strong>posted</strong> journal entries — customer invoices, credit notes, vendor bills, refunds, and bank/cash/general entries — as a DATEV <strong>Buchungsstapel</strong> CSV. The first row is the EXTF header (firm, client, fiscal-year start, account length, date range); the rest are the bookings.</p>
+      <h3 class="sub">How to export — two entry points</h3>
+      <div class="flow">
+        <div class="f"><b>A</b><span>On an invoice/journal-entry <strong>list</strong>: select records → <strong>Actions → Download DATEV File</strong>.</span></div>
+        <div class="f"><b>B</b><span>On the <strong>General Ledger</strong> report (DE companies): the <strong>Download DATEV File</strong> button, using the report's date filter.</span></div>
+      </div>
+      <p class="para">Both open the <strong>Download DATEV Format</strong> chooser with three formats:</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Format</th><th>You get</th></tr>
+        <tr><td><strong>CSV</strong></td><td>The plain Buchungsstapel. If new customers/vendors are involved, a <strong>ZIP</strong> with the bookings file (<code>EXTF_accounting_entries.csv</code>) + the partner master file (<code>EXTF_customer_accounts.csv</code>).</td></tr>
+        <tr><td><strong>CSV + PDF (ZIP)</strong></td><td>The CSV(s) plus each invoice's <strong>PDF</strong> and a <code>document.xml</code> that links every PDF to its booking (Chapter 7).</td></tr>
+        <tr><td><strong>XML</strong></td><td>Routes to the XML export (Chapter 8).</td></tr>
+      </table></div>
+      <h3 class="sub">What happens to customers &amp; vendors (Debitor/Kreditor)</h3>
+      <p class="para">On receivable/payable lines, the module swaps Odoo's account for the partner's <strong>DATEV sub-account number</strong>. Debit shows as <strong>S</strong> (Soll), credit as <strong>H</strong> (Haben). If a partner has no number yet, one is created from the configured range and saved on the partner.</p>
+      <div class="tip note"><span class="i">📦</span><p><strong>Big date ranges?</strong> The General Ledger export shows a batch selector (<em>"Move X to Y"</em>) with a <strong>Next Batch</strong> button, honouring your <em>G/L Export Batch Size</em>. A <strong>Missing DATEV Account</strong> filter helps you catch entries with no account set before exporting.</p></div>
+    </section>
+
+    <!-- 7 CSV+PDF -->
+    <section id="c7">
+      <h2><span class="num">7</span> Export: CSV + PDF &amp; Download Bills</h2>
+      <p class="lead">Send the bookings <em>and</em> the source documents, so DATEV shows the invoice PDF next to each booking.</p>
+      <h3 class="sub">CSV + PDF (ZIP)</h3>
+      <p class="para">Same as the CSV export, but the ZIP also contains every invoice's <strong>PDF</strong> plus a <code>document.xml</code> manifest. That manifest is the <strong>Beleglink</strong> (BEDI) — it tells DATEV which PDF belongs to which booking, so the Steuerberater sees the original document right beside the entry. This is the format clients love, because it removes all the "where's the invoice for this line?" back-and-forth.</p>
+      <h3 class="sub">Download Bills (.zip) — PDFs only</h3>
+      <p class="para">A simpler tool (from the Base module): select invoices → <strong>Actions → Download Bills (.zip)</strong> to get just the PDFs, named <code>Bulk_Invoices_&lt;timestamp&gt;.zip</code> — no CSV. Handy when someone only needs the documents. A daily clean-up cron removes these temporary zips automatically.</p>
+      <div class="tip"><span class="i">💡</span><p>Each invoice remembers its <strong>DATEV Export Date</strong> and <strong>Zip Export Date</strong>, so you can always see what's already been sent.</p></div>
+    </section>
+
+    <!-- 8 XML EXPORT -->
+    <section id="c8">
+      <h2><span class="num">8</span> Export: XML (Belegverwaltung online)</h2>
+      <p class="lead">A structured, per-invoice data record that lets DATEV book the invoice automatically — no manual typing on the DATEV side.</p>
+      <p class="para">Where the CSV is a <em>batch of bookings</em>, the XML export produces <strong>one DATEV XML record per invoice/bill</strong> (schema <em>Belegverwaltung online</em>). It's not a scan — it carries the structured data: amounts, tax, invoice/due/delivery dates, invoice number, the partner's DATEV number, order reference, VAT IDs and bank details. DATEV reads it and proposes the booking automatically.</p>
+      <h3 class="sub">How to export</h3>
+      <div class="flow">
+        <div class="f"><b>1</b><span>Only <strong>posted</strong> invoices, credit notes, bills or refunds qualify.</span></div>
+        <div class="f"><b>2</b><span>Select them → <strong>Actions → Download DATEV File → XML</strong>.</span></div>
+        <div class="f"><b>3</b><span>One record → a single <code>.xml</code>; several → a <code>.zip</code> of one XML each. Each XML is also attached to its invoice and noted in the chatter.</span></div>
+      </div>
+      <p class="para">Invoices then show read-only <strong>Exported as XML</strong> and <strong>XML Export Date</strong> fields, with matching search filters so you can track what's been sent.</p>
+      <div class="tip note"><span class="i">ℹ️</span><p>Each XML carries the standard DATEV note <em>"Kopie nur zur Verbuchung berechtigt nicht zum Vorsteuerabzug"</em> — a legal disclaimer that this copy is for booking only, not for reclaiming input VAT.</p></div>
+    </section>
+
+    <!-- 9 IMPORT -->
+    <section id="c9">
+      <h2><span class="num">9</span> Import from DATEV</h2>
+      <p class="lead">The reverse direction — bring DATEV booking files back into Odoo as draft entries (e.g. bookings the Steuerberater made, or historical data).</p>
+      <h3 class="sub">How to import</h3>
+      <div class="path">Accounting <b>→</b> Import DATEV CSV</div>
+      <p class="para">The <strong>Import DATEV</strong> wizard asks for:</p>
+      <ul class="clean">
+        <li><strong>Counter-Account</strong> — whether the counter account is in the <em>Konto</em> or <em>Gegenkonto</em> column.</li>
+        <li><strong>Import Journal</strong> — the target journal (must be flagged <em>Is DATEV Import Journal?</em>).</li>
+        <li><strong>Year</strong> and <strong>Is Legacy Data Imported?</strong> — for historical/opening-balance data.</li>
+        <li><strong>Files</strong> — one or more DATEV EXTF CSVs. <strong>One calendar month per file</strong> (multi-month files are rejected).</li>
+      </ul>
+      <p class="para">Each grouped set of rows becomes a <strong>draft journal entry</strong> — left in draft so you review before posting.</p>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>Import matches, it does not create master data.</strong> Accounts (Sachkonten), taxes (via BU-Schlüssel), currencies and analytic accounts must <em>already exist</em> — a missing one <strong>aborts</strong> the import. Only a missing <strong>partner</strong> is tolerated (it falls back to the journal's default receivable/payable account and logs a warning). It does <strong>not</strong> import a chart of accounts.</p></div>
+      <h3 class="sub">Checking what happened</h3>
+      <p class="para">Open <strong>Accounting → DATEV Import Logs</strong> (read-only, newest first). Each log has a <strong>Level</strong> — <span style="color:var(--blue)">Info</span> (blue) or <span style="color:var(--amber)">Data Issue</span> (amber) — and details. After a run you get either "import success" or "completed with warnings"; filter by <strong>Level = Data Issue</strong> to see problems like <em>"The partner does not exist."</em></p>
+    </section>
+
+    <!-- 10 API -->
+    <section id="c10">
+      <h2><span class="num">10</span> DATEV API (DATEVconnect)</h2>
+      <p class="lead">The premium option: skip files entirely. Odoo talks straight to the DATEV cloud and pushes bookings, master data and PDFs automatically, on a schedule.</p>
+      <p class="para">One-line pitch: <strong>post an invoice in Odoo and it appears in DATEV by itself, with the PDF attached — and you're emailed if anything fails.</strong></p>
+      <h3 class="sub">Connecting (one-time OAuth)</h3>
+      <div class="flow">
+        <div class="f"><b>1</b><span>On the DATEV Integration record, click <strong>Get Access Token</strong>.</span></div>
+        <div class="f"><b>2</b><span>Odoo opens <strong>DATEV's own login page</strong> — the user signs in with their DATEV credentials and authorizes the scopes.</span></div>
+        <div class="f"><b>3</b><span>DATEV redirects back; Odoo stores the tokens. Buttons then become <strong>Refresh</strong> / <strong>Revoke</strong>. Thanks to the <em>offline_access</em> scope, the connection lasts ~2 years.</span></div>
+      </div>
+      <div class="tip warn"><span class="i">🔒</span><p>The user logs in on DATEV's page — <strong>we never handle their DATEV password</strong>, and the OAuth client secret is fetched automatically (the accountant never types it). Use <strong>Is Sandbox Mode?</strong> to test safely before going live.</p></div>
+      <h3 class="sub">Export settings</h3>
+      <ul class="clean">
+        <li><strong>Export Frequency</strong> — Daily / Monthly / Quarterly.</li>
+        <li><strong>Journals to Export</strong>, <strong>Export Start Date</strong>.</li>
+        <li><strong>Data to Export</strong> — toggles for master data / accounting entries / PDF documents.</li>
+        <li><strong>PDF Export</strong> — Optional or Mandatory (with a size limit).</li>
+        <li><strong>Category / Folder / Register</strong> — where files land in DATEV.</li>
+      </ul>
+      <h3 class="sub">Running &amp; monitoring</h3>
+      <p class="para"><strong>Manual push:</strong> select records → <strong>Actions → Export to DATEV API</strong>, or on the integration record <strong>Export via API</strong> (with an <em>Include Already Exported?</em> option and a duplicate warning). <strong>Automatic push:</strong> the <strong>DATEV: Export Data</strong> cron runs on your chosen frequency.</p>
+      <p class="para">Track everything in <strong>DATEV Export Jobs</strong> (read-only): each batch shows a <strong>Status</strong> (Created → Started → Success / Failed / Cancelled), the last step, the DATEV job id, retry count, and a <strong>Logs</strong> button. Failed jobs have a <strong>Retry Job</strong> button. If something breaks (expired token, failed export), admins get a grouped <strong>"Critical Error in DATEV Integration"</strong> email with a link straight to the logs.</p>
+      <div class="tip"><span class="i">💡</span><p><strong>File vs API — how to choose:</strong> use <strong>CSV/XML file export</strong> when the Steuerberater wants to import files themselves; use the <strong>API</strong> when the client wants true hands-off, automatic syncing.</p></div>
+    </section>
+
+    <!-- 11 CHEAT SHEET -->
+    <section id="c11">
+      <h2><span class="num">11</span> Buttons &amp; Status Cheat-Sheet</h2>
+      <p class="lead">Where to click, and what the status fields mean.</p>
+      <h3 class="sub">Actions on invoices / journal entries</h3>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Button (Actions menu)</th><th>Does</th></tr>
+        <tr><td><strong>Download DATEV File</strong></td><td>Opens the chooser: CSV · CSV + PDF (ZIP) · XML.</td></tr>
+        <tr><td><strong>Download Bills (.zip)</strong></td><td>Zips just the selected invoices' PDFs.</td></tr>
+        <tr><td><strong>Export to DATEV API</strong></td><td>Pushes selected records to DATEV over the API.</td></tr>
+        <tr><td><strong>General Ledger → Download DATEV File</strong></td><td>Date-range Buchungsstapel export from the report.</td></tr>
+      </table></div>
+      <h3 class="sub">Status fields (read-only, on the invoice's DATEV group)</h3>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Field</th><th>Meaning</th></tr>
+        <tr><td><strong>DATEV Export Date</strong></td><td>When it went into a CSV export.</td></tr>
+        <tr><td><strong>Zip Export Date</strong></td><td>When its PDF went into a Bills zip.</td></tr>
+        <tr><td><strong>Exported as XML / XML Export Date</strong></td><td>When it was exported as a DATEV XML.</td></tr>
+        <tr><td><strong>Exported to DATEV API</strong></td><td>Whether it was pushed via the API.</td></tr>
+      </table></div>
+      <h3 class="sub">Useful search filters</h3>
+      <p class="para"><strong>Missing DATEV Account</strong> (entries with no main account) · <strong>XML Exported / Not Exported</strong> · <strong>Exported to DATEV API</strong>.</p>
+    </section>
+
+    <!-- GLOSSARY -->
+    <section id="glossary">
+      <h2><span class="num">★</span> DATEV Glossary</h2>
+      <p class="lead">German bookkeeping terms, decoded.</p>
+      <dl class="glossary">
+        <div><dt>DATEV</dt><dd>The German cooperative whose software tax advisors use for accounting and tax filing.</dd></div>
+        <div><dt>Steuerberater</dt><dd>A German tax advisor — the professional who keeps the official books in DATEV.</dd></div>
+        <div><dt>EXTF</dt><dd>DATEV's import/export file format. The first CSV line (the "EXTF header") identifies firm, client, period and file type.</dd></div>
+        <div><dt>Buchungsstapel</dt><dd>A batch of bookings — the accounting-entry CSV. = Odoo's posted journal entries.</dd></div>
+        <div><dt>Berater-Nr. <span class="de">(Consultant Number)</span></dt><dd>Identifies the tax firm. Set on the Odoo Company; exports fail without it.</dd></div>
+        <div><dt>Mandant-Nr. <span class="de">(Client Number)</span></dt><dd>Identifies this specific client's file in DATEV. Set on the Company.</dd></div>
+        <div><dt>SKR03 / SKR04</dt><dd>The two standard German charts of accounts. Chosen at company setup.</dd></div>
+        <div><dt>Sachkonto</dt><dd>A general-ledger account (a "Konto"). <em>Gegenkonto</em> = the counter/contra account on a booking.</dd></div>
+        <div><dt>Debitor</dt><dd>A customer sub-account (DATEV range 10000+). = Odoo customer + DATEV Customer Identifier.</dd></div>
+        <div><dt>Kreditor</dt><dd>A vendor sub-account (DATEV range 70000+). = Odoo vendor + DATEV Supplier Identifier.</dd></div>
+        <div><dt>Soll / Haben</dt><dd>Debit / Credit — written as <code class="k">S</code> / <code class="k">H</code> in the file.</dd></div>
+        <div><dt>BU-Schlüssel <span class="de">(Buchungsschlüssel)</span></dt><dd>DATEV tax/booking key. Maps to Odoo taxes; the default key <strong>40</strong> switches off DATEV's auto-tax on a line.</dd></div>
+        <div><dt>Belegfeld 1 / 2, Belegdatum, Buchungstext</dt><dd>The document reference, dates and posting text on each booking row.</dd></div>
+        <div><dt>Beleg / Belegverwaltung online</dt><dd>Documents (invoice PDFs) and DATEV's online receipt management — fed by the XML export and the API's PDF push.</dd></div>
+        <div><dt>Beleglink (BEDI)</dt><dd>The link that ties a PDF to its booking (the <code class="k">document.xml</code> in a CSV+PDF zip).</dd></div>
+        <div><dt>KOST1 / KOST2 <span class="de">(Kostenstelle)</span></dt><dd>DATEV cost centres. Map to Odoo analytic plans.</dd></div>
+        <div><dt>DATEVconnect</dt><dd>DATEV's cloud API — what our API Integration module connects to for automatic syncing.</dd></div>
+      </dl>
+    </section>
+
+    <footer>
+      <p>Internal training · <strong>much. GmbH</strong> · built on the standard German localization (<code class="k">l10n_de</code>)</p>
+      <p style="margin-top:8px">Prerequisite reading: the <a href="odoo-accounting-getting-started.html">Odoo Accounting &amp; Invoicing handbook</a> · Odoo 19 · You've got this 💪</p>
+    </footer>
+
+  </div>
+</div>
+
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+
+<script>
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}
+  });
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  var links=Array.prototype.slice.call(document.querySelectorAll('aside.sidebar a'));
+  var map={};
+  links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.remove('active')});
+        var a=map[e.target.id]; if(a){a.classList.add('active')}
+      }
+    })
+  },{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+</script>
+
+</body>
+</html>
