@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odoo Getting Started — New Joiner Handbook</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--mp-fg);--brand-soft:var(--mp-bg);--brand-solid:#4F46B8;--accent:#4F46B8;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+    --brand-solid:#6A5FE0;--accent:#6A5FE0;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+
+  header.hero{max-width:1160px;margin:0 auto;padding:34px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:30px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1160px;margin:0 auto;padding:16px 20px 90px}
+  aside.sidebar{position:sticky;top:20px;flex:0 0 250px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;max-height:calc(100vh - 40px);overflow:auto}
+  aside.sidebar h3{margin:4px 8px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  aside.sidebar a{display:block;padding:8px 10px;border-radius:9px;color:var(--text);text-decoration:none;font-size:14.5px;font-weight:500}
+  aside.sidebar a .n{display:inline-block;width:22px;color:var(--text-3);font-weight:700;font-size:13px}
+  aside.sidebar a:hover{background:var(--brand-soft)}
+  aside.sidebar a.active{background:var(--brand-solid);color:#fff}
+  aside.sidebar a.active .n{color:rgba(255,255,255,.8)}
+  .content{flex:1 1 auto;min-width:0}
+
+  .welcome{background:var(--surface-1);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+  .welcome h2{margin:0 0 8px;font-size:20px}
+  .welcome p{margin:0;color:var(--text-2)}
+  .welcome .wave{font-size:22px}
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:24px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+
+  .steps{display:grid;gap:12px;margin-top:6px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .step .dot{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center}
+  .step h4{margin:2px 0 4px;font-size:16px}
+  .step p{margin:0;color:var(--text-2)}
+  .step .hint{display:inline-block;margin-top:8px;font-size:13px;background:var(--blue-soft);color:var(--blue);padding:3px 10px;border-radius:8px;font-weight:600}
+
+  .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-top:8px}
+  .type{border-radius:12px;padding:15px;border:1px solid var(--border)}
+  .type .icon{font-size:22px}
+  .type h4{margin:8px 0 4px;font-size:15px}
+  .type p{margin:0;font-size:13.5px;color:var(--text-2)}
+  .type.own,.type.income{background:var(--green-soft);border-color:var(--border-success)}
+  .type.owe{background:var(--red-soft);border-color:var(--border-danger)}
+  .type.equity{background:var(--blue-soft);border-color:#8fbcec}
+  .type.expense{background:var(--amber-soft);border-color:var(--border-warning)}
+  .pill{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px}
+  .pill.g{background:var(--green);color:#fff}.pill.r{background:var(--red);color:#fff}.pill.b{background:var(--blue);color:#fff}.pill.a{background:var(--amber);color:#fff}
+
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#b9b2f2;font-weight:600}
+
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+
+  .flow{display:grid;gap:10px;margin-top:8px}
+  .flow .f{display:flex;gap:14px;align-items:flex-start}
+  .flow .f b{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .flow .f span{color:var(--text-2)}
+
+  .why{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+  .why .w{background:var(--brand-soft);border-radius:10px;padding:12px;font-size:14px;font-weight:600;color:var(--brand)}
+  .why .w small{display:block;font-weight:400;color:var(--text-2);margin-top:3px}
+
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:460px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+  kbd{font-family:var(--mono);font-size:.8em;background:var(--surface-0);border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+
+  dl.glossary{margin:0}
+  dl.glossary div{padding:13px 0;border-bottom:1px solid var(--border)}
+  dl.glossary div:last-child{border-bottom:0}
+  dl.glossary dt{font-weight:700;color:var(--brand)}
+  dl.glossary dd{margin:4px 0 0;color:var(--text-2);font-size:15px}
+
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+  .links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 18px}
+  .links a{background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:8px 15px}
+
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+
+  @media (max-width:900px){
+    .layout{flex-direction:column;padding-top:12px}
+    aside.sidebar{position:static;flex:none;width:100%;max-height:none}
+    aside.sidebar nav{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+  }
+  @media (max-width:560px){
+    .hero h1{font-size:25px}
+    .mini{grid-template-columns:1fr}
+    aside.sidebar nav{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <a class="backlink" href="index.html">← Back to Guide Hub</a>
+  <span class="kicker">New Joiner Handbook · Odoo Basics</span>
+  <h1>Odoo Getting Started</h1>
+  <p>The complete beginner's guide to finding your way around Odoo — the screen, the apps, the buttons and the habits. No prior Odoo experience needed.</p>
+  <div class="badge-v">Odoo 19 · Getting Started</div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR NAV -->
+  <aside class="sidebar">
+    <h3>Chapters</h3>
+    <nav>
+      <a href="#c1"><span class="n">1</span>What Odoo Is</a>
+      <a href="#c2"><span class="n">2</span>Logging In &amp; the Screen</a>
+      <a href="#c3"><span class="n">3</span>Apps &amp; Modules</a>
+      <a href="#c4"><span class="n">4</span>Views</a>
+      <a href="#c5"><span class="n">5</span>Working with Records</a>
+      <a href="#c6"><span class="n">6</span>Finding Things</a>
+      <a href="#c7"><span class="n">7</span>The Chatter</a>
+      <a href="#c8"><span class="n">8</span>Activities &amp; Discuss</a>
+      <a href="#c9"><span class="n">9</span>Users &amp; Companies</a>
+      <a href="#c10"><span class="n">10</span>Settings &amp; Dev Mode</a>
+    </nav>
+    <h3 style="margin-top:16px">Reference</h3>
+    <nav>
+      <a href="#glossary"><span class="n">★</span>Glossary</a>
+    </nav>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="welcome">
+      <h2><span class="wave">👋</span> Welcome aboard!</h2>
+      <p>Odoo is the software the whole business runs on — sales, projects, support, stock, accounting and more, all in <strong>one place</strong>. Before you learn any single app, it helps to learn the <strong>ground rules</strong>: how to log in, move around, create and find records, and use the little panel that follows you everywhere. Learn these once and <strong>every</strong> Odoo app suddenly feels familiar. Read top to bottom, or jump around with the menu on the left. Nothing to memorise — you'll build the habits by clicking around.</p>
+    </div>
+
+    <div class="bigidea">
+      <span class="tag">🧠 Read this first — the one big idea</span>
+      <p>Odoo is <strong>modular</strong>. It's one database with many <strong>apps</strong> bolted on — Sales, Inventory, Helpdesk, Accounting… — that all share the same customers, products and users. Because every app is built from the same building blocks, once you learn <strong>how one screen works, you know how all of them work.</strong> This handbook teaches those shared building blocks.</p>
+    </div>
+
+    <!-- 1 WHAT ODOO IS -->
+    <section id="c1">
+      <h2><span class="num">1</span> What Odoo Is</h2>
+      <p class="lead">A single, connected business system — not a pile of separate programs.</p>
+      <p class="para">Odoo is an <strong>ERP</strong> (Enterprise Resource Planning) system: one place where a company manages most of what it does. What makes it special is that all the pieces are <strong>connected</strong>. Sell a product in <em>Sales</em> and the stock drops in <em>Inventory</em>, an invoice appears in <em>Accounting</em>, and the customer's history updates — automatically. No copy-pasting between tools.</p>
+      <h3 class="sub">Apps, not programs</h3>
+      <p class="para">Each business area is an <strong>app</strong> you switch on when you need it. You only see the apps that are installed. A small company might run three; a big one, thirty. They all live in the same database and share the same data.</p>
+      <div class="mini">
+        <div class="m"><h4>🧩 Modular</h4><p>Turn apps on/off as needs change. Start small, grow later.</p></div>
+        <div class="m"><h4>🔗 Connected</h4><p>One customer, one product list — shared by every app.</p></div>
+        <div class="m"><h4>🎯 Consistent</h4><p>Every app uses the same buttons, views and search. Learn once.</p></div>
+        <div class="m"><h4>🌐 Web-based</h4><p>Runs in your browser. Nothing to install on your laptop.</p></div>
+      </div>
+      <h3 class="sub">Community vs Enterprise</h3>
+      <p class="para">Odoo comes in two editions. <strong>Community</strong> is the free, open-source core. <strong>Enterprise</strong> is a paid subscription that adds more apps and features (accounting automation, studio, more integrations) plus official support. At much. you'll mostly work with <strong>Enterprise</strong> features.</p>
+      <div class="tip note"><span class="i">ℹ️</span><p><strong>Where Odoo runs:</strong> it can be hosted by Odoo (<em>Odoo Online</em>), on a managed platform (<em>Odoo.sh</em>), or on a company's own servers (<em>on-premise</em>). As a user the screen looks the same everywhere — the difference is who maintains the server.</p></div>
+    </section>
+
+    <!-- 2 LOGGING IN & THE SCREEN -->
+    <section id="c2">
+      <h2><span class="num">2</span> Logging In &amp; the Screen</h2>
+      <p class="lead">Your first five minutes: where everything lives on screen.</p>
+      <h3 class="sub">Getting in</h3>
+      <p class="para">Open the database's web address in your browser, enter your <strong>email and password</strong>, and you land on your home screen. Bookmark the address. If you forget your password, use <strong>Reset Password</strong> on the login page (it emails you a link).</p>
+      <h3 class="sub">The four corners of the screen</h3>
+      <p class="para">Almost every Odoo screen has the same frame. Learn these four spots and you'll never feel lost:</p>
+      <div class="steps">
+        <div class="step"><div class="dot">1</div><div>
+          <h4>▦ Apps menu — top-left</h4>
+          <p>Click the icon (or the current app's name) to open the <strong>grid of all your apps</strong>. This is how you jump from Sales to Inventory to Helpdesk.</p>
+          <span class="hint">Your main way to switch apps</span></div></div>
+        <div class="step"><div class="dot">2</div><div>
+          <h4>☰ Top menu bar</h4>
+          <p>Inside an app, the bar along the top holds that app's <strong>menus</strong> (e.g. in Sales: Orders, Products, Reporting, Configuration). It changes with each app.</p>
+          <span class="hint">Navigate within the current app</span></div></div>
+        <div class="step"><div class="dot">3</div><div>
+          <h4>🍞 Breadcrumbs</h4>
+          <p>The trail just under the top bar (e.g. <em>Orders › S00023</em>) shows where you are. Click any earlier step to go back <strong>without losing your place</strong>.</p>
+          <span class="hint">Always know where you are</span></div></div>
+        <div class="step"><div class="dot">4</div><div>
+          <h4>🔔👤 Right side</h4>
+          <p>Top-right holds the <strong>Activities</strong> (clock) and <strong>Messages</strong> (speech bubble) icons, and your <strong>user menu</strong> (your name/avatar) for preferences and logging out.</p>
+          <span class="hint">Your notifications &amp; profile</span></div></div>
+      </div>
+      <div class="tip"><span class="i">💡</span><p><strong>Lost? Click the app name (top-left) then your app again</strong> — it takes you to that app's home. And breadcrumbs are your friend: click backwards through them instead of the browser's Back button.</p></div>
+    </section>
+
+    <!-- 3 APPS & MODULES -->
+    <section id="c3">
+      <h2><span class="num">3</span> Apps &amp; Modules</h2>
+      <p class="lead">How apps get added, and what "installing" really means.</p>
+      <p class="para">The <strong>Apps</strong> app is the store where you browse and install everything Odoo offers. Installing an app switches on its menus, screens and automations across the whole database — for <em>everyone</em>, not just you.</p>
+      <div class="path">Apps <b>→</b> search a name (e.g. "Project") <b>→</b> Install</div>
+      <h3 class="sub">App vs module — same thing, different size</h3>
+      <div class="mini">
+        <div class="m"><h4>📱 App</h4><p>A big, user-facing area like Sales or CRM. What you see as a tile on your home screen.</p></div>
+        <div class="m"><h4>🧱 Module</h4><p>A smaller add-on that extends an app (a specific integration, report or tweak). Same install mechanism.</p></div>
+      </div>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>Installing changes the database for everyone.</strong> On a real customer system, apps are installed deliberately by the project team — not clicked on to "have a look". Explore freely in a <em>test</em> database; be careful in production.</p></div>
+      <div class="tip note"><span class="i">ℹ️</span><p>Some technical modules are hidden until you switch on <strong>Developer Mode</strong> (Chapter 10) and remove the "Apps" filter. You rarely need those as a new joiner.</p></div>
+    </section>
+
+    <!-- 4 VIEWS -->
+    <section id="c4">
+      <h2><span class="num">4</span> Views</h2>
+      <p class="lead">The same data, shown in different shapes. Switch views with the little icons at the top-right of a list.</p>
+      <p class="para">A <strong>view</strong> is just a way of displaying records. The same 200 sales orders can be shown as a spreadsheet-like list, a drag-and-drop board, or a chart — you pick whichever helps right now. Not every screen offers every view; you'll see icons for the ones available.</p>
+      <div class="types">
+        <div class="type"><div class="icon">📄</div><h4>List</h4><p>Rows &amp; columns, like a spreadsheet. Great for scanning many records.</p></div>
+        <div class="type"><div class="icon">🗂️</div><h4>Kanban</h4><p>Cards in columns you drag between stages. Great for pipelines &amp; tasks.</p></div>
+        <div class="type"><div class="icon">📝</div><h4>Form</h4><p>One record in full detail. Where you actually read and edit.</p></div>
+        <div class="type"><div class="icon">📅</div><h4>Calendar</h4><p>Records placed on dates. Great for meetings, deadlines, activities.</p></div>
+        <div class="type"><div class="icon">📊</div><h4>Pivot</h4><p>A cross-table to summarise numbers (totals by month, by salesperson…).</p></div>
+        <div class="type"><div class="icon">📈</div><h4>Graph</h4><p>Bar, line or pie chart of the same data.</p></div>
+        <div class="type"><div class="icon">⏰</div><h4>Activity</h4><p>A grid of who owes what follow-up, by type.</p></div>
+        <div class="type"><div class="icon">🗺️</div><h4>Map</h4><p>Records with an address plotted on a map.</p></div>
+      </div>
+      <div class="tip"><span class="i">💡</span><p><strong>Switching view keeps your filters.</strong> Filter a list down to "this month's orders", flip to the Graph icon, and you're charting exactly that subset. Views are just different lenses on the same filtered data.</p></div>
+    </section>
+
+    <!-- 5 WORKING WITH RECORDS -->
+    <section id="c5">
+      <h2><span class="num">5</span> Working with Records</h2>
+      <p class="lead">Create, edit, save, and the safe ways to get rid of things.</p>
+      <p class="para">A <strong>record</strong> is a single item — one customer, one product, one order. You open one in a <strong>form view</strong>, and everything you do to your data is really "editing a record".</p>
+      <h3 class="sub">Create &amp; save</h3>
+      <div class="flow">
+        <div class="f"><b>1</b><span>Click <strong>New</strong> to start a blank record.</span></div>
+        <div class="f"><b>2</b><span>Fill the fields. <strong>Bold / highlighted fields are required</strong> — Odoo won't save without them.</span></div>
+        <div class="f"><b>3</b><span>Odoo <strong>saves as you go</strong>: an unsaved record shows a cloud/☁ or the breadcrumb turns into <strong>Save</strong> (✓) and <strong>Discard</strong> (✕) buttons. Click ✓ to keep, ✕ to throw away.</span></div>
+      </div>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>Don't navigate away with unsaved changes.</strong> If you see the Save/Discard buttons, decide first — otherwise Odoo will nag you (or lose the edit). When in doubt, hit <strong>Discard</strong> to safely undo everything since you opened the record.</p></div>
+      <h3 class="sub">The cog / action menu</h3>
+      <p class="para">On most forms a <strong>⚙ Actions</strong> menu (or the gear icon) offers extra options for that record:</p>
+      <div class="mini">
+        <div class="m"><h4>📑 Duplicate</h4><p>Copy a record to make a similar one quickly.</p></div>
+        <div class="m"><h4>🗄️ Archive</h4><p>Hide a record you no longer use <em>without deleting it</em>. It disappears from normal views but data (and history) stays. The safe choice.</p></div>
+        <div class="m"><h4>🗑️ Delete</h4><p>Permanently remove. Often blocked once a record is linked to accounting or confirmed documents.</p></div>
+        <div class="m"><h4>🔗 Share / Export</h4><p>Export selected records to a spreadsheet, or generate a shareable link where supported.</p></div>
+      </div>
+      <div class="tip note"><span class="i">ℹ️</span><p><strong>Archive, don't delete.</strong> If you're unsure, archive. It's reversible (filter for "Archived" and un-archive), and it never breaks links to past documents the way deleting can.</p></div>
+    </section>
+
+    <!-- 6 FINDING THINGS -->
+    <section id="c6">
+      <h2><span class="num">6</span> Finding Things</h2>
+      <p class="lead">The search bar is the most powerful tool on the screen once you know its three jobs.</p>
+      <p class="para">The bar at the top of any list does far more than text search. Click into it and you'll see three menus drop down:</p>
+      <div class="flow">
+        <div class="f"><b>🔎</b><span><strong>Search</strong> — type a word; Odoo suggests searching by name, customer, reference, etc. Pick which field you meant.</span></div>
+        <div class="f"><b>⛃</b><span><strong>Filters</strong> — pre-built conditions like <em>My Orders</em>, <em>This Month</em>, <em>To Invoice</em>. Combine several to narrow down.</span></div>
+        <div class="f"><b>▤</b><span><strong>Group By</strong> — stack records into groups (by Salesperson, by Stage, by Month). Turns a flat list into a collapsible summary.</span></div>
+      </div>
+      <h3 class="sub">Save a search as a Favorite</h3>
+      <p class="para">Built the perfect filter + grouping? Open <strong>Favorites → Save current search</strong>, name it, and it's one click next time. You can even set it as your <strong>default</strong> for that screen, or share it with the team.</p>
+      <div class="tip"><span class="i">💡</span><p><strong>A "wrong-looking" list is usually a leftover filter.</strong> If records seem missing, check the coloured filter tags in the search bar and click the <strong>✕</strong> on each to clear them. Filters stick as you move around.</p></div>
+    </section>
+
+    <!-- 7 THE CHATTER -->
+    <section id="c7">
+      <h2><span class="num">7</span> The Chatter</h2>
+      <p class="lead">The panel beside (or below) most forms — the record's built-in history, notes and messaging. You'll use it constantly.</p>
+      <p class="para">The <strong>chatter</strong> turns every record into a little conversation and audit trail. Open a customer, an order or a ticket and you'll see it: a message box, a list of followers, and a timeline of everything that ever happened to that record.</p>
+      <h3 class="sub">Send Message vs Log Note — know the difference</h3>
+      <div class="mini">
+        <div class="m"><h4>✉️ Send message</h4><p><strong>Goes out</strong> — it emails the <em>followers</em> of the record (often the customer). Use for external communication.</p></div>
+        <div class="m"><h4>🗒️ Log note</h4><p><strong>Stays internal</strong> — a private note for colleagues. The customer never sees it. Use for "called them, no answer".</p></div>
+      </div>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>This is the classic new-joiner trap.</strong> <em>Send message</em> can email the customer; <em>Log note</em> does not. If it's an internal comment, always use <strong>Log note</strong>. Check which tab you're on before you type.</p></div>
+      <h3 class="sub">The rest of the chatter</h3>
+      <div class="mini">
+        <div class="m"><h4>👥 Followers</h4><p>People who get notified about this record. Add colleagues so they stay in the loop; remove yourself to stop notifications.</p></div>
+        <div class="m"><h4>⏰ Activities</h4><p>Schedule a to-do <em>on the record</em> — "Call back Tuesday". More in Chapter 8.</p></div>
+        <div class="m"><h4>📎 Attachments</h4><p>Drag files straight onto the chatter to store them with the record.</p></div>
+        <div class="m"><h4>🕓 Tracked history</h4><p>Odoo auto-logs important changes ("Stage: New → Won") so you can see who changed what, when.</p></div>
+      </div>
+      <div class="tip"><span class="i">💡</span><p><strong>Use @mentions.</strong> Type <kbd>@</kbd> and a colleague's name in a log note to ping them directly — they get a notification without you leaving the record.</p></div>
+    </section>
+
+    <!-- 8 ACTIVITIES & DISCUSS -->
+    <section id="c8">
+      <h2><span class="num">8</span> Activities &amp; Discuss</h2>
+      <p class="lead">How Odoo keeps track of what you need to do, and how the team chats.</p>
+      <h3 class="sub">Activities — your to-do list, attached to real work</h3>
+      <p class="para">An <strong>activity</strong> is a scheduled to-do linked to a record: a call, an email, a meeting, an upload. Instead of a separate to-do app, the reminder lives <em>on the order/ticket/customer</em> it's about. The <strong>clock icon (top-right)</strong> shows everything due across all apps — <span style="color:var(--red);font-weight:600">red = overdue</span>, <span style="color:var(--amber);font-weight:600">amber = today</span>, grey = later.</p>
+      <div class="flow">
+        <div class="f"><b>1</b><span>On any record's chatter, click <strong>Activities</strong> → pick a type, a due date and a note.</span></div>
+        <div class="f"><b>2</b><span>It appears in your clock menu and on the <strong>Activity view</strong> of that app.</span></div>
+        <div class="f"><b>3</b><span>Done it? Click <strong>Mark Done</strong> — optionally logging a note and scheduling the next one in one go.</span></div>
+      </div>
+      <h3 class="sub">Discuss — the built-in chat</h3>
+      <p class="para">The <strong>Discuss</strong> app (speech-bubble icon) is Odoo's internal messaging: direct messages, and <strong>channels</strong> for teams or topics (like Slack/Teams). Messages you're mentioned in, plus follower notifications from records, all gather here so nothing slips through.</p>
+      <div class="tip"><span class="i">💡</span><p><strong>Live by the clock icon.</strong> Start your day there: clear the red overdue items first. If work isn't scheduled as an activity, it's easy to forget — so schedule the next step before you close a record.</p></div>
+    </section>
+
+    <!-- 9 USERS & COMPANIES -->
+    <section id="c9">
+      <h2><span class="num">9</span> Users, Companies &amp; Your Preferences</h2>
+      <p class="lead">Who can do what, working across multiple companies, and setting up your own profile.</p>
+      <h3 class="sub">Users &amp; access rights</h3>
+      <p class="para">Every person is a <strong>user</strong>. What each user can see and do is controlled by <strong>access rights</strong> — grouped into roles per app (e.g. in Sales: <em>User</em> vs <em>Administrator</em>). This is why a colleague might see a menu you don't: different rights, same database.</p>
+      <div class="mini">
+        <div class="m"><h4>👤 Internal user</h4><p>A staff member with a proper login and app access. (These are what a subscription counts.)</p></div>
+        <div class="m"><h4>🌐 Portal user</h4><p>An external contact (customer/vendor) who only sees <em>their own</em> documents through a limited portal — no back-office access.</p></div>
+      </div>
+      <h3 class="sub">Multi-company</h3>
+      <p class="para">One Odoo database can hold <strong>several companies</strong>. If you have access to more than one, a <strong>company switcher</strong> appears near your name — tick which companies you're working in. Records belong to a company, so the switcher controls what you see.</p>
+      <h3 class="sub">Your preferences</h3>
+      <p class="para">Open the <strong>user menu (your avatar, top-right) → Preferences / My Profile</strong> to set the things that make Odoo yours:</p>
+      <ul class="clean">
+        <li><strong>Language</strong> — the whole interface translates instantly.</li>
+        <li><strong>Timezone</strong> — get this right or your times/deadlines will look off.</li>
+        <li><strong>Email signature</strong> — added to messages you send from Odoo.</li>
+        <li><strong>Notification preference</strong> — handle notifications by email or in-app (Discuss).</li>
+      </ul>
+      <div class="tip note"><span class="i">ℹ️</span><p><strong>Set your timezone first.</strong> A wrong timezone is the #1 reason activities and meeting times look one or two hours off for new joiners.</p></div>
+    </section>
+
+    <!-- 10 SETTINGS & DEV MODE -->
+    <section id="c10">
+      <h2><span class="num">10</span> Settings &amp; Developer Mode</h2>
+      <p class="lead">Where behaviour is configured, and the "show me more" switch consultants use daily.</p>
+      <h3 class="sub">Settings</h3>
+      <p class="para">The <strong>Settings</strong> app has a <em>General Settings</em> page plus a section for <strong>each installed app</strong>. This is where features are switched on/off and defaults are set. Two habits:</p>
+      <div class="flow">
+        <div class="f"><b>1</b><span>Use the app filter/menu at the left of Settings to jump straight to, say, <strong>Sales</strong> settings.</span></div>
+        <div class="f"><b>2</b><span>Toggling a setting often reveals more options below it — read before you save.</span></div>
+      </div>
+      <h3 class="sub">Developer Mode</h3>
+      <p class="para"><strong>Developer (debug) mode</strong> unlocks technical information helpful when configuring or troubleshooting: real field names, model names, extra menus, and the ability to inspect automated rules. It changes <em>what you can see</em>, not your data.</p>
+      <div class="path">Settings <b>→</b> scroll to the bottom of <b>General Settings</b> <b>→</b> Developer Tools <b>→</b> Activate the developer mode</div>
+      <div class="mini">
+        <div class="m"><h4>🔍 See field names</h4><p>Hover a field to get its technical name — essential when writing docs, imports or asking for help.</p></div>
+        <div class="m"><h4>🐞 The bug menu</h4><p>A ⚙/bug icon appears in the top bar with tools to view the record's metadata, fields and automations.</p></div>
+      </div>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>Developer mode is for looking, not breaking.</strong> It exposes powerful technical screens. As a new joiner, use it to <em>read</em> field/model names and understand the setup — don't change technical settings on a customer's live database without guidance.</p></div>
+      <div class="tip"><span class="i">💡</span><p><strong>Turn it off when done</strong> (same place → <em>Deactivate</em>) so your day-to-day screens stay clean and simple.</p></div>
+    </section>
+
+    <!-- GLOSSARY -->
+    <section id="glossary">
+      <h2><span class="num">★</span> Plain-English glossary</h2>
+      <p class="lead">The words you'll keep hearing — decoded.</p>
+      <dl class="glossary">
+        <div><dt>ERP</dt><dd>Enterprise Resource Planning — one connected system that runs many parts of a business.</dd></div>
+        <div><dt>App / Module</dt><dd>A switch-on-able business area (app) or smaller add-on (module) inside the same database.</dd></div>
+        <div><dt>Community / Enterprise</dt><dd>The free open-source edition vs the paid edition with more features and support.</dd></div>
+        <div><dt>Record</dt><dd>A single item of data — one customer, product, order or ticket.</dd></div>
+        <div><dt>View</dt><dd>A way of displaying records: List, Kanban, Form, Calendar, Pivot, Graph, Activity, Map.</dd></div>
+        <div><dt>Form view</dt><dd>The detailed screen for one record, where you read and edit it.</dd></div>
+        <div><dt>Breadcrumbs</dt><dd>The clickable trail showing where you are, used to step back without losing your place.</dd></div>
+        <div><dt>Chatter</dt><dd>The messaging + history panel on a record: messages, log notes, followers, activities, attachments.</dd></div>
+        <div><dt>Send message vs Log note</dt><dd>A message notifies followers (can email the customer); a log note is internal-only.</dd></div>
+        <div><dt>Follower</dt><dd>A person who gets notified about changes to a record.</dd></div>
+        <div><dt>Activity</dt><dd>A scheduled to-do (call, email, meeting) attached to a record; shown under the clock icon.</dd></div>
+        <div><dt>Discuss</dt><dd>Odoo's built-in chat — direct messages and team channels.</dd></div>
+        <div><dt>Filter / Group By / Favorite</dt><dd>Search tools: narrow records, stack them into groups, and save a search for reuse.</dd></div>
+        <div><dt>Archive</dt><dd>Hide a record without deleting it — reversible and safe.</dd></div>
+        <div><dt>User (internal / portal)</dt><dd>A staff login with back-office access, vs an external contact with a limited portal.</dd></div>
+        <div><dt>Access rights</dt><dd>Rules that decide what each user can see and do, grouped into roles per app.</dd></div>
+        <div><dt>Multi-company</dt><dd>Several companies in one database, chosen with the company switcher.</dd></div>
+        <div><dt>Developer mode</dt><dd>A switch that reveals technical info (field/model names, debug tools) for configuring and troubleshooting.</dd></div>
+      </dl>
+    </section>
+
+    <footer>
+      <p>Official Odoo 19 sources:</p>
+      <div class="links">
+        <a href="https://www.odoo.com/documentation/19.0/" target="_blank" rel="noopener">📖 Odoo docs</a>
+        <a href="https://www.odoo.com/documentation/19.0/applications/general.html" target="_blank" rel="noopener">⚙️ General settings docs</a>
+        <a href="https://www.odoo.com/slides" target="_blank" rel="noopener">🎓 Free courses (eLearning)</a>
+        <a href="https://erp.muchconsulting.de/odoo/knowledge/1511/knowledge/2591" target="_blank" rel="noopener">📚 much. Knowledge</a>
+        <a href="https://www.youtube.com/watch?v=NoxYrnnHgfk" target="_blank" rel="noopener">▶️ Navigate in Odoo (video)</a>
+      </div>
+      <p>Made for new joiners · Odoo 19 Getting Started · You've got this 💪</p>
+    </footer>
+
+  </div><!-- /content -->
+</div><!-- /layout -->
+
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+
+<script>
+  // Back-to-top button
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}
+  });
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+  // Scroll-spy: highlight the current chapter in the sidebar
+  var links=Array.prototype.slice.call(document.querySelectorAll('aside.sidebar a'));
+  var map={};
+  links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.remove('active')});
+        var a=map[e.target.id]; if(a){a.classList.add('active')}
+      }
+    })
+  },{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+</script>
+
+</body>
+</html>

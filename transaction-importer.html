@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deep Dive: Transaction Importer — User Guide</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:40px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--mt-fg);border-radius:10px;padding:13px 16px;margin:16px 0}
+.callout.tip{border-left-color:var(--border-warning);background:var(--bg-warning)}
+.callout.ok{border-left-color:var(--border-success);background:var(--bg-success)}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:16px 0}
+.fbox{flex:1;min-width:150px;border:1px solid var(--border-strong);border-radius:12px;background:var(--surface-1);padding:12px 12px}
+.fbox .n{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em}
+.fbox .t{font-weight:500;font-size:14.5px;margin-top:2px}
+.fbox .s{font-size:12.5px;color:var(--text-2);margin-top:3px}
+.farr{display:flex;align-items:center;color:var(--text-3);font-size:18px}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+.dir{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scn{color:var(--text-2);font-size:15px;margin:10px 0}
+.scn b{color:var(--text);font-weight:500}
+.rail{position:relative;margin:16px 0 4px}
+.rail:before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:var(--border)}
+.stg{display:flex;gap:14px;align-items:stretch;margin-bottom:10px;position:relative}
+.node{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;border:2px solid var(--fg);z-index:1}
+.card{flex:1;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:10px 14px;cursor:pointer}
+.card:hover{border-color:var(--border-strong)}
+.stg.sel .card{border-color:var(--fg);background:var(--surface-2)}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);color:var(--fg);font-size:12px;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.ttl{font-weight:500;font-size:15px}
+.ex{color:var(--text-2);font-size:13px;margin-top:3px}
+.det{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:14px 16px;margin-top:6px}
+.det h4{margin:0 0 2px;font-size:15px;font-weight:500}
+.det .lab{font-size:12px;color:var(--text-3);margin:10px 0 3px;text-transform:uppercase;letter-spacing:.04em}
+.det p{margin:0;font-size:14px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border)}
+.chip.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.chip.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.chip.bad{background:var(--bg-danger);color:var(--text-danger);border-color:var(--border-danger)}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.words{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:6px 18px;margin:14px 0}
+.words dt{font-weight:500;margin-top:10px}
+.words dd{margin:0 0 4px;color:var(--text-2);font-size:14.5px}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;padding-top:12px;border-top:1px solid var(--border)}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.dot{width:11px;height:11px;border-radius:3px;background:var(--fg)}
+.doc{display:none}
+.docmode #live{display:none}
+.docmode .doc{display:block}
+.doc h3{border-top:1px solid var(--border);padding-top:16px}
+footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{.noprint{display:none!important}body{background:#fff;font-size:12px}.wrap{max-width:none;padding:0}#live{display:none!important}.doc{display:block!important}.stg,.det,h3{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>Deep Dive: Transaction Importer</h1>
+<p class="lead">Automatically pull payments out of PayPal, Stripe and friends, drop them into Odoo, and match them to the right invoices — with no copy-pasting. A thorough but plain-language guide for a new joiner.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="document.body.classList.toggle('docmode')">Handout view</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>1. What is this?</h2>
+<p>When a business sells online, money ends up sitting at payment companies — PayPal, Stripe, and so on — each with its own list of payments. The <b>Transaction Importer</b> reaches into those companies, copies each payment into Odoo, and then <b>matches it to the invoice it paid</b>. So your accounting stays up to date on its own.</p>
+<p>Two words to get straight right away:</p>
+<div class="words">
+<dt>Transaction</dt><dd>Here it means <b>one payment</b> held by a provider — e.g. "customer paid €40 by PayPal on 3 March, PayPal kept €1.20 in fees". (It is <i>not</i> a database thing — it's a real money movement.)</dd>
+<dt>Provider</dt><dd>The outside payment service the money is sitting in. This module knows six of them: <b>PayPal, Stripe, Mollie, Heidelpay, Shopify</b> and <b>SIX</b> (a Swiss card processor).</dd>
+</div>
+<p><b>Why it exists:</b> without it, someone has to download those payment lists and hand-type (or CSV-import) them into Odoo, then manually tick off which payment paid which invoice — slow and easy to get wrong. This module does both halves automatically.</p>
+
+<h2>2. The big picture</h2>
+<p>End to end, a payment travels like this — and every step can run on a timer <b>or</b> be triggered by hand:</p>
+<div class="flow">
+<div class="fbox"><div class="n">Step 1 · Source</div><div class="t">Provider</div><div class="s">PayPal/Stripe/… holds the payment</div></div>
+<div class="farr">→</div>
+<div class="fbox"><div class="n">Step 2 · Fetch</div><div class="t">Import</div><div class="s">Odoo logs in and downloads the payments for a date range</div></div>
+<div class="farr">→</div>
+<div class="fbox"><div class="n">Step 3 · Land</div><div class="t">Bank statement line</div><div class="s">Each payment becomes a row on a bank statement in Odoo</div></div>
+<div class="farr">→</div>
+<div class="fbox"><div class="n">Step 4 · Match</div><div class="t">Reconcile</div><div class="s">Odoo links each payment to the invoice it settles</div></div>
+</div>
+<div class="callout ok"><b>Safe to re-run.</b> The importer remembers what it already brought in (it checks each payment's id). If you import an overlapping date range twice, it simply skips the ones it already has — no duplicates.</div>
+
+<h3>A few words you'll hear</h3>
+<dl class="words">
+<dt>Integration</dt><dd>One saved connection to <b>one</b> provider account (its login details + schedule). One PayPal account = one integration.</dd>
+<dt>Setting Line</dt><dd>A rule that says "payments matching <i>these</i> conditions go into <i>this</i> accounting book, and match to invoices like <i>this</i>." An integration can have several.</dd>
+<dt>Journal</dt><dd>The accounting book (a specific bank/cash account) where the imported payments land.</dd>
+<dt>Bank statement line</dt><dd>The Odoo record each imported payment becomes — one row of a bank statement (money in or out).</dd>
+<dt>Reconcile</dt><dd>Officially linking a payment to the invoice it pays, so the invoice is marked settled.</dd>
+<dt>Scheduled action (cron)</dt><dd>A background job that runs on a timer. This module makes two per integration — one to import, one to reconcile.</dd>
+<dt>Log</dt><dd>The system's diary of what happened (successes, skips, errors) — your first place to look when something seems off.</dd>
+<dt>Production vs Test</dt><dd>Production = the real, live account. Test (staging) = a safe practice account; the module uses separate "Test Credentials" there automatically.</dd>
+</dl>
+
+<h2>3. Under the hood (the deep-dive bit)</h2>
+<p>You don't need this to use it — but it helps you understand what you're clicking:</p>
+<div class="words">
+<dt>The Integration record</dt><dd>The heart of it. It holds the provider login and runs the two jobs (import + reconcile). It's built on much.'s shared <b>Integration Hub</b> foundation, so it behaves like our other connectors (same states, same logging).</dd>
+<dt>Setting Lines do the routing</dt><dd>Each line points at a Journal and carries the matching rules. No active line = nothing imports (the log will literally say "No importer setting lines configured").</dd>
+<dt>Matching options</dt><dd>You can require an <b>exact amount</b> match, or allow small <b>over/underpayment</b> tolerances. You also choose to match <b>by Partner</b> (the customer) or <b>by Transaction ID</b>. Matching on neither is risky — it could tie a payment to any invoice with the same amount.</dd>
+<dt>Fees</dt><dd>Optionally, the importer adds one extra statement line that sums the provider's fees, so your books reflect what the provider kept.</dd>
+<dt>Safety nets</dt><dd>Work happens in batches; a bad batch is rolled back without spoiling the others. Long runs pause after ~10 minutes and continue next time. Empty date ranges stop retrying after a few tries so nothing loops forever.</dd>
+</div>
+
+<h2>4. Step by step</h2>
+<p>Pick a task below. Click any step for the plain explanation, where to find it, and a tip.</p>
+
+<div id="live" class="noprint">
+<div class="bar"><select id="wf"></select><span class="dir" id="dir"></span></div>
+<div class="scn" id="scn"></div>
+<div class="rail" id="rail"></div>
+<div class="det" id="det"></div>
+</div>
+
+<div class="lg">
+<span class="lgi m-purple"><span class="dot"></span>Step you take</span>
+<span class="lgi m-teal"><span class="dot"></span>What appears / result</span>
+<span class="lgi m-blue"><span class="dot"></span>Choice / option</span>
+<span class="lgi m-amber"><span class="dot"></span>Where to check</span>
+<span class="lgi m-pink"><span class="dot"></span>One-time setting</span>
+</div>
+
+<div class="doc" id="doc"></div>
+
+<footer>Onboarding aid for the <code>transaction_import</code> module ("Transaction Importer", Odoo 19). Models, fields, buttons and cron names are drawn from the module source. It builds on the private Integration Hub (<code>ihub</code>) base, so a few menu names / states come from that framework. Six built-in providers: PayPal, Stripe, Mollie, Heidelpay, Shopify, SIX. Self-contained &amp; offline.</footer>
+
+</div>
+<script>
+const WF=[
+{id:'setup',label:'A · Set up a provider',dir:'One-time setup',scn:'Connect your company\'s PayPal account so its payments flow into Odoo.',steps:[
+{m:'m-pink',t:'Create the integration',ex:'Name: "PayPal Production"',mo:'Integration Hub > Integration Settings > New',st:['Inactive'],biz:'This is one saved connection to one provider account. Choosing the provider type (e.g. PayPal) tells Odoo which service to talk to.',cfg:'One integration = one provider account. It starts inactive until you activate it.'},
+{m:'m-pink',t:'Enter the credentials',ex:'PayPal Client ID + Secret',mo:'Integration form > Connection Settings tab',st:[],biz:'These are the login keys the importer uses to reach the provider. Each provider shows only the fields it needs (PayPal calls them "Client ID" and Secret).',cfg:'On a test/staging instance, fill the "Test Credentials" instead — the module picks the right set automatically.'},
+{m:'m-blue',t:'Set the schedule',ex:'Every 2 hours, delay 1 hour',mo:'Integration form > Import Transaction group',st:[],biz:'Controls how often the automatic import runs, and how far back it looks each time.',cfg:'The delay must never be bigger than the interval — Odoo will refuse to save if it is.'},
+{m:'m-purple',t:'Add at least one setting line',ex:'See task B',mo:'Integration form > Reconciliation Settings tab',st:[],biz:'Without an active setting line, nothing imports — the log will say "No importer setting lines configured".',cfg:'You need one line per journal/rule; most people start with a single line.'},
+{m:'m-pink',t:'Test Connection → go live',ex:'Creates the two timed jobs',mo:'Integration form > Test Connection button',st:['Staging','Active'],biz:'This checks the login works and creates the two scheduled jobs ("IHub: …" for import and "IHub: Reconcile - …").',cfg:'After this, the importer runs on its own on the schedule you set.'}
+]},
+{id:'line',label:'B · Route & match with a Setting Line',dir:'The rule that does the work',scn:'Send completed PayPal payments into your "PayPal" journal and auto-match them to invoices.',steps:[
+{m:'m-purple',t:'Add a line',ex:'One rule = one row',mo:'Integration > Reconciliation Settings > Setting Lines',st:[],biz:'Each line is one routing/matching rule. You can add several if different payments need different handling.',cfg:'Untick "Active" later to pause a line without deleting it.'},
+{m:'m-blue',t:'Pick the Journal (required)',ex:'Journal = "PayPal"',mo:'Setting line > Journal field',st:[],biz:'The accounting book where the imported payments land. One bank statement is created per import for this line.',cfg:'This field is required — the line does nothing without it.'},
+{m:'m-blue',t:'Set Parameters (optional filter)',ex:'e.g. only "successful" payments',mo:'Setting line > Parameters field',st:[],biz:'A comma-separated filter. Leave it blank to import everything; fill it to import only certain kinds (e.g. only completed payments).',cfg:'Only editable when the provider defines what the parameter means.'},
+{m:'m-blue',t:'Turn on Reconcile + matching',ex:'Match by Partner · exact amount',mo:'Setting line > Reconcile / Match over',st:[],biz:'Tick Reconcile, then choose exact-amount matching (default) or allow small over/underpayment, and match by Partner or by Transaction ID.',cfg:'Matching on neither Partner nor Transaction ID is risky — it can grab any invoice with the same amount.'},
+{m:'m-blue',t:'Fees (optional)',ex:'Add a summed-fee line',mo:'Setting line > Fees checkbox',st:[],biz:'Adds one extra statement line totalling the provider’s fees, so your books show what the provider kept.',cfg:'It’s flagged so fees are never counted twice.'},
+{m:'m-pink',t:'Keep the line Active',ex:'Leave "Active" ticked',mo:'Setting line > Active',st:['Active'],biz:'Only active lines are used during import.',cfg:'Untick to temporarily switch this rule off.'}
+]},
+{id:'manual',label:'C · Import & fix things by hand',dir:'When you can’t wait for the timer',scn:'Back-fill last week\'s payments and clear a batch that didn’t match.',steps:[
+{m:'m-purple',t:'Open "Run Manually"',ex:'Opens the Manual Run popup',mo:'Integration form > Run Manually button',st:[],biz:'Lets you import or reconcile right now instead of waiting for the scheduled job.',cfg:'The button shows once the integration isn’t inactive.'},
+{m:'m-blue',t:'Choose the dates',ex:'From / To date range',mo:'Manual Run wizard > from & to',st:[],biz:'Picks which period of payments to pull. Defaults to yesterday → today.',cfg:'Safe to overlap with earlier runs — duplicates are skipped automatically.'},
+{m:'m-purple',t:'Pick actions and Run',ex:'Tick Import and/or Reconcile',mo:'Manual Run wizard > Run',st:[],biz:'You can import, reconcile, or both. Manual runs show problems as clear pop-up errors (not just hidden in logs).',cfg:'Ticking neither box gives "Please select at least one option to run".'},
+{m:'m-teal',t:'Read the result',ex:'"N transactions imported / reconciled"',mo:'On-screen pop-up',st:[],biz:'Tells you how many payments came in and how many matched.',cfg:'Re-running the same range is safe if the count looks low.'},
+{m:'m-amber',t:'Review skips in the log',ex:'"no matches" · "multiple matches"',mo:'Integration > log messages',st:['Info','Warning','Error'],biz:'Payments that couldn’t be matched are logged with the reason — no matching invoice, several possible matches, or no customer on the invoice.',cfg:'Fix by adjusting the setting line’s tolerances or the match option, then re-run Reconcile.'}
+]}
+];
+let wi=0,sel=0;
+const selEl=document.getElementById('wf');
+WF.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;selEl.appendChild(o);});
+function tone(s){s=s.toLowerCase();if(/fail|error|bad|inactive/.test(s))return'bad';if(/done|ok|success|info|active|staging/.test(s))return'ok';if(/draft|manual|warning|choice/.test(s))return'warn';return'';}
+function chipHtml(st){return st.length?'<div class="lab">Status</div><div class="chips">'+st.map(x=>'<span class="chip '+tone(x)+'">'+x+'</span>').join('')+'</div>':'';}
+function render(){
+const w=WF[wi];
+document.getElementById('dir').textContent=w.dir;
+document.getElementById('scn').innerHTML=w.scn;
+const rail=document.getElementById('rail');rail.innerHTML='';
+w.steps.forEach((s,i)=>{
+const stg=document.createElement('div');stg.className='stg '+s.m+(i===sel?' sel':'');
+stg.innerHTML='<div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div></div>';
+stg.querySelector('.card').onclick=()=>{sel=i;render();};
+rail.appendChild(stg);
+});
+const s=w.steps[sel];
+document.getElementById('det').innerHTML='<h4>'+s.t+'</h4><p>'+s.biz+'</p><div class="lab">Where to find it</div><p><code>'+s.mo+'</code></p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'');
+}
+selEl.onchange=()=>{wi=+selEl.value;sel=0;render();};
+render();
+function renderDoc(){
+const doc=document.getElementById('doc');let h='';
+WF.forEach(w=>{
+h+='<h3>'+w.label+' &nbsp;&middot;&nbsp; '+w.dir+'</h3><p class="scn">'+w.scn+'</p><div class="rail">';
+w.steps.forEach((s,i)=>{
+h+='<div class="stg '+s.m+'"><div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div><div class="det" style="margin-top:8px"><p>'+s.biz+'</p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'')+'</div></div></div>';
+});
+h+='</div>';
+});
+doc.innerHTML=h;
+}
+renderDoc();
+</script>
+</body>
+</html>

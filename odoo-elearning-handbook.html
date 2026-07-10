@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odoo eLearning — New Joiner Handbook</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--ma-fg);--brand-soft:var(--ma-bg);--brand-solid:#B0730F;--accent:#B0730F;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+    --mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+    --brand-solid:#E0A54A;--accent:#E0A54A;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+  header.hero{max-width:1160px;margin:0 auto;padding:34px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:30px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1160px;margin:0 auto;padding:16px 20px 90px}
+  aside.sidebar{position:sticky;top:20px;flex:0 0 250px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;max-height:calc(100vh - 40px);overflow:auto}
+  aside.sidebar h3{margin:4px 8px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  aside.sidebar a{display:block;padding:8px 10px;border-radius:9px;color:var(--text);text-decoration:none;font-size:14.5px;font-weight:500}
+  aside.sidebar a .n{display:inline-block;width:22px;color:var(--text-3);font-weight:700;font-size:13px}
+  aside.sidebar a:hover{background:var(--brand-soft)}
+  aside.sidebar a.active{background:var(--brand-solid);color:#fff}
+  aside.sidebar a.active .n{color:rgba(255,255,255,.8)}
+  .content{flex:1 1 auto;min-width:0}
+  .welcome{background:var(--surface-1);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+  .welcome h2{margin:0 0 8px;font-size:20px}
+  .welcome p{margin:0;color:var(--text-2)}
+  .welcome .wave{font-size:22px}
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:24px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+  .steps{display:grid;gap:12px;margin-top:6px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .step .dot{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center}
+  .step h4{margin:2px 0 4px;font-size:16px}
+  .step p{margin:0;color:var(--text-2)}
+  .step .hint{display:inline-block;margin-top:8px;font-size:13px;background:var(--blue-soft);color:var(--blue);padding:3px 10px;border-radius:8px;font-weight:600}
+  .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-top:8px}
+  .type{border-radius:12px;padding:15px;border:1px solid var(--border)}
+  .type .icon{font-size:22px}
+  .type h4{margin:8px 0 4px;font-size:15px}
+  .type p{margin:0;font-size:13.5px;color:var(--text-2)}
+  .type.own,.type.income{background:var(--green-soft);border-color:var(--border-success)}
+  .type.owe{background:var(--red-soft);border-color:var(--border-danger)}
+  .type.equity{background:var(--blue-soft);border-color:#8fbcec}
+  .type.expense{background:var(--amber-soft);border-color:var(--border-warning)}
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#f2d29f;font-weight:600}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+  .flow{display:grid;gap:10px;margin-top:8px}
+  .flow .f{display:flex;gap:14px;align-items:flex-start}
+  .flow .f b{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .flow .f span{color:var(--text-2)}
+  .why{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+  .why .w{background:var(--brand-soft);border-radius:10px;padding:12px;font-size:14px;font-weight:600;color:var(--brand)}
+  .why .w small{display:block;font-weight:400;color:var(--text-2);margin-top:3px}
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:460px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+  kbd{font-family:var(--mono);font-size:.8em;background:var(--surface-0);border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+  dl.glossary{margin:0}
+  dl.glossary div{padding:13px 0;border-bottom:1px solid var(--border)}
+  dl.glossary div:last-child{border-bottom:0}
+  dl.glossary dt{font-weight:700;color:var(--brand)}
+  dl.glossary dd{margin:4px 0 0;color:var(--text-2);font-size:15px}
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+  .links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 18px}
+  .links a{background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:8px 15px}
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+  @media (max-width:900px){.layout{flex-direction:column;padding-top:12px}aside.sidebar{position:static;flex:none;width:100%;max-height:none}aside.sidebar nav{display:grid;grid-template-columns:1fr 1fr;gap:2px}}
+  @media (max-width:560px){.hero h1{font-size:25px}.mini{grid-template-columns:1fr}aside.sidebar nav{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <a class="backlink" href="index.html">← Back to Guide Hub</a>
+  <span class="kicker">New Joiner Handbook · Online Courses</span>
+  <h1>Odoo eLearning</h1>
+  <p>Build and publish online courses — for training staff internally or teaching customers, with quizzes, certificates and progress tracking.</p>
+  <div class="badge-v">Odoo 19 · eLearning</div>
+</header>
+<div class="layout">
+  <aside class="sidebar"><h3>Chapters</h3><nav><a href="#c1"><span class="n">1</span>What eLearning Is</a><a href="#c2"><span class="n">2</span>Courses</a><a href="#c3"><span class="n">3</span>Content Types</a><a href="#c4"><span class="n">4</span>Access & Enrolment</a><a href="#c5"><span class="n">5</span>Quizzes & Certification</a><a href="#c6"><span class="n">6</span>Gamification</a><a href="#c7"><span class="n">7</span>Publishing & Reporting</a></nav><h3 style="margin-top:16px">Reference</h3><nav><a href="#glossary"><span class="n">★</span>Glossary</a></nav></aside>
+  <div class="content">
+    <div class="welcome"><h2><span class="wave">👋</span> Welcome aboard!</h2><p>Odoo <strong>eLearning</strong> lets you build <strong>online courses</strong> from videos, documents and quizzes. We use it to onboard new joiners and to teach customers how our products work. Learners watch, read, take quizzes and earn certificates — and you can see exactly how far each person has got.</p></div>
+    <div class="bigidea"><span class="tag">🧠 Read this first — the one big idea</span><p>A course is a list of <strong>content</strong> grouped into <strong>sections</strong>. Content can be a <strong>video, a document, a web page or a quiz</strong>. Set who can <strong>enrol</strong>, optionally add a <strong>certification</strong>, publish it — and Odoo tracks every learner’s progress.</p></div>
+    <section id="c1"><h2><span class="num">1</span> What eLearning Is</h2><p class="lead">Package knowledge into courses people work through at their own pace.</p><p class="para">eLearning is Odoo’s course builder. You assemble lessons, decide who can take the course, and publish it on your website. Learners progress through the content while Odoo records completion — perfect for repeatable training you don’t want to deliver live every time.</p><div class="mini"><div class="m"><h4>🎓 Course</h4><p>A complete lesson set on one topic.</p></div><div class="m"><h4>🧱 Content</h4><p>A single lesson: video, document, page or quiz.</p></div><div class="m"><h4>📑 Section</h4><p>A group of contents inside a course.</p></div><div class="m"><h4>🏅 Certification</h4><p>A graded quiz that awards a certificate.</p></div></div></section><section id="c2"><h2><span class="num">2</span> Courses</h2><p class="lead">The container for a topic’s lessons.</p><div class="path">eLearning <b>→</b> New (course)</div><p class="para">Give the course a <strong>title</strong>, a description, tags and a cover image. Inside, organise lessons into <strong>sections</strong> (e.g. “Basics”, “Advanced”) so long courses stay tidy. Reorder content by dragging.</p></section><section id="c3"><h2><span class="num">3</span> Content Types</h2><p class="lead">Mix formats to keep courses engaging.</p><div class="types"><div class="type"><div class="icon">🎬</div><h4>Video</h4><p>An embedded or uploaded video lesson.</p></div><div class="type"><div class="icon">📄</div><h4>Document</h4><p>A PDF or slide deck to read.</p></div><div class="type"><div class="icon">🌐</div><h4>Web page</h4><p>A rich page written right in Odoo.</p></div><div class="type"><div class="icon">❓</div><h4>Quiz</h4><p>Questions that test and reinforce learning.</p></div></div><p class="para">Add content inside a course and pick its type. Each item can require the learner to finish it before the next unlocks, if you want a strict path.</p></section><section id="c4"><h2><span class="num">4</span> Access & Enrolment</h2><p class="lead">Decide who can take the course and how they get in.</p><div class="tablewrap"><table class="t"><tr><th>Enrol policy</th><th>Meaning</th></tr><tr><td><strong>Public / Free</strong></td><td>Anyone can take it.</td></tr><tr><td><strong>On invitation</strong></td><td>Only people you invite can join.</td></tr><tr><td><strong>On payment</strong></td><td>Learners buy access (ties into eCommerce).</td></tr></table></div><p class="para">Course <strong>visibility</strong> controls who even sees it exists (everyone, signed-in members, or invited only). Combine visibility + enrol policy to make courses public, members-only or paid.</p></section><section id="c5"><h2><span class="num">5</span> Quizzes & Certification</h2><p class="lead">Check understanding and hand out proof of completion.</p><p class="para">A <strong>quiz</strong> is content made of questions, each worth points. A <strong>certification</strong> course requires passing a quiz to earn a certificate the learner can share. Great for “you must pass this to be signed off” training.</p><div class="tip"><span class="i">💡</span><p>Keep quizzes short and focused on the must-know points — they reinforce learning as much as they test it.</p></div></section><section id="c6"><h2><span class="num">6</span> Gamification & Community</h2><p class="lead">Points and badges that make learning stick.</p><div class="mini"><div class="m"><h4>⭐ Karma</h4><p>Points learners earn for finishing content and passing quizzes.</p></div><div class="m"><h4>🏅 Badges</h4><p>Awards for milestones — recognition that motivates.</p></div><div class="m"><h4>🥇 Ranks</h4><p>Levels reached as karma grows.</p></div><div class="m"><h4>💬 Reviews & Forum</h4><p>Learners can rate courses and ask questions.</p></div></div><div class="tip note"><span class="i">ℹ️</span><p>Gamification is optional — turn it on when you want engagement, leave it off for straightforward internal training.</p></div></section><section id="c7"><h2><span class="num">7</span> Publishing & Reporting</h2><p class="lead">Put the course live, then watch progress.</p><p class="para">Courses live on your <strong>website</strong>. Toggle <strong>Published</strong> to make a course visible; unpublish to hide a draft. Once live, reporting shows <strong>attendees</strong>, how far each has progressed, and completion/quiz results — so you know who has actually done the training.</p><div class="tip"><span class="i">💡</span><p>For onboarding, check the attendee list to confirm new joiners have completed the required courses.</p></div></section><section id="glossary"><h2><span class="num">★</span> Plain-English glossary</h2><p class="lead">The words you'll keep hearing — decoded.</p><dl class="glossary"><div><dt>Course</dt><dd>A complete set of lessons on one topic.</dd></div><div><dt>Content</dt><dd>A single lesson: video, document, web page or quiz.</dd></div><div><dt>Section</dt><dd>A group of contents within a course.</dd></div><div><dt>Enrol policy</dt><dd>Who can join: public, on invitation, or on payment.</dd></div><div><dt>Visibility</dt><dd>Who can see that a course exists.</dd></div><div><dt>Quiz</dt><dd>Question-based content that tests learning.</dd></div><div><dt>Certification</dt><dd>A course that awards a certificate on passing.</dd></div><div><dt>Karma</dt><dd>Points earned for learning activity.</dd></div><div><dt>Badge / Rank</dt><dd>Awards and levels that gamify progress.</dd></div><div><dt>Attendee</dt><dd>A learner enrolled in a course.</dd></div></dl></section>
+    <footer><p>Official Odoo 19 sources:</p><div class="links"><a href="https://www.odoo.com/documentation/19.0/applications/websites/elearning.html" target="_blank" rel="noopener">📖 eLearning docs</a><a href="https://www.odoo.com/slides" target="_blank" rel="noopener">🎓 Free courses</a><a href="https://erp.muchconsulting.de/odoo/knowledge/1511/knowledge/2591" target="_blank" rel="noopener">📚 much. Knowledge</a><a href="https://www.youtube.com/watch?v=0GUx0Lcr1ZY" target="_blank" rel="noopener">▶️ eLearning basics (video)</a></div><p>Made for new joiners · Odoo 19 eLearning · You've got this 💪</p></footer>
+  </div>
+</div>
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+<script>
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}});
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  var links=Array.prototype.slice.call(document.querySelectorAll('aside.sidebar a'));
+  var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('active')});var a=map[e.target.id];if(a){a.classList.add('active')}}})},{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odoo Website & eCommerce — New Joiner Handbook</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--mt-fg);--brand-soft:var(--mt-bg);--brand-solid:#0d7d78;--accent:#0d7d78;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+    --mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+    --brand-solid:#34b3ab;--accent:#34b3ab;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+  header.hero{max-width:1160px;margin:0 auto;padding:34px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:30px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1160px;margin:0 auto;padding:16px 20px 90px}
+  aside.sidebar{position:sticky;top:20px;flex:0 0 250px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;max-height:calc(100vh - 40px);overflow:auto}
+  aside.sidebar h3{margin:4px 8px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  aside.sidebar a{display:block;padding:8px 10px;border-radius:9px;color:var(--text);text-decoration:none;font-size:14.5px;font-weight:500}
+  aside.sidebar a .n{display:inline-block;width:22px;color:var(--text-3);font-weight:700;font-size:13px}
+  aside.sidebar a:hover{background:var(--brand-soft)}
+  aside.sidebar a.active{background:var(--brand-solid);color:#fff}
+  aside.sidebar a.active .n{color:rgba(255,255,255,.8)}
+  .content{flex:1 1 auto;min-width:0}
+  .welcome{background:var(--surface-1);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+  .welcome h2{margin:0 0 8px;font-size:20px}
+  .welcome p{margin:0;color:var(--text-2)}
+  .welcome .wave{font-size:22px}
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:24px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+  .steps{display:grid;gap:12px;margin-top:6px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .step .dot{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center}
+  .step h4{margin:2px 0 4px;font-size:16px}
+  .step p{margin:0;color:var(--text-2)}
+  .step .hint{display:inline-block;margin-top:8px;font-size:13px;background:var(--blue-soft);color:var(--blue);padding:3px 10px;border-radius:8px;font-weight:600}
+  .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-top:8px}
+  .type{border-radius:12px;padding:15px;border:1px solid var(--border)}
+  .type .icon{font-size:22px}
+  .type h4{margin:8px 0 4px;font-size:15px}
+  .type p{margin:0;font-size:13.5px;color:var(--text-2)}
+  .type.own,.type.income{background:var(--green-soft);border-color:var(--border-success)}
+  .type.owe{background:var(--red-soft);border-color:var(--border-danger)}
+  .type.equity{background:var(--blue-soft);border-color:#8fbcec}
+  .type.expense{background:var(--amber-soft);border-color:var(--border-warning)}
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#8fe3ea;font-weight:600}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+  .flow{display:grid;gap:10px;margin-top:8px}
+  .flow .f{display:flex;gap:14px;align-items:flex-start}
+  .flow .f b{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .flow .f span{color:var(--text-2)}
+  .why{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+  .why .w{background:var(--brand-soft);border-radius:10px;padding:12px;font-size:14px;font-weight:600;color:var(--brand)}
+  .why .w small{display:block;font-weight:400;color:var(--text-2);margin-top:3px}
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:460px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+  kbd{font-family:var(--mono);font-size:.8em;background:var(--surface-0);border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+  dl.glossary{margin:0}
+  dl.glossary div{padding:13px 0;border-bottom:1px solid var(--border)}
+  dl.glossary div:last-child{border-bottom:0}
+  dl.glossary dt{font-weight:700;color:var(--brand)}
+  dl.glossary dd{margin:4px 0 0;color:var(--text-2);font-size:15px}
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+  .links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 18px}
+  .links a{background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:8px 15px}
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+  @media (max-width:900px){.layout{flex-direction:column;padding-top:12px}aside.sidebar{position:static;flex:none;width:100%;max-height:none}aside.sidebar nav{display:grid;grid-template-columns:1fr 1fr;gap:2px}}
+  @media (max-width:560px){.hero h1{font-size:25px}.mini{grid-template-columns:1fr}aside.sidebar nav{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <a class="backlink" href="index.html">← Back to Guide Hub</a>
+  <span class="kicker">New Joiner Handbook · Online Store</span>
+  <h1>Odoo Website & eCommerce</h1>
+  <p>Build a website with drag-and-drop blocks and turn it into an online shop that sells the very same products already in Odoo.</p>
+  <div class="badge-v">Odoo 19 · Website & eCommerce</div>
+</header>
+<div class="layout">
+  <aside class="sidebar"><h3>Chapters</h3><nav><a href="#c1"><span class="n">1</span>What It Is</a><a href="#c2"><span class="n">2</span>The Website Builder</a><a href="#c3"><span class="n">3</span>Products Online</a><a href="#c4"><span class="n">4</span>Shop & Categories</a><a href="#c5"><span class="n">5</span>Cart & Checkout</a><a href="#c6"><span class="n">6</span>Accounts & Promotions</a><a href="#c7"><span class="n">7</span>SEO & Reporting</a></nav><h3 style="margin-top:16px">Reference</h3><nav><a href="#glossary"><span class="n">★</span>Glossary</a></nav></aside>
+  <div class="content">
+    <div class="welcome"><h2><span class="wave">👋</span> Welcome aboard!</h2><p>Odoo <strong>Website</strong> is a drag-and-drop site builder, and <strong>eCommerce</strong> makes that site sell. Because the shop uses the <strong>same products, stock and customers</strong> as the rest of Odoo, an online order flows straight into Sales, Inventory and Accounting — no separate system to reconcile. This underpins our Shopware, Shopify and ChannelEngine work.</p></div>
+    <div class="bigidea"><span class="tag">🧠 Read this first — the one big idea</span><p>The shop is <strong>just your Odoo products, published to a web page</strong>. Build pages by dragging <strong>building blocks</strong>, tick a product as <strong>Published</strong>, and it appears in the shop — where a sale becomes a normal Odoo sales order. One database, storefront included.</p></div>
+    <section id="c1"><h2><span class="num">1</span> What Website & eCommerce Is</h2><p class="lead">A website builder and an online shop, sharing one database with everything else.</p><p class="para">Website lets you build and edit pages visually — no code. eCommerce adds a storefront, cart and checkout on top, selling the products you already manage in Odoo. Every online order is a real Odoo <strong>sales order</strong>, so stock and accounting update automatically.</p><div class="mini"><div class="m"><h4>🌐 Website</h4><p>The pages, built from drag-and-drop blocks.</p></div><div class="m"><h4>🛒 Shop</h4><p>The product catalogue customers browse.</p></div><div class="m"><h4>🧺 Cart & Checkout</h4><p>Where a visitor buys and pays.</p></div><div class="m"><h4>👤 Portal</h4><p>A customer’s account and order history.</p></div></div></section><section id="c2"><h2><span class="num">2</span> The Website Builder</h2><p class="lead">Design pages by dragging blocks — what you see is what visitors get.</p><p class="para">Click <strong>Edit</strong> to enter build mode, then drag <strong>building blocks</strong> (text, images, columns, banners, pricing, forms) onto the page and tweak them in the side panel. <strong>Save</strong> to keep changes; toggle <strong>Published</strong> to make a page public or keep it a draft.</p><div class="flow"><div class="f"><b>✏️</b><span><strong>Edit</strong> — enter build mode.</span></div><div class="f"><b>🧱</b><span><strong>Drag blocks</strong> — drop in sections and style them.</span></div><div class="f"><b>💾</b><span><strong>Save</strong> — store your changes.</span></div><div class="f"><b>🌍</b><span><strong>Publish</strong> — make it live for visitors.</span></div></div></section><section id="c3"><h2><span class="num">3</span> Products Online</h2><p class="lead">Getting an existing Odoo product into the shop.</p><p class="para">Open a product and set it <strong>Published</strong> to list it in the shop. The <strong>product page</strong> shows images, description, price and an <strong>Add to Cart</strong> button. <strong>Variants</strong> (size, colour) let one product page offer multiple options.</p><div class="tip note"><span class="i">ℹ️</span><p>Good <strong>images and descriptions</strong> sell — the product page is your storefront window.</p></div></section><section id="c4"><h2><span class="num">4</span> Shop & Categories</h2><p class="lead">Help customers find things fast.</p><p class="para">The <strong>shop page</strong> lists published products. <strong>eCommerce categories</strong> group them into a browsable menu (e.g. Men / Women / Accessories), and <strong>filters</strong> and <strong>sorting</strong> let shoppers narrow by attribute or price. You can arrange and resize product tiles right on the page.</p></section><section id="c5"><h2><span class="num">5</span> Cart & Checkout</h2><p class="lead">Turning a full cart into a paid order.</p><div class="steps"><div class="step"><div class="dot">1</div><div><h4>🧺 Cart</h4><p>The visitor collects products and reviews quantities.</p></div></div><div class="step"><div class="dot">2</div><div><h4>🚚 Delivery method</h4><p>Shipping options and costs are chosen.</p><span class="hint">Ties into Inventory</span></div></div><div class="step"><div class="dot">3</div><div><h4>💳 Payment provider</h4><p>Card/online payment (Stripe, PayPal…) collects the money.</p><span class="hint">Marks the order paid</span></div></div><div class="step"><div class="dot">4</div><div><h4>✅ Confirmation</h4><p>A sales order + invoice are created in Odoo.</p><span class="hint">Fully automatic</span></div></div></div><div class="tip"><span class="i">💡</span><p>Test payments in the provider’s <strong>test mode</strong> first — never go live with real cards untested.</p></div></section><section id="c6"><h2><span class="num">6</span> Customer Accounts & Promotions</h2><p class="lead">Repeat customers and incentives to buy.</p><p class="para">Shoppers can create an <strong>account</strong> to see their <strong>order history</strong> and documents through the customer <strong>portal</strong>. To drive sales, use <strong>discounts, coupon/promo codes</strong> and <strong>pricelists</strong> — the same pricing engine as Sales, applied online.</p><div class="mini"><div class="m"><h4>🎟️ Coupons</h4><p>One-off codes for a discount.</p></div><div class="m"><h4>🏷️ Promotions</h4><p>Rules like “buy 2 get 1”, auto-applied.</p></div><div class="m"><h4>💷 Pricelists</h4><p>Customer/quantity/currency-based online pricing.</p></div><div class="m"><h4>👤 Portal</h4><p>Self-service account and order history.</p></div></div></section><section id="c7"><h2><span class="num">7</span> SEO & Reporting</h2><p class="lead">Get found on Google, and see what sells.</p><p class="para">Each page has <strong>SEO</strong> settings — title, description and keywords — so search engines index it well. Sales made online appear in normal <strong>Sales reporting</strong>, and eCommerce adds views for online-specific metrics (abandoned carts, top products).</p><div class="tip note"><span class="i">ℹ️</span><p>Because online orders are just Odoo sales orders, all your usual Sales and Accounting reports already include them — no separate reconciliation.</p></div></section><section id="glossary"><h2><span class="num">★</span> Plain-English glossary</h2><p class="lead">The words you'll keep hearing — decoded.</p><dl class="glossary"><div><dt>Website</dt><dd>Odoo’s drag-and-drop site builder.</dd></div><div><dt>Building block</dt><dd>A draggable page section (text, image, banner…).</dd></div><div><dt>Publish</dt><dd>Making a page or product visible to visitors.</dd></div><div><dt>Shop</dt><dd>The catalogue page listing published products.</dd></div><div><dt>eCommerce category</dt><dd>A group used to organise products for browsing.</dd></div><div><dt>Variant</dt><dd>A product option like size or colour on one product page.</dd></div><div><dt>Cart / Checkout</dt><dd>Where a visitor collects items and pays.</dd></div><div><dt>Payment provider</dt><dd>A service (Stripe, PayPal…) that collects online payment.</dd></div><div><dt>Portal</dt><dd>A customer’s self-service account and order history.</dd></div><div><dt>SEO</dt><dd>Settings that help search engines rank your pages.</dd></div></dl></section>
+    <footer><p>Official Odoo 19 sources:</p><div class="links"><a href="https://www.odoo.com/documentation/19.0/applications/websites/ecommerce.html" target="_blank" rel="noopener">📖 eCommerce docs</a><a href="https://www.odoo.com/documentation/19.0/applications/websites/website.html" target="_blank" rel="noopener">🌐 Website docs</a><a href="https://erp.muchconsulting.de/odoo/knowledge/1511/knowledge/2591" target="_blank" rel="noopener">📚 much. Knowledge</a><a href="https://www.youtube.com/watch?v=-qkJMZ8-raM" target="_blank" rel="noopener">▶️ Build an eCommerce site (video)</a></div><p>Made for new joiners · Odoo 19 Website & eCommerce · You've got this 💪</p></footer>
+  </div>
+</div>
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+<script>
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}});
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  var links=Array.prototype.slice.call(document.querySelectorAll('aside.sidebar a'));
+  var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('active')});var a=map[e.target.id];if(a){a.classList.add('active')}}})},{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+</script>
+</body>
+</html>

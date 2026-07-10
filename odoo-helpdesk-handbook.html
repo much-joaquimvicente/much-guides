@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odoo Helpdesk — New Joiner Handbook</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--mt-fg);--brand-soft:var(--mt-bg);--brand-solid:#0d7d78;--accent:#0d7d78;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+    --mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+    --brand-solid:#34b3ab;--accent:#34b3ab;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+  header.hero{max-width:1160px;margin:0 auto;padding:34px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:30px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1160px;margin:0 auto;padding:16px 20px 90px}
+  aside.sidebar{position:sticky;top:20px;flex:0 0 250px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;max-height:calc(100vh - 40px);overflow:auto}
+  aside.sidebar h3{margin:4px 8px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  aside.sidebar a{display:block;padding:8px 10px;border-radius:9px;color:var(--text);text-decoration:none;font-size:14.5px;font-weight:500}
+  aside.sidebar a .n{display:inline-block;width:22px;color:var(--text-3);font-weight:700;font-size:13px}
+  aside.sidebar a:hover{background:var(--brand-soft)}
+  aside.sidebar a.active{background:var(--brand-solid);color:#fff}
+  aside.sidebar a.active .n{color:rgba(255,255,255,.8)}
+  .content{flex:1 1 auto;min-width:0}
+  .welcome{background:var(--surface-1);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+  .welcome h2{margin:0 0 8px;font-size:20px}
+  .welcome p{margin:0;color:var(--text-2)}
+  .welcome .wave{font-size:22px}
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:24px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+  .steps{display:grid;gap:12px;margin-top:6px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .step .dot{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center}
+  .step h4{margin:2px 0 4px;font-size:16px}
+  .step p{margin:0;color:var(--text-2)}
+  .step .hint{display:inline-block;margin-top:8px;font-size:13px;background:var(--blue-soft);color:var(--blue);padding:3px 10px;border-radius:8px;font-weight:600}
+  .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-top:8px}
+  .type{border-radius:12px;padding:15px;border:1px solid var(--border)}
+  .type .icon{font-size:22px}
+  .type h4{margin:8px 0 4px;font-size:15px}
+  .type p{margin:0;font-size:13.5px;color:var(--text-2)}
+  .type.own,.type.income{background:var(--green-soft);border-color:var(--border-success)}
+  .type.owe{background:var(--red-soft);border-color:var(--border-danger)}
+  .type.equity{background:var(--blue-soft);border-color:#8fbcec}
+  .type.expense{background:var(--amber-soft);border-color:var(--border-warning)}
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#8fe3ea;font-weight:600}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+  .flow{display:grid;gap:10px;margin-top:8px}
+  .flow .f{display:flex;gap:14px;align-items:flex-start}
+  .flow .f b{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .flow .f span{color:var(--text-2)}
+  .why{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+  .why .w{background:var(--brand-soft);border-radius:10px;padding:12px;font-size:14px;font-weight:600;color:var(--brand)}
+  .why .w small{display:block;font-weight:400;color:var(--text-2);margin-top:3px}
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:460px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+  kbd{font-family:var(--mono);font-size:.8em;background:var(--surface-0);border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+  dl.glossary{margin:0}
+  dl.glossary div{padding:13px 0;border-bottom:1px solid var(--border)}
+  dl.glossary div:last-child{border-bottom:0}
+  dl.glossary dt{font-weight:700;color:var(--brand)}
+  dl.glossary dd{margin:4px 0 0;color:var(--text-2);font-size:15px}
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+  .links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 18px}
+  .links a{background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:8px 15px}
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+  @media (max-width:900px){.layout{flex-direction:column;padding-top:12px}aside.sidebar{position:static;flex:none;width:100%;max-height:none}aside.sidebar nav{display:grid;grid-template-columns:1fr 1fr;gap:2px}}
+  @media (max-width:560px){.hero h1{font-size:25px}.mini{grid-template-columns:1fr}aside.sidebar nav{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <a class="backlink" href="index.html">← Back to Guide Hub</a>
+  <span class="kicker">New Joiner Handbook · Customer Support</span>
+  <h1>Odoo Helpdesk</h1>
+  <p>How support teams receive, prioritise and resolve customer tickets — with deadlines (SLAs) and satisfaction tracking built in.</p>
+  <div class="badge-v">Odoo 19 · Helpdesk</div>
+</header>
+<div class="layout">
+  <aside class="sidebar"><h3>Chapters</h3><nav><a href="#c1"><span class="n">1</span>What Helpdesk Is</a><a href="#c2"><span class="n">2</span>Helpdesk Teams</a><a href="#c3"><span class="n">3</span>Channels</a><a href="#c4"><span class="n">4</span>Tickets</a><a href="#c5"><span class="n">5</span>Stages & Pipeline</a><a href="#c6"><span class="n">6</span>SLA Policies</a><a href="#c7"><span class="n">7</span>Working & Reporting</a></nav><h3 style="margin-top:16px">Reference</h3><nav><a href="#glossary"><span class="n">★</span>Glossary</a></nav></aside>
+  <div class="content">
+    <div class="welcome"><h2><span class="wave">👋</span> Welcome aboard!</h2><p>Odoo <strong>Helpdesk</strong> is where customer questions and problems become <strong>tickets</strong> that a team works through to resolution. It brings every channel — email, web form, live chat — into one pipeline, adds <strong>deadlines (SLAs)</strong> so nothing is forgotten, and measures how happy customers are afterwards.</p></div>
+    <div class="bigidea"><span class="tag">🧠 Read this first — the one big idea</span><p>A ticket is just a <strong>task for support</strong>. It arrives through a <strong>channel</strong>, lands in a <strong>team</strong>, moves across <strong>stages</strong> until solved, and is answered through the same <strong>chatter</strong> you already know. Master those four words and Helpdesk is easy.</p></div>
+    <section id="c1"><h2><span class="num">1</span> What Helpdesk Is</h2><p class="lead">Turn scattered customer requests into a single, trackable queue.</p><p class="para">Instead of support living in someone’s inbox, Helpdesk collects every request as a <strong>ticket</strong> in a shared <strong>pipeline</strong>. The team sees what is open, who owns it, how urgent it is and whether it is running late — so problems get solved instead of lost.</p><div class="mini"><div class="m"><h4>🎫 Ticket</h4><p>One customer request or problem.</p></div><div class="m"><h4>👥 Team</h4><p>A group that handles a category of tickets.</p></div><div class="m"><h4>🗂️ Stage</h4><p>Where the ticket is: New → In Progress → Solved.</p></div><div class="m"><h4>⏰ SLA</h4><p>A promised deadline to respond or resolve.</p></div></div></section><section id="c2"><h2><span class="num">2</span> Helpdesk Teams</h2><p class="lead">A team defines who handles which tickets, and how they are shared out.</p><div class="path">Helpdesk <b>→</b> Configuration <b>→</b> Teams <b>→</b> New</div><p class="para">Each team has its own pipeline and settings. The key choice is the <strong>assignment method</strong> — how new tickets are given to agents:</p><div class="types"><div class="type"><div class="icon">✋</div><h4>Manually</h4><p>Agents pick tickets from the queue themselves.</p></div><div class="type"><div class="icon">🎲</div><h4>Randomly</h4><p>Odoo spreads tickets evenly at random.</p></div><div class="type"><div class="icon">⚖️</div><h4>Balanced</h4><p>Odoo assigns to whoever has the fewest open tickets.</p></div></div><div class="tip note"><span class="i">ℹ️</span><p>You also set <strong>visibility</strong> (who can see the team’s tickets) and which <strong>channels</strong> feed it — covered next.</p></div></section><section id="c3"><h2><span class="num">3</span> Channels — how tickets arrive</h2><p class="lead">Customers reach you many ways; Helpdesk funnels them all into tickets.</p><div class="flow"><div class="f"><b>✉️</b><span><strong>Email alias</strong> — customers email e.g. support@company.com and a ticket is created automatically.</span></div><div class="f"><b>🌐</b><span><strong>Website form</strong> — a “Submit a ticket” page on your site.</span></div><div class="f"><b>💬</b><span><strong>Live chat</strong> — a chat widget on the site can spin a conversation into a ticket.</span></div><div class="f"><b>⌨️</b><span><strong>Manual</strong> — an agent creates a ticket by hand (e.g. after a phone call).</span></div></div><div class="tip"><span class="i">💡</span><p>Turn channels on per team in the team’s settings. The <strong>email alias</strong> is the workhorse for most support teams.</p></div></section><section id="c4"><h2><span class="num">4</span> Tickets — the ticket form</h2><p class="lead">Everything about one request in one place.</p><div class="steps"><div class="step"><div class="dot">1</div><div><h4>🧑 Customer</h4><p>Who reported it — links their contact and history.</p><span class="hint">Auto-filled from email</span></div></div><div class="step"><div class="dot">2</div><div><h4>📝 Subject & Description</h4><p>What the problem is.</p></div></div><div class="step"><div class="dot">3</div><div><h4>⚡ Priority</h4><p>Star rating that pushes urgent tickets up.</p><span class="hint">Drives SLA targets</span></div></div><div class="step"><div class="dot">4</div><div><h4>🏷️ Tags & Assignee</h4><p>Categorise the ticket and set who owns it.</p></div></div><div class="step"><div class="dot">5</div><div><h4>⏰ SLA deadline</h4><p>The promised response/resolution time.</p><span class="hint">Colour shows if at risk</span></div></div></div></section><section id="c5"><h2><span class="num">5</span> Stages & Pipeline</h2><p class="lead">Tickets flow across a kanban board just like project tasks.</p><div class="flow"><div class="f"><b>1</b><span><strong>New</strong> — just arrived, unassigned or unstarted.</span></div><div class="f"><b>2</b><span><strong>In Progress</strong> — an agent is working it.</span></div><div class="f"><b>3</b><span><strong>Solved</strong> — answer given, awaiting confirmation.</span></div><div class="f"><b>4</b><span><strong>Done / Closed</strong> — resolved and put to rest.</span></div></div><p class="para">Drag tickets between stages as you work. A <strong>folded</strong> stage (like Done) keeps the board tidy. You can <strong>merge</strong> duplicate tickets so one conversation holds the whole story.</p></section><section id="c6"><h2><span class="num">6</span> SLA Policies</h2><p class="lead">A promise to answer within a set time — measured automatically.</p><p class="para">An <strong>SLA (Service Level Agreement)</strong> policy sets a target like “<em>High-priority tickets reach Solved within 8 working hours</em>”. Odoo tracks the clock and colours the ticket: <span style="color:var(--green);font-weight:600">on time</span> or <span style="color:var(--red);font-weight:600">breached</span>. Policies can depend on <strong>priority</strong>, <strong>tags</strong> or <strong>team</strong>.</p><div class="path">Helpdesk <b>→</b> Configuration <b>→</b> SLA Policies</div><div class="tip note"><span class="i">ℹ️</span><p>SLAs measure in <strong>working hours</strong>, not wall-clock time — so a Friday-evening ticket isn’t unfairly “late” by Monday.</p></div></section><section id="c7"><h2><span class="num">7</span> Working a Ticket & Reporting</h2><p class="lead">Answer through the chatter, and learn from the numbers.</p><p class="para">Reply to the customer with <strong>Send message</strong>; keep colleague notes as <strong>Log note</strong> (the same message/note rule from Getting Started — get this right so customers never see internal chatter). If enabled, log <strong>time on the ticket</strong> via a Timesheets tab. Close when resolved.</p><h3 class="sub">Satisfaction & reports</h3><div class="mini"><div class="m"><h4>⭐ Ratings</h4><p>After closing, customers rate the help — great/okay/bad.</p></div><div class="m"><h4>⏰ SLA Success</h4><p>Share of tickets that met their deadline.</p></div><div class="m"><h4>📊 Ticket Analysis</h4><p>Volume, resolution time and load by team/agent.</p></div><div class="m"><h4>📚 Help Center</h4><p>Publish Knowledge articles so customers self-serve.</p></div></div></section><section id="glossary"><h2><span class="num">★</span> Plain-English glossary</h2><p class="lead">The words you'll keep hearing — decoded.</p><dl class="glossary"><div><dt>Ticket</dt><dd>A single customer request or problem tracked to resolution.</dd></div><div><dt>Team</dt><dd>A group handling a category of tickets, with its own pipeline.</dd></div><div><dt>Assignment method</dt><dd>How new tickets are shared out: manual, random or balanced.</dd></div><div><dt>Channel</dt><dd>A way tickets arrive: email, web form, live chat or manual.</dd></div><div><dt>Stage</dt><dd>A kanban column showing a ticket’s progress.</dd></div><div><dt>SLA</dt><dd>A promised response/resolution deadline, tracked automatically.</dd></div><div><dt>Priority</dt><dd>A star rating that ranks urgency and can drive SLAs.</dd></div><div><dt>Merge</dt><dd>Combining duplicate tickets into one.</dd></div><div><dt>Rating</dt><dd>A customer’s satisfaction score after a ticket closes.</dd></div><div><dt>Help Center</dt><dd>A public site of Knowledge articles for customer self-service.</dd></div></dl></section>
+    <footer><p>Official Odoo 19 sources:</p><div class="links"><a href="https://www.odoo.com/documentation/19.0/applications/services/helpdesk.html" target="_blank" rel="noopener">📖 Helpdesk docs</a><a href="https://www.odoo.com/slides" target="_blank" rel="noopener">🎓 Free courses</a><a href="https://erp.muchconsulting.de/odoo/knowledge/1511/knowledge/2591" target="_blank" rel="noopener">📚 much. Knowledge</a><a href="https://www.youtube.com/watch?v=GewHZ9JKQHQ" target="_blank" rel="noopener">▶️ Helpdesk overview (video)</a></div><p>Made for new joiners · Odoo 19 Helpdesk · You've got this 💪</p></footer>
+  </div>
+</div>
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+<script>
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}});
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  var links=Array.prototype.slice.call(document.querySelectorAll('aside.sidebar a'));
+  var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('active')});var a=map[e.target.id];if(a){a.classList.add('active')}}})},{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+</script>
+</body>
+</html>

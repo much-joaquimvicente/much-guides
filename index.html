@@ -76,6 +76,24 @@ button:hover{border-color:var(--text-3)}
 .res-h{font-family:var(--mono);font-size:11.5px;color:var(--text-3);margin-top:5px}
 .res-empty{color:var(--text-2);font-size:14px;padding:12px 2px}
 .sec-label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.sec-label.collapsible{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;user-select:none}
+.sec-label.collapsible:hover{color:var(--text-2)}
+.sec-label .chev{font-size:11px;color:var(--text-3);transition:transform .18s ease;flex-shrink:0}
+.sec-label.collapsed .chev{transform:rotate(-90deg)}
+.sec-txt{display:inline-flex;align-items:center;gap:9px}
+.sec-ico{display:inline-block;transform-origin:50% 60%;font-size:1.15em;line-height:1}
+@media (prefers-reduced-motion:no-preference){
+.sec-label:hover .ico-bird{animation:mg-flap .45s ease-in-out infinite}
+.sec-label:hover .ico-alien{animation:mg-alien 1.1s linear infinite}
+.sec-label:hover .ico-puzzle{animation:mg-spin .9s linear infinite}
+.sec-label:hover .ico-unicorn{animation:mg-unicorn .7s ease-in-out infinite}
+.sec-label:hover .ico-dragon{animation:mg-dragon .6s ease-in-out infinite}
+}
+@keyframes mg-flap{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+@keyframes mg-alien{0%{filter:hue-rotate(0deg);transform:translateY(0)}25%{transform:translateY(-3px)}50%{filter:hue-rotate(180deg);transform:translateY(0)}75%{transform:translateY(-3px)}100%{filter:hue-rotate(360deg);transform:translateY(0)}}
+@keyframes mg-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes mg-unicorn{0%,100%{transform:translateY(0);filter:hue-rotate(0deg)}50%{transform:translateY(-7px);filter:hue-rotate(180deg)}}
+@keyframes mg-dragon{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.35) rotate(-8deg)}}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:48px}
 .guide-card{display:block;text-decoration:none;color:inherit;border:1px solid var(--border);border-radius:14px;background:var(--surface-1);padding:20px 20px 18px;transition:border-color .15s,box-shadow .15s,transform .12s}
 .guide-card:hover{border-color:var(--border-strong);box-shadow:0 4px 18px rgba(0,0,0,.07);transform:translateY(-2px)}
@@ -165,19 +183,19 @@ code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding
   <div id="results" class="results noprint" hidden></div>
 
   <div id="browse">
-  <div class="sec-label">Available guides</div>
+  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-bird">🐣</span> Available guides</span></div>
   <div class="grid" id="grid"></div>
 
-  <div class="sec-label">Testing</div>
+  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-alien">👾</span> Testing</span></div>
   <div class="grid" id="testing-grid"></div>
 
-  <div class="sec-label">How the layers fit together</div>
+  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-puzzle">🧩</span> How the layers fit together</span></div>
   <div class="stack-wrap" id="stack"></div>
 
-  <div class="sec-label">Products &amp; Training</div>
+  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-unicorn">🦄</span> Products &amp; Training</span></div>
   <div class="grid" id="extras-grid"></div>
 
-  <div class="sec-label">Training Odoo sections</div>
+  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-dragon">🐉</span> Training Odoo sections</span></div>
   <div class="grid" id="odoo-training-grid"></div>
   </div>
 
@@ -260,6 +278,107 @@ const GUIDES = [
     tags:  ['Accounting', 'Germany'],
     links: [
       { label: 'Odoo → DATEV Integration', href: 'much-datev-training.html' }
+    ]
+  },
+
+  {
+    icon:  '🤖',
+    color: 'm-purple',
+    badge: 'How-to',
+    title: 'AI Automated Actions',
+    desc:  'Let Odoo automatically send a record to an AI (ChatGPT, Claude, Gemini, Mistral) and write the answer back into chatter, a field, or an activity — no code.',
+    tags:  ['AI', 'No-code'],
+    links: [
+      { label: 'Guide', href: 'ai-automated-actions.html' }
+    ]
+  },
+  {
+    icon:  '💳',
+    color: 'm-blue',
+    badge: 'Payments',
+    title: 'Payment Providers (PayPal)',
+    desc:  'Connect a PayPal Business account to your Odoo shop — PayPal, Pay Later, Venmo and card payments, with saved methods and automatic webhooks.',
+    tags:  ['PayPal', 'Payments'],
+    links: [
+      { label: 'Guide', href: 'payment-providers-paypal.html' }
+    ]
+  },
+  {
+    icon:  '📄',
+    color: 'm-coral',
+    badge: 'DIN 5008',
+    title: 'German Document Templates',
+    desc:  'Reformats Odoo invoices, quotations, orders and delivery slips into the German DIN 5008 business-letter layout, with a settings panel for logos, footers and colours.',
+    tags:  ['German', 'Documents'],
+    links: [
+      { label: 'Guide', href: 'german-documents-din5008.html' }
+    ]
+  },
+  {
+    icon:  '🇩🇪',
+    color: 'm-amber',
+    badge: 'Localization',
+    title: 'German Data & Translations',
+    desc:  'Pre-loads German accounting/HR data (AfA tables, BWA reports, working times, holidays) and sharpens Odoo’s German-language interface.',
+    tags:  ['German', 'Accounting/HR'],
+    links: [
+      { label: 'Guide', href: 'german-data-translations.html' }
+    ]
+  },
+  {
+    icon:  '🔬',
+    color: 'm-teal',
+    badge: 'Traceability',
+    title: 'Enhanced Traceability',
+    desc:  'Richer lot/serial traceability across manufacturing and repair — service dates in the report, live “active components”, ticket links and bulk repair tools.',
+    tags:  ['Traceability', 'Repair'],
+    links: [
+      { label: 'Guide', href: 'enhanced-traceability.html' }
+    ]
+  },
+  {
+    icon:  '✅',
+    color: 'm-pink',
+    badge: 'Purchasing',
+    title: 'Supplier Compliance',
+    desc:  'Blocks or flags purchase orders when a vendor’s level or certificates don’t meet the products’ compliance requirements.',
+    tags:  ['Compliance', 'Purchasing'],
+    links: [
+      { label: 'Guide', href: 'supplier-compliance.html' }
+    ]
+  },
+  {
+    icon:  '📦',
+    color: 'm-gray',
+    badge: 'EOL',
+    title: 'ChannelEngine Integration',
+    desc:  'Retired marketplace connector (Odoo ↔ ChannelEngine). Do not sell to new customers — reference page for supporting existing users.',
+    tags:  ['Retired', 'Support only'],
+    links: [
+      { label: 'Reference (retired)', href: 'channelengine-integration.html' }
+    ]
+  },
+  {
+    icon:  '📦',
+    color: 'm-gray',
+    badge: 'EOL',
+    title: 'WMS Integration Framework',
+    desc:  'Retired warehouse/shipping framework, superseded by Order Base. Do not sell to new customers — reference page for supporting existing users.',
+    tags:  ['Retired', 'Support only'],
+    links: [
+      { label: 'Reference (retired)', href: 'wms-integration-framework.html' }
+    ]
+  },
+
+  {
+    icon:  '📥',
+    color: 'm-teal',
+    badge: 'Deep dive',
+    title: 'Transaction Importer',
+    desc:  'Automatically pulls payments from PayPal, Stripe, Mollie, Heidelpay, Shopify and SIX into Odoo bank statement lines and matches them to invoices.',
+    tags:  ['Payments', 'Reconciliation'],
+    links: [
+      { label: 'Deep dive', href: 'transaction-importer.html' }
     ]
   },
 
@@ -346,6 +465,87 @@ const ODOO_TRAINING_NAV = [
     desc:  'Odoo Accounting & Invoicing explained for new joiners — the full course as a handbook: setup, chart of accounts, invoices, bills, payments, bank, taxes, reporting and more.',
     tags:  ['Odoo', '15 chapters'],
     href:  'odoo-accounting-getting-started.html'
+  },
+  {
+    icon:  '🚀',
+    color: 'm-purple',
+    badge: 'Odoo Training',
+    title: 'Getting Started',
+    desc:  'Find your way around Odoo — the screen, apps, views, records, search, the chatter, activities, users and developer mode. The basics every app builds on.',
+    tags:  ['Odoo', '10 chapters'],
+    href:  'odoo-getting-started-handbook.html'
+  },
+  {
+    icon:  '📋',
+    color: 'm-blue',
+    badge: 'Odoo Training',
+    title: 'Project & Timesheets',
+    desc:  'Plan work as projects and tasks, move it across kanban stages, and log the hours you spend — planned vs effective time, collaboration and reporting.',
+    tags:  ['Odoo', '7 chapters'],
+    href:  'odoo-project-timesheets-handbook.html'
+  },
+  {
+    icon:  '🎧',
+    color: 'm-teal',
+    badge: 'Odoo Training',
+    title: 'Helpdesk',
+    desc:  'Receive, prioritise and resolve customer tickets — teams, channels (email/web/live chat), stages, SLA deadlines and satisfaction ratings.',
+    tags:  ['Odoo', '7 chapters'],
+    href:  'odoo-helpdesk-handbook.html'
+  },
+  {
+    icon:  '📚',
+    color: 'm-coral',
+    badge: 'Odoo Training',
+    title: 'Knowledge',
+    desc:  'Odoo’s built-in wiki — a nested tree of articles, the “/” editor, embedded live views, sharing & permissions, and how it plugs into other apps.',
+    tags:  ['Odoo', '7 chapters'],
+    href:  'odoo-knowledge-handbook.html'
+  },
+  {
+    icon:  '🎓',
+    color: 'm-amber',
+    badge: 'Odoo Training',
+    title: 'eLearning',
+    desc:  'Build and publish online courses — sections, content types (video/document/quiz), enrolment, certifications, gamification and progress reporting.',
+    tags:  ['Odoo', '7 chapters'],
+    href:  'odoo-elearning-handbook.html'
+  },
+  {
+    icon:  '💼',
+    color: 'm-pink',
+    badge: 'Odoo Training',
+    title: 'Sales',
+    desc:  'From quotation to confirmed sales order to invoice — products, order lines, quotation templates, pricelists, invoicing policy and the order-to-cash flow.',
+    tags:  ['Odoo', '7 chapters'],
+    href:  'odoo-sales-handbook.html'
+  },
+  {
+    icon:  '📦',
+    color: 'm-gray',
+    badge: 'Odoo Training',
+    title: 'Inventory',
+    desc:  'Stock through warehouses and locations — receipts, deliveries, transfers, the double-entry stock model, replenishment, lots/serials and reporting.',
+    tags:  ['Odoo', '7 chapters'],
+    href:  'odoo-inventory-handbook.html'
+  },
+  {
+    icon:  '🔁',
+    color: 'm-blue',
+    badge: 'Odoo Training',
+    title: 'Subscription',
+    desc:  'Recurring sales orders that renew and invoice themselves — recurring products, plans, lifecycle, payment tokens, and MRR/churn metrics.',
+    tags:  ['Odoo', '7 chapters'],
+    href:  'odoo-subscription-handbook.html'
+  },
+  {
+    icon:  '🛒',
+    color: 'm-teal',
+    badge: 'Odoo Training',
+    title: 'Website & eCommerce',
+    desc:  'Build a site with drag-and-drop blocks and turn it into a shop selling your Odoo products — pages, product publishing, cart & checkout, promotions and SEO.',
+    tags:  ['Odoo', '7 chapters'],
+    href:  'odoo-website-ecommerce-handbook.html'
   }
 ];
 
@@ -485,6 +685,38 @@ try{(function(){
   q.addEventListener('input',run);
   q.addEventListener('keydown',function(e){if(e.key==='Escape'){q.value='';run();q.blur();}});
 })();}catch(e){}
+</script>
+<script>
+(function(){try{
+  var browse=document.getElementById('browse');
+  if(!browse) return;
+  var KEY='muchSections.v1';
+  var state={};
+  try{ state=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){}
+  var labels=browse.querySelectorAll('.sec-label');
+  Array.prototype.forEach.call(labels,function(lab){
+    var content=lab.nextElementSibling;
+    if(!content) return;
+    var id=lab.textContent.trim();
+    lab.classList.add('collapsible');
+    var chev=document.createElement('span');
+    chev.className='chev';
+    chev.textContent='▾';
+    lab.appendChild(chev);
+    function apply(collapsed){
+      if(collapsed){lab.classList.add('collapsed');content.style.display='none';}
+      else{lab.classList.remove('collapsed');content.style.display='';}
+    }
+    apply(state[id]!==false);
+    lab.addEventListener('click',function(){
+      var nowCollapsed=!lab.classList.contains('collapsed');
+      apply(nowCollapsed);
+      state[id]=nowCollapsed;
+      try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+    });
+  });
+}catch(e){}})();
+
 </script>
 </body>
 </html>

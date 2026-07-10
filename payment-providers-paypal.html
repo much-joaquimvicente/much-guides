@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payment Providers (PayPal) — User Guide</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:40px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--mb-fg);border-radius:10px;padding:13px 16px;margin:16px 0}
+.callout.tip{border-left-color:var(--border-warning);background:var(--bg-warning)}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+.dir{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scn{color:var(--text-2);font-size:15px;margin:10px 0}
+.scn b{color:var(--text);font-weight:500}
+.rail{position:relative;margin:16px 0 4px}
+.rail:before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:var(--border)}
+.stg{display:flex;gap:14px;align-items:stretch;margin-bottom:10px;position:relative}
+.node{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;border:2px solid var(--fg);z-index:1}
+.card{flex:1;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:10px 14px;cursor:pointer}
+.card:hover{border-color:var(--border-strong)}
+.stg.sel .card{border-color:var(--fg);background:var(--surface-2)}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);color:var(--fg);font-size:12px;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.ttl{font-weight:500;font-size:15px}
+.ex{color:var(--text-2);font-size:13px;margin-top:3px}
+.det{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:14px 16px;margin-top:6px}
+.det h4{margin:0 0 2px;font-size:15px;font-weight:500}
+.det .lab{font-size:12px;color:var(--text-3);margin:10px 0 3px;text-transform:uppercase;letter-spacing:.04em}
+.det p{margin:0;font-size:14px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border)}
+.chip.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.chip.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.chip.bad{background:var(--bg-danger);color:var(--text-danger);border-color:var(--border-danger)}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.words{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:6px 18px;margin:14px 0}
+.words dt{font-weight:500;margin-top:10px}
+.words dd{margin:0 0 4px;color:var(--text-2);font-size:14.5px}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;padding-top:12px;border-top:1px solid var(--border)}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.dot{width:11px;height:11px;border-radius:3px;background:var(--fg)}
+.doc{display:none}
+.docmode #live{display:none}
+.docmode .doc{display:block}
+.doc h3{border-top:1px solid var(--border);padding-top:16px}
+footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{.noprint{display:none!important}body{background:#fff;font-size:12px}.wrap{max-width:none;padding:0}#live{display:none!important}.doc{display:block!important}.stg,.det,h3{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>Payment Providers (PayPal) — User Guide</h1>
+<p class="lead">Connect your PayPal Business account to your Odoo shop and offer PayPal, Pay Later, Venmo and card payments — with saved methods and automatic status updates. Written for a new team member.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="document.body.classList.toggle('docmode')">Handout view</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>1. What is this?</h2>
+<p>This is the much. <b>PayPal suite</b> — a bundle of Odoo modules built with PayPal. It links your PayPal Business account to your Odoo online shop so customers can pay with the PayPal wallet, <b>Pay Later</b> instalments, <b>Venmo</b>, Google&nbsp;Pay, Apple&nbsp;Pay and credit/debit cards. It also handles merchant setup with a guided wizard, lets shoppers securely save payment methods ("<b>vaulting</b>"), and keeps Odoo and PayPal in step automatically using <b>webhooks</b>.</p>
+<p><b>Why it exists:</b> Odoo ships with a basic built-in PayPal option, but it is limited to the classic redirect. This suite gives the full modern experience in one place — no-copy-paste onboarding, extra payment methods, saved methods, on-site "Pay in 4" banners and express-checkout buttons.</p>
+
+<h3>What's in the suite</h3>
+<dl class="words">
+<dt>PayPal: Payment Integration</dt><dd>The core engine — connects Odoo to your PayPal Business account and handles payments, refunds and logging.</dd>
+<dt>PayPal: Merchant Configurator</dt><dd>The "Display Options" that let you turn methods on/off and control where banners &amp; buttons appear.</dd>
+<dt>PayPal: Vaulting</dt><dd>Lets logged-in customers save PayPal / Venmo / card details and manage them from their account.</dd>
+<dt>PayPal: Webhook Base</dt><dd>Behind-the-scenes plumbing that safely receives and queues PayPal's status updates.</dd>
+<dt>PayPal: Website Sale</dt><dd>Storefront touches — Pay Later / Venmo banners, express-checkout buttons, shipping.</dd>
+</dl>
+
+<h3>A few words you'll hear</h3>
+<dl class="words">
+<dt>Payment provider</dt><dd>The configured connection to a payment service (here "PayPal Business Integration").</dd>
+<dt>Onboarding wizard</dt><dd>The guided popup that logs you into PayPal and fills your Merchant/Client ID automatically.</dd>
+<dt>Vaulting</dt><dd>Securely saving a customer's payment method for faster repeat purchases.</dd>
+<dt>Webhook</dt><dd>An automatic message PayPal sends Odoo when something happens (e.g. a payment is captured).</dd>
+<dt>Sandbox vs Production</dt><dd>Sandbox = safe test mode with fake money; Production = live, real payments.</dd>
+</dl>
+
+<h2>2. Step by step</h2>
+<p>Pick a task below. Click any step for the plain-language explanation, where to find it, and a tip.</p>
+
+<div id="live" class="noprint">
+<div class="bar"><select id="wf"></select><span class="dir" id="dir"></span></div>
+<div class="scn" id="scn"></div>
+<div class="rail" id="rail"></div>
+<div class="det" id="det"></div>
+</div>
+
+<div class="lg">
+<span class="lgi m-purple"><span class="dot"></span>Step you take</span>
+<span class="lgi m-teal"><span class="dot"></span>What appears in Odoo</span>
+<span class="lgi m-blue"><span class="dot"></span>Choice / option</span>
+<span class="lgi m-gray"><span class="dot"></span>External / customer side</span>
+<span class="lgi m-amber"><span class="dot"></span>Where to check</span>
+<span class="lgi m-pink"><span class="dot"></span>One-time setting</span>
+</div>
+
+<div class="doc" id="doc"></div>
+
+<footer>Onboarding aid for the much. PayPal suite (<code>payment_paypal_suite</code>, Odoo 19). Menus, field labels and the webhook cron are drawn from the module source &amp; README. Always test in Sandbox before switching to Production. Self-contained &amp; offline.</footer>
+
+</div>
+<script>
+const WF=[
+{id:'connect',label:'A · Connect your PayPal account',dir:'One-time setup',scn:'A new merchant links their PayPal Business account so the shop can take payments.',steps:[
+{m:'m-pink',t:'Enter partner credentials',ex:'The Secret URL / keys from much.',mo:'Invoicing > Configuration > Settings > PayPal Partner Credentials',st:[],biz:'A one-time step that lets Odoo talk to PayPal on your behalf. These values are normally provided to you — you do not invent them.',cfg:'Treat these like a password; do not share them.'},
+{m:'m-purple',t:'Open the PayPal provider',ex:'"PayPal Business Integration"',mo:'Website (or Invoicing) > Configuration > Payment Providers',st:['Disabled','Test','Enabled'],biz:'This record represents PayPal in your shop — all the settings live here.',cfg:'Turn on developer mode first if you don’t see every option.'},
+{m:'m-blue',t:'Choose environment & country',ex:'Environment: Sandbox',mo:'The Connect wizard (PayPal Payment Panel)',st:['Sandbox','Production'],biz:'Sandbox tests with fake money; switch to Production only when you are ready for real payments. Set the account country too.',cfg:'The wizard warns you if the country does not match your company.'},
+{m:'m-purple',t:'Click "Connect with PayPal"',ex:'Log into PayPal in the popup',mo:'Connect button in the wizard',st:[],biz:'PayPal fills your Merchant ID and Client ID back into Odoo automatically — no copy-pasting keys.',cfg:'Use a current Chrome/Edge; the popup can misbehave on older browsers.'},
+{m:'m-teal',t:'Publish the provider',ex:'Make it visible at checkout',mo:'Provider form → Publish / visibility',st:['Unpublished','Published'],biz:'Until published, customers cannot see PayPal at checkout.',cfg:'Run one full Sandbox order end-to-end before publishing to Production.'}
+]},
+{id:'methods',label:'B · Turn on methods & banners',dir:'You choose what customers see',scn:'The merchant decides which payment options appear and where Pay Later banners show.',steps:[
+{m:'m-blue',t:'Enable the payment methods',ex:'Cards · Pay Later · Venmo · Google/Apple Pay',mo:'Provider form → Configuration tab',st:[],biz:'Each toggle adds that option to the customer’s payment page.',cfg:'Some toggles are read-only if unsupported in your country (e.g. Venmo is US-only).'},
+{m:'m-pink',t:'Enable Vaulting & Express Checkout',ex:'Saved methods + on-page buttons',mo:'Provider form → Configuration tab',st:[],biz:'Vaulting lets customers save methods; Express Checkout shows PayPal buttons earlier in the journey.',cfg:'Only logged-in customers can save methods.'},
+{m:'m-blue',t:'Open Display Options',ex:'Where buttons & banners appear',mo:'Provider form → Display Options tab',st:[],biz:'Controls placement across your site — product page, cart, payment page.',cfg:'Use the "Preview" control to see how it will look.'},
+{m:'m-blue',t:'Place the checkout buttons',ex:'Product Page · Cart · Payment',mo:'Display Options → Checkout Buttons',st:[],biz:'Lets customers start an express PayPal payment before the final step.',cfg:'A few well-placed buttons usually convert better than all of them.'},
+{m:'m-blue',t:'Configure Pay Later / Venmo messaging',ex:'"Pay in 4" banners + styling',mo:'Display Options → Messaging Placement & Styling',st:[],biz:'Shows promotional instalment banners to encourage purchases.',cfg:'Match the banner colour to your theme so it looks native.'}
+]},
+{id:'daily',label:'C · Saved methods & refunds',dir:'Day-to-day',scn:'A returning customer reuses a saved card, and later the merchant refunds an order.',steps:[
+{m:'m-gray',t:'Customer saves a method',ex:'"Save your card" at checkout',mo:'Website payment page (customer side)',st:[],biz:'A logged-in shopper can store their PayPal/Venmo/card securely for next time.',cfg:'Guests can’t save methods — they must be logged in.'},
+{m:'m-teal',t:'Customer manages saved methods',ex:'My Account → Payment Methods',mo:'Website > My Account > Payment Methods',st:[],biz:'Customers can view or delete their saved methods themselves.',cfg:'Deleting here also removes the token on PayPal’s side.'},
+{m:'m-purple',t:'Merchant issues a refund',ex:'Refund button on the transaction',mo:'The order’s Payment Transaction record',st:['Posted','Refunded'],biz:'Sends a full refund through the PayPal API, straight from Odoo.',cfg:'Open the transaction from the order to find the Refund button.'},
+{m:'m-amber',t:'Check webhook queue & logs',ex:'Status stuck? Look here',mo:'Provider form → Queue & Logs stat buttons',st:['Info','Error'],biz:'The "PayPal: Process Webhook Queue" cron keeps statuses in sync; Logs show raw API calls for troubleshooting.',cfg:'If a status looks stuck, check the Queue for a failed webhook item.'}
+]}
+];
+let wi=0,sel=0;
+const selEl=document.getElementById('wf');
+WF.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;selEl.appendChild(o);});
+function tone(s){s=s.toLowerCase();if(/fail|error|bad|block|disabled/.test(s))return'bad';if(/done|active|ok|success|info|enabled|published|posted|refunded|production/.test(s))return'ok';if(/sandbox|test|draft|unpublished|manual/.test(s))return'warn';return'';}
+function chipHtml(st){return st.length?'<div class="lab">Status</div><div class="chips">'+st.map(x=>'<span class="chip '+tone(x)+'">'+x+'</span>').join('')+'</div>':'';}
+function render(){
+const w=WF[wi];
+document.getElementById('dir').textContent=w.dir;
+document.getElementById('scn').innerHTML=w.scn;
+const rail=document.getElementById('rail');rail.innerHTML='';
+w.steps.forEach((s,i)=>{
+const stg=document.createElement('div');stg.className='stg '+s.m+(i===sel?' sel':'');
+stg.innerHTML='<div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div></div>';
+stg.querySelector('.card').onclick=()=>{sel=i;render();};
+rail.appendChild(stg);
+});
+const s=w.steps[sel];
+document.getElementById('det').innerHTML='<h4>'+s.t+'</h4><p>'+s.biz+'</p><div class="lab">Where to find it</div><p><code>'+s.mo+'</code></p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'');
+}
+selEl.onchange=()=>{wi=+selEl.value;sel=0;render();};
+render();
+function renderDoc(){
+const doc=document.getElementById('doc');let h='';
+WF.forEach(w=>{
+h+='<h3>'+w.label+' &nbsp;&middot;&nbsp; '+w.dir+'</h3><p class="scn">'+w.scn+'</p><div class="rail">';
+w.steps.forEach((s,i)=>{
+h+='<div class="stg '+s.m+'"><div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div><div class="det" style="margin-top:8px"><p>'+s.biz+'</p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'')+'</div></div></div>';
+});
+h+='</div>';
+});
+doc.innerHTML=h;
+}
+renderDoc();
+</script>
+</body>
+</html>

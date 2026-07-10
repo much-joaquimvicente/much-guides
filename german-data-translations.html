@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>German Data & Translations — User Guide</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:40px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--ma-fg);border-radius:10px;padding:13px 16px;margin:16px 0}
+.callout.tip{border-left-color:var(--border-warning);background:var(--bg-warning)}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+.dir{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scn{color:var(--text-2);font-size:15px;margin:10px 0}
+.scn b{color:var(--text);font-weight:500}
+.rail{position:relative;margin:16px 0 4px}
+.rail:before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:var(--border)}
+.stg{display:flex;gap:14px;align-items:stretch;margin-bottom:10px;position:relative}
+.node{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;border:2px solid var(--fg);z-index:1}
+.card{flex:1;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:10px 14px;cursor:pointer}
+.card:hover{border-color:var(--border-strong)}
+.stg.sel .card{border-color:var(--fg);background:var(--surface-2)}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);color:var(--fg);font-size:12px;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.ttl{font-weight:500;font-size:15px}
+.ex{color:var(--text-2);font-size:13px;margin-top:3px}
+.det{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:14px 16px;margin-top:6px}
+.det h4{margin:0 0 2px;font-size:15px;font-weight:500}
+.det .lab{font-size:12px;color:var(--text-3);margin:10px 0 3px;text-transform:uppercase;letter-spacing:.04em}
+.det p{margin:0;font-size:14px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border)}
+.chip.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.chip.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.chip.bad{background:var(--bg-danger);color:var(--text-danger);border-color:var(--border-danger)}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.words{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:6px 18px;margin:14px 0}
+.words dt{font-weight:500;margin-top:10px}
+.words dd{margin:0 0 4px;color:var(--text-2);font-size:14.5px}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;padding-top:12px;border-top:1px solid var(--border)}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.dot{width:11px;height:11px;border-radius:3px;background:var(--fg)}
+.doc{display:none}
+.docmode #live{display:none}
+.docmode .doc{display:block}
+.doc h3{border-top:1px solid var(--border);padding-top:16px}
+footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{.noprint{display:none!important}body{background:#fff;font-size:12px}.wrap{max-width:none;padding:0}#live{display:none!important}.doc{display:block!important}.stg,.det,h3{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>German Data &amp; Translations — User Guide</h1>
+<p class="lead">Pre-loaded German accounting/HR master data plus polished German-language translations, so Odoo works the way German businesses and accountants expect. Written for a new team member.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="document.body.classList.toggle('docmode')">Handout view</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>1. What is this?</h2>
+<p>"German Data &amp; Translations" (internally branded <b>Much OfD</b> — "Odoo für Deutschland") is a pair of add-on modules. One pre-fills your database with German accounting and HR reference data on install; the other replaces Odoo's built-in German text with cleaner, more accurate translations. Together they save you from setting up German-specific data by hand and from living with rough machine-style German labels.</p>
+<p><b>Why it exists:</b> Odoo ships English-first defaults and its standard German translation has gaps. German businesses also need specific local artifacts Odoo does not provide out of the box — the official <b>AfA depreciation tables</b>, German working-time and public-holiday calendars, and the <b>BWA</b> report every tax advisor expects. These modules fill those gaps so a German company can start immediately.</p>
+
+<div class="callout"><b>Heads-up:</b> this does <i>not</i> load German states or bank lists. What it actually loads is AfA depreciation asset models, working-time calendars, public holidays and BWA reports (Data module) plus improved German UI translations (Translations module).</div>
+
+<h3>What each module provides</h3>
+<dl class="words">
+<dt>Much OfD - German Data</dt><dd>Loads on install: AfA depreciation asset models (by industry), working-time calendars, public holidays, and ready-made BWA financial reports (SKR03 &amp; SKR04).</dd>
+<dt>Much OfD - German Translations</dt><dd>Replaces Odoo's German (de_DE) interface text across many apps with corrected, business-friendly wording — re-applied automatically on every upgrade.</dd>
+</dl>
+
+<h3>A few words you'll hear</h3>
+<dl class="words">
+<dt>AfA (Absetzung für Abnutzung)</dt><dd>Germany's official rules/tables for depreciating (writing down) the value of business assets over time.</dd>
+<dt>Asset model</dt><dd>A reusable template that defines how a type of asset depreciates; this module pre-creates many, grouped by industry.</dd>
+<dt>BWA (Betriebswirtschaftliche Auswertung)</dt><dd>A standard German monthly management report summarising revenue, costs and profit.</dd>
+<dt>SKR03 / SKR04</dt><dd>The two most common German standard charts of accounts; the BWA ships in a variant for each.</dd>
+<dt>Industry</dt><dd>A category on AfA asset models; selecting industries activates the matching depreciation templates.</dd>
+</dl>
+
+<h2>2. Step by step</h2>
+<p>Pick a task below. Click any step for the explanation, where to find it, and a tip.</p>
+
+<div id="live" class="noprint">
+<div class="bar"><select id="wf"></select><span class="dir" id="dir"></span></div>
+<div class="scn" id="scn"></div>
+<div class="rail" id="rail"></div>
+<div class="det" id="det"></div>
+</div>
+
+<div class="lg">
+<span class="lgi m-purple"><span class="dot"></span>Step you take</span>
+<span class="lgi m-teal"><span class="dot"></span>What appears in Odoo</span>
+<span class="lgi m-blue"><span class="dot"></span>Choice / option</span>
+<span class="lgi m-pink"><span class="dot"></span>Install / one-time</span>
+</div>
+
+<div class="doc" id="doc"></div>
+
+<footer>Onboarding aid for the much. OfD modules (<code>much_german_data</code>, <code>much_german_translation</code>, Odoo 19). Data is imported on install from bundled Excel files; translations re-apply on upgrade. Self-contained &amp; offline.</footer>
+
+</div>
+<script>
+const WF=[
+{id:'data',label:'A · Install & verify the German data',dir:'One-time setup',scn:'You just installed "Much OfD - German Data" and want to confirm the depreciation tables and industry selection are working.',steps:[
+{m:'m-pink',t:'Install the module',ex:'Apps → "Much OfD - German Data"',mo:'Apps',st:[],biz:'On install, a hook auto-imports the AfA tables, working times and public holidays from the bundled Excel files.',cfg:'The import needs the openpyxl Python library present on the server.'},
+{m:'m-blue',t:'Turn on the AfA tables',ex:'Tick "Use AfA tables for Assets Models"',mo:'Settings > Odoo for Germany',st:[],biz:'This unlocks the industry selection used to filter which asset models are active.',cfg:'You must Save before the next step appears.'},
+{m:'m-purple',t:'Select your industries',ex:'"Update Industry" → choose → Go Ahead',mo:'Settings > Odoo for Germany (Industry wizard)',st:[],biz:'Chosen industries activate their AfA asset models; the rest stay archived.',cfg:'A warning wizard shows exactly which industries will be added or removed before you commit.'},
+{m:'m-teal',t:'Verify the asset models',ex:'Entries flagged "from AfA table"',mo:'Accounting > Configuration > Asset Models',st:[],biz:'These are the depreciation templates imported from the AfA table.',cfg:'AfA-sourced models are protected — a rule blocks archiving non-closed assets that did not come from the AfA table.'},
+{m:'m-teal',t:'Open the BWA report',ex:'Pick the SKR03 or SKR04 variant',mo:'Accounting > Reporting > BWA',st:[],biz:'Confirms the BWA financial reports loaded correctly.',cfg:'Choose the variant that matches your chart of accounts.'}
+]},
+{id:'trans',label:'B · Improved German translations',dir:'Where they show up',scn:'You want Odoo\'s interface to read in proper German and stay that way after updates.',steps:[
+{m:'m-blue',t:'Set the language to German',ex:'User → Language = Deutsch (DE)',mo:'Settings > Users > (your user)',st:[],biz:'Translations only appear for users whose language is de_DE.',cfg:'Add German under Settings > Translations > Languages first if it is missing.'},
+{m:'m-pink',t:'Install the Translations module',ex:'"Much OfD - German Translations"',mo:'Apps',st:[],biz:'It layers corrected German terms over Odoo\'s defaults across many apps.',cfg:'It only depends on base, so it is safe to install even if you do not use every covered app.'},
+{m:'m-teal',t:'Check a corrected label',ex:'"Expected Arrival" → "Erwartetes Lieferdatum"',mo:'e.g. a Purchase Order',st:[],biz:'Demonstrates the improved German taking effect in the interface.',cfg:'Refresh the browser if an old label is cached.'},
+{m:'m-purple',t:'Re-apply after upgrades',ex:'Apps → module → Upgrade',mo:'Apps > (module) > Upgrade',st:[],biz:'The upgrade force-overwrites terms, so the improved German always wins over Odoo\'s built-in text.',cfg:'If a term ever reverts after an Odoo update, just upgrade this module again.'}
+]}
+];
+let wi=0,sel=0;
+const selEl=document.getElementById('wf');
+WF.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;selEl.appendChild(o);});
+function tone(s){s=s.toLowerCase();if(/fail|error|bad/.test(s))return'bad';if(/done|ok|success/.test(s))return'ok';if(/draft|manual/.test(s))return'warn';return'';}
+function chipHtml(st){return st.length?'<div class="lab">Status</div><div class="chips">'+st.map(x=>'<span class="chip '+tone(x)+'">'+x+'</span>').join('')+'</div>':'';}
+function render(){
+const w=WF[wi];
+document.getElementById('dir').textContent=w.dir;
+document.getElementById('scn').innerHTML=w.scn;
+const rail=document.getElementById('rail');rail.innerHTML='';
+w.steps.forEach((s,i)=>{
+const stg=document.createElement('div');stg.className='stg '+s.m+(i===sel?' sel':'');
+stg.innerHTML='<div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div></div>';
+stg.querySelector('.card').onclick=()=>{sel=i;render();};
+rail.appendChild(stg);
+});
+const s=w.steps[sel];
+document.getElementById('det').innerHTML='<h4>'+s.t+'</h4><p>'+s.biz+'</p><div class="lab">Where to find it</div><p><code>'+s.mo+'</code></p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'');
+}
+selEl.onchange=()=>{wi=+selEl.value;sel=0;render();};
+render();
+function renderDoc(){
+const doc=document.getElementById('doc');let h='';
+WF.forEach(w=>{
+h+='<h3>'+w.label+' &nbsp;&middot;&nbsp; '+w.dir+'</h3><p class="scn">'+w.scn+'</p><div class="rail">';
+w.steps.forEach((s,i)=>{
+h+='<div class="stg '+s.m+'"><div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div><div class="det" style="margin-top:8px"><p>'+s.biz+'</p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'')+'</div></div></div>';
+});
+h+='</div>';
+});
+doc.innerHTML=h;
+}
+renderDoc();
+</script>
+</body>
+</html>

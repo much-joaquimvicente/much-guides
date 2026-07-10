@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odoo Project & Timesheets — New Joiner Handbook</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--mb-fg);--brand-soft:var(--mb-bg);--brand-solid:#1668C4;--accent:#1668C4;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+    --mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+    --brand-solid:#6AA6E8;--accent:#6AA6E8;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+  header.hero{max-width:1160px;margin:0 auto;padding:34px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:30px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1160px;margin:0 auto;padding:16px 20px 90px}
+  aside.sidebar{position:sticky;top:20px;flex:0 0 250px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;max-height:calc(100vh - 40px);overflow:auto}
+  aside.sidebar h3{margin:4px 8px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  aside.sidebar a{display:block;padding:8px 10px;border-radius:9px;color:var(--text);text-decoration:none;font-size:14.5px;font-weight:500}
+  aside.sidebar a .n{display:inline-block;width:22px;color:var(--text-3);font-weight:700;font-size:13px}
+  aside.sidebar a:hover{background:var(--brand-soft)}
+  aside.sidebar a.active{background:var(--brand-solid);color:#fff}
+  aside.sidebar a.active .n{color:rgba(255,255,255,.8)}
+  .content{flex:1 1 auto;min-width:0}
+  .welcome{background:var(--surface-1);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+  .welcome h2{margin:0 0 8px;font-size:20px}
+  .welcome p{margin:0;color:var(--text-2)}
+  .welcome .wave{font-size:22px}
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:24px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+  .steps{display:grid;gap:12px;margin-top:6px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .step .dot{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center}
+  .step h4{margin:2px 0 4px;font-size:16px}
+  .step p{margin:0;color:var(--text-2)}
+  .step .hint{display:inline-block;margin-top:8px;font-size:13px;background:var(--blue-soft);color:var(--blue);padding:3px 10px;border-radius:8px;font-weight:600}
+  .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-top:8px}
+  .type{border-radius:12px;padding:15px;border:1px solid var(--border)}
+  .type .icon{font-size:22px}
+  .type h4{margin:8px 0 4px;font-size:15px}
+  .type p{margin:0;font-size:13.5px;color:var(--text-2)}
+  .type.own,.type.income{background:var(--green-soft);border-color:var(--border-success)}
+  .type.owe{background:var(--red-soft);border-color:var(--border-danger)}
+  .type.equity{background:var(--blue-soft);border-color:#8fbcec}
+  .type.expense{background:var(--amber-soft);border-color:var(--border-warning)}
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#9fc7f2;font-weight:600}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+  .flow{display:grid;gap:10px;margin-top:8px}
+  .flow .f{display:flex;gap:14px;align-items:flex-start}
+  .flow .f b{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .flow .f span{color:var(--text-2)}
+  .why{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+  .why .w{background:var(--brand-soft);border-radius:10px;padding:12px;font-size:14px;font-weight:600;color:var(--brand)}
+  .why .w small{display:block;font-weight:400;color:var(--text-2);margin-top:3px}
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:460px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+  kbd{font-family:var(--mono);font-size:.8em;background:var(--surface-0);border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+  dl.glossary{margin:0}
+  dl.glossary div{padding:13px 0;border-bottom:1px solid var(--border)}
+  dl.glossary div:last-child{border-bottom:0}
+  dl.glossary dt{font-weight:700;color:var(--brand)}
+  dl.glossary dd{margin:4px 0 0;color:var(--text-2);font-size:15px}
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+  .links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 18px}
+  .links a{background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:8px 15px}
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+  @media (max-width:900px){.layout{flex-direction:column;padding-top:12px}aside.sidebar{position:static;flex:none;width:100%;max-height:none}aside.sidebar nav{display:grid;grid-template-columns:1fr 1fr;gap:2px}}
+  @media (max-width:560px){.hero h1{font-size:25px}.mini{grid-template-columns:1fr}aside.sidebar nav{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <a class="backlink" href="index.html">← Back to Guide Hub</a>
+  <span class="kicker">New Joiner Handbook · Project Management</span>
+  <h1>Odoo Project & Timesheets</h1>
+  <p>How we plan work, track it across stages, and log the time we spend — the backbone of delivery at a consultancy.</p>
+  <div class="badge-v">Odoo 19 · Project & Timesheets</div>
+</header>
+<div class="layout">
+  <aside class="sidebar"><h3>Chapters</h3><nav><a href="#c1"><span class="n">1</span>What Project Is</a><a href="#c2"><span class="n">2</span>Projects & Stages</a><a href="#c3"><span class="n">3</span>Tasks</a><a href="#c4"><span class="n">4</span>Kanban & Lifecycle</a><a href="#c5"><span class="n">5</span>Timesheets</a><a href="#c6"><span class="n">6</span>Planning & Progress</a><a href="#c7"><span class="n">7</span>Collaboration & Reporting</a></nav><h3 style="margin-top:16px">Reference</h3><nav><a href="#glossary"><span class="n">★</span>Glossary</a></nav></aside>
+  <div class="content">
+    <div class="welcome"><h2><span class="wave">👋</span> Welcome aboard!</h2><p>Odoo <strong>Project</strong> is where the team plans and tracks work, and <strong>Timesheets</strong> is how we record the hours we spend on it. Together they answer the two questions a consultancy lives by: <strong>“what needs doing?”</strong> and <strong>“where did our time go?”</strong> Learn the handful of ideas below and you can run any project board.</p></div>
+    <div class="bigidea"><span class="tag">🧠 Read this first — the one big idea</span><p>Everything is a <strong>task inside a project</strong>. A <strong>project</strong> is the container (a client, an initiative); <strong>tasks</strong> are the pieces of work inside it that move across <strong>stages</strong> from “to do” to “done”. Log your hours as <strong>timesheets</strong> on those tasks, and Odoo shows planned-vs-real time automatically.</p></div>
+    <section id="c1"><h2><span class="num">1</span> What Project Is</h2><p class="lead">Organise work into projects and tasks, and see status at a glance — no “where are we?” emails.</p><p class="para">Odoo Project turns work into visible, trackable items. Each <strong>project</strong> holds many <strong>tasks</strong>, and each task sits in a <strong>stage</strong> (a kanban column) that shows how far along it is. Anyone can open the board and instantly see what is in progress, what is blocked, and what is done.</p><div class="mini"><div class="m"><h4>📁 Project</h4><p>A container for related work — often one client or initiative.</p></div><div class="m"><h4>✅ Task</h4><p>A single piece of work: “Configure Helpdesk SLA”.</p></div><div class="m"><h4>🗂️ Stage</h4><p>A column (To Do → In Progress → Done) showing progress.</p></div><div class="m"><h4>⏱️ Timesheet</h4><p>Hours logged against a task.</p></div></div></section><section id="c2"><h2><span class="num">2</span> Projects & Stages</h2><p class="lead">Create the container and shape its columns to match how your team works.</p><div class="path">Project <b>→</b> New</div><p class="para">Give the project a <strong>name</strong>, optionally link a <strong>customer</strong>, and choose whether it <strong>allows timesheets</strong> and <strong>billing</strong>. Each project has its own <strong>stages</strong> — rename or add columns (e.g. <em>To Do</em>, <em>In Progress</em>, <em>Review</em>, <em>Done</em>) so the board mirrors your real process.</p><div class="tip note"><span class="i">ℹ️</span><p>A project can be tied to a <strong>customer and a sales order</strong>, so tasks and logged time trace straight back to what was sold and can be billed.</p></div></section><section id="c3"><h2><span class="num">3</span> Tasks — the unit of work</h2><p class="lead">The task form is where the actual work is described, assigned and scheduled.</p><div class="steps"><div class="step"><div class="dot">1</div><div><h4>👤 Assignees</h4><p>Who is doing it. A task can have one or several people.</p><span class="hint">Filter “My Tasks” by this</span></div></div><div class="step"><div class="dot">2</div><div><h4>📅 Deadline</h4><p>When it is due — drives the calendar and overdue warnings.</p><span class="hint">Feeds the Calendar view</span></div></div><div class="step"><div class="dot">3</div><div><h4>⏳ Planned hours</h4><p>Your estimate of the effort — compared later against logged time.</p><span class="hint">Powers progress bars</span></div></div><div class="step"><div class="dot">4</div><div><h4>🏷️ Tags & Priority</h4><p>Label and star tasks so the important ones surface first.</p><span class="hint">Star = high priority</span></div></div></div><p class="para">Big tasks can be split into <strong>sub-tasks</strong>, and you can set <strong>dependencies</strong> so one task only starts once another is finished.</p></section><section id="c4"><h2><span class="num">4</span> Kanban Stages & Task Lifecycle</h2><p class="lead">Work flows left-to-right across the board. You move it by dragging.</p><p class="para">Drag a card from one stage to the next as work progresses. Each card also has a <strong>kanban state</strong> — a small traffic light: <span style="color:var(--green);font-weight:600">green “ready”</span>, <span style="color:var(--red);font-weight:600">red “blocked”</span>, or grey “in progress” — to flag problems without moving the card.</p><div class="flow"><div class="f"><b>1</b><span><strong>To Do</strong> — captured, not started.</span></div><div class="f"><b>2</b><span><strong>In Progress</strong> — someone is actively working it.</span></div><div class="f"><b>3</b><span><strong>Review / Done</strong> — finished, or awaiting a check.</span></div></div><div class="tip note"><span class="i">ℹ️</span><p><strong>Personal stages</strong> let each person organise their own view of tasks without changing the shared project columns.</p></div></section><section id="c5"><h2><span class="num">5</span> Timesheets — logging time</h2><p class="lead">Record how long work actually took. This is what makes billing and estimates honest.</p><p class="para">With the <strong>Timesheets</strong> app installed and the project set to allow it, every task gets a <strong>Timesheets tab</strong>. Add a line with the date, a description and the <strong>hours</strong> — or use the <strong>Grid</strong> view to fill a whole week at once.</p><div class="path">Project task <b>→</b> Timesheets tab <b>→</b> Add a line &nbsp;·&nbsp; or &nbsp; Timesheets app <b>→</b> Grid</div><div class="tip"><span class="i">💡</span><p>Use the built-in <strong>timer</strong> (start/stop on a task) to capture time as you work instead of guessing at the end of the day.</p></div></section><section id="c6"><h2><span class="num">6</span> Planning & Progress</h2><p class="lead">Estimate vs reality, at a glance.</p><p class="para">Each task compares <strong>planned hours</strong> (your estimate) with <strong>effective hours</strong> (what you logged). A <strong>progress bar</strong> shows how much of the estimate is used — so you spot a task about to blow its budget while there is still time to react.</p><div class="tablewrap"><table class="t"><tr><th>Term</th><th>Plain meaning</th></tr><tr><td><strong>Planned / Allocated hours</strong></td><td>What you estimated the task would take.</td></tr><tr><td><strong>Effective hours</strong></td><td>What was actually logged via timesheets.</td></tr><tr><td><strong>Remaining</strong></td><td>Planned minus effective — budget left.</td></tr></table></div></section><section id="c7"><h2><span class="num">7</span> Collaboration & Reporting</h2><p class="lead">Keep the conversation on the work, and read the numbers that come out of it.</p><p class="para">Every task has the <strong>chatter</strong> (Chapter 7 of the Getting Started handbook): message the customer, log internal notes, @mention colleagues, attach files and schedule follow-up activities — all pinned to the task.</p><h3 class="sub">Reports worth knowing</h3><div class="mini"><div class="m"><h4>📊 Task Analysis</h4><p>Counts and status of tasks by project, stage, assignee.</p></div><div class="m"><h4>⏱️ Timesheets Analysis</h4><p>Hours by person, project or task — the billing view.</p></div><div class="m"><h4>📉 Burndown</h4><p>Work remaining over time — are we on track to finish?</p></div><div class="m"><h4>🗓️ Project dashboard</h4><p>Per-project overview of open work and logged time.</p></div></div></section><section id="glossary"><h2><span class="num">★</span> Plain-English glossary</h2><p class="lead">The words you'll keep hearing — decoded.</p><dl class="glossary"><div><dt>Project</dt><dd>A container for related tasks — usually a client or initiative.</dd></div><div><dt>Task</dt><dd>A single piece of work that moves across stages.</dd></div><div><dt>Sub-task</dt><dd>A smaller task nested under a parent task.</dd></div><div><dt>Stage</dt><dd>A kanban column showing how far along a task is.</dd></div><div><dt>Kanban state</dt><dd>A task’s traffic light: ready (green), blocked (red) or in progress.</dd></div><div><dt>Personal stage</dt><dd>Your own private way to organise tasks, separate from shared columns.</dd></div><div><dt>Timesheet</dt><dd>A logged entry of hours spent on a task.</dd></div><div><dt>Planned / Effective hours</dt><dd>The estimated effort vs the hours actually logged.</dd></div><div><dt>Dependency</dt><dd>A rule that one task can’t start until another is done.</dd></div><div><dt>Billable</dt><dd>Whether logged time can be invoiced to a customer.</dd></div></dl></section>
+    <footer><p>Official Odoo 19 sources:</p><div class="links"><a href="https://www.odoo.com/documentation/19.0/applications/services/project.html" target="_blank" rel="noopener">📖 Project docs</a><a href="https://www.odoo.com/documentation/19.0/applications/services/timesheets.html" target="_blank" rel="noopener">⏱️ Timesheets docs</a><a href="https://www.odoo.com/slides" target="_blank" rel="noopener">🎓 Free courses</a><a href="https://erp.muchconsulting.de/odoo/knowledge/1511/knowledge/2591" target="_blank" rel="noopener">📚 much. Knowledge</a><a href="https://www.youtube.com/watch?v=MP-DJQXRIjs" target="_blank" rel="noopener">▶️ Project basics (video)</a></div><p>Made for new joiners · Odoo 19 Project & Timesheets · You've got this 💪</p></footer>
+  </div>
+</div>
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+<script>
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}});
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  var links=Array.prototype.slice.call(document.querySelectorAll('aside.sidebar a'));
+  var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('active')});var a=map[e.target.id];if(a){a.classList.add('active')}}})},{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+</script>
+</body>
+</html>

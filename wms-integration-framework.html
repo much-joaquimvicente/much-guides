@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WMS Integration Framework (Retired) — Reference</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:840px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:36px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+a.inline{color:var(--mp-fg)}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.warnbar{background:var(--bg-danger);border:1px solid var(--border-danger);border-left:5px solid var(--text-danger);border-radius:12px;padding:14px 18px;margin:14px 0 8px}
+.warnbar .h{font-weight:600;color:var(--text-danger);font-size:15px;margin-bottom:4px}
+.warnbar p{margin:4px 0 0;font-size:14.5px;color:var(--text)}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--mp-fg);border-radius:10px;padding:13px 16px;margin:16px 0}
+.callout.ok{border-left-color:var(--border-success);background:var(--bg-success)}
+.callout.warn{border-left-color:var(--border-warning);background:var(--bg-warning)}
+.words{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:6px 18px;margin:14px 0}
+.words dt{font-weight:500;margin-top:10px}
+.words dd{margin:0 0 4px;color:var(--text-2);font-size:14.5px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:16px 0}
+.fbox{flex:1;min-width:150px;border:1px solid var(--border-strong);border-radius:12px;background:var(--surface-1);padding:12px}
+.fbox .n{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em}
+.fbox .t{font-weight:500;font-size:14.5px;margin-top:2px}
+.fbox .s{font-size:12.5px;color:var(--text-2);margin-top:3px}
+.farr{display:flex;align-items:center;color:var(--text-3);font-size:18px}
+.dirtbl{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.dirtbl th,.dirtbl td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:top}
+.dirtbl th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:500}
+.dirtbl td .d{font-family:var(--mono);font-size:12px;color:var(--mt-fg);white-space:nowrap}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--mg-bg);color:var(--mg-fg);border:1px solid var(--border-strong);margin-bottom:8px}
+footer{margin-top:44px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+footer a{color:var(--mp-fg)}
+@media print{.noprint{display:none!important}body{background:#fff;font-size:12px}.wrap{max-width:none;padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<div class="tag">Retired · End of life</div>
+<h1>WMS Integration Framework</h1>
+<p class="lead">A reference page for a retired product — written in plain language for colleagues supporting customers who still use it, and for anyone who wants to understand what it did.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<div class="warnbar">
+<div class="h">⚠️ Do not sell this to new customers</div>
+<p>This product has reached <b>end of life</b> (retired, no longer developed). Please do <b>not</b> offer or sell it to new customers — for new projects use <b>Order Base</b> instead (see section 5). This page exists to explain what it was and to help you support customers who are <b>already</b> using it.</p>
+</div>
+
+<h2>1. First — what is a WMS?</h2>
+<p>Let's unpack the jargon before anything else.</p>
+<p><b>WMS</b> stands for <b>Warehouse Management System</b> — the software that runs a physical warehouse. It decides where each item is stored, and it guides the workers through <b>picking</b> (grabbing the items for an order off the shelves), <b>packing</b> (putting them in a box), and <b>shipping</b> (handing the box to a courier).</p>
+<p>Often the warehouse isn't even the customer's own — it's a <b>3PL</b> (<b>Third-Party Logistics</b> provider): an outside company you pay to store your goods and ship your orders for you. Either way, that warehouse runs its own WMS software, separate from Odoo.</p>
+<div class="callout"><b>The core problem:</b> Odoo knows about <b>orders and stock on paper</b> (the accounting and admin side). The warehouse/WMS knows about the <b>physical goods</b> (what's really on the shelf, what actually shipped). If they don't talk to each other, the two drift apart — Odoo thinks something shipped that didn't, or shows stock that's really gone. An integration keeps them in step.</p></div>
+
+<h2>2. What the "WMS Integration Framework" was</h2>
+<p>It was much.'s older <b>base layer</b> — a shared foundation — for connecting Odoo to outside warehouse/3PL systems. A "framework" here means the common <b>plumbing</b>: the boring-but-essential machinery (running tasks on a timer, keeping logs, matching data between two systems, handling errors) that every individual warehouse connector needs. Instead of rebuilding that plumbing for each new warehouse, connectors were built <b>on top of</b> this framework.</p>
+<div class="flow">
+<div class="fbox"><div class="n">Admin side</div><div class="t">Odoo</div><div class="s">Orders, deliveries, stock, invoicing</div></div>
+<div class="farr">⇄</div>
+<div class="fbox"><div class="n">The plumbing</div><div class="t">WMS Framework</div><div class="s">Shared jobs, logs, data matching</div></div>
+<div class="farr">⇄</div>
+<div class="fbox"><div class="n">Physical side</div><div class="t">Warehouse / 3PL</div><div class="s">Pick, pack, ship, receive</div></div>
+</div>
+
+<h2>3. What flowed where</h2>
+<p>These integrations are easiest to understand by direction. There are two main journeys — goods going <b>out</b> to customers, and goods coming <b>in</b> from suppliers — plus keeping stock honest.</p>
+<table class="dirtbl">
+<tr><th>What</th><th>Direction</th><th>In plain words</th></tr>
+<tr><td><b>Delivery orders</b></td><td><span class="d">Odoo → warehouse</span></td><td>When a customer order needs shipping, Odoo tells the warehouse "please pick, pack and send this."</td></tr>
+<tr><td><b>Shipment confirmation + tracking</b></td><td><span class="d">warehouse → Odoo</span></td><td>Once the warehouse ships it, it reports back "done, here's the tracking number" — and Odoo marks the delivery complete.</td></tr>
+<tr><td><b>Expected receipts (ASN)</b></td><td><span class="d">Odoo → warehouse</span></td><td>When new stock is on its way from a supplier, Odoo warns the warehouse in advance so they're ready to receive it. This heads-up is called an ASN.</td></tr>
+<tr><td><b>Received quantities</b></td><td><span class="d">warehouse → Odoo</span></td><td>When the goods physically arrive and are counted, the warehouse reports the real quantities back, and Odoo's stock goes up.</td></tr>
+<tr><td><b>Stock levels</b></td><td><span class="d">warehouse → Odoo</span></td><td>The warehouse is the source of truth for what's physically there, so it periodically syncs the real stock back to Odoo to prevent overselling.</td></tr>
+<tr><td><b>Returns</b></td><td><span class="d">both ways</span></td><td>A customer return is registered and the stock is put back — kept in step between the two systems.</td></tr>
+</table>
+<div class="callout warn"><b>Honest note:</b> the exact screens, fields and settings of our old WMS framework aren't documented here — the code is retired and not in our current codebase. The flows above are how warehouse/3PL integrations generally work; the specifics varied per connector built on the framework.</div>
+
+<h2>4. Words you'll hear</h2>
+<dl class="words">
+<dt>WMS (Warehouse Management System)</dt><dd>Software that runs a warehouse — storage, picking, packing, shipping.</dd>
+<dt>3PL (Third-Party Logistics)</dt><dd>An outside company you pay to store and ship your goods for you.</dd>
+<dt>ASN (Advance Shipping Notice)</dt><dd>A "heads-up" message that stock is on its way, so the receiving side can prepare.</dd>
+<dt>Pick / Pack / Ship</dt><dd>The three warehouse steps: grab the items, box them, send them.</dd>
+<dt>SSCC</dt><dd>A standard barcode number that identifies one specific pallet or carton, so it can be tracked as a unit.</dd>
+<dt>Master data</dt><dd>The shared "facts" both systems must agree on — mainly the product list — so a message about "product X" means the same thing on both sides.</dd>
+<dt>Framework / base layer</dt><dd>Shared plumbing that other, more specific connectors are built on top of, so common work isn't rebuilt each time.</dd>
+</dl>
+
+<h2>5. Why it's retired — and what to use instead</h2>
+<p>It has been <b>replaced</b> by a newer, cleaner foundation called <b>Order Base</b>, which itself sits on the <b>Integration Hub</b> (our current shared base for all integrations). Because the newer framework does the same job better, the old WMS framework was retired: no new features, no new sales.</p>
+<div class="callout ok"><b>For any new project, start here instead:</b> <b>Order Base</b> — our current integration framework. There's a proper guide for it: <a class="inline" href="ihub-onboarding.html">Integration Hub &amp; Order Base</a>. Never begin new work on the retired framework.</div>
+
+<h2>6. If a customer still uses it</h2>
+<div class="words">
+<dt>What it does day to day</dt><dd>It quietly moves information between Odoo and an outside warehouse — telling the warehouse to ship orders, and hearing back when they're shipped or received.</dd>
+<dt>Where to look when something breaks</dt><dd>The <b>logs</b> (the system's diary of what happened) are your first stop, just like every other connector. Check the last scheduled run too — a message may simply not have been sent or received yet.</dd>
+<dt>Typical tickets</dt><dd>"An order wasn't sent to the warehouse", "a shipment didn't come back into Odoo", or "stock doesn't match" — all usually traced through the logs.</dd>
+<dt>When in doubt</dt><dd>Because this framework is retired and not in our current codebase, escalate anything tricky to a senior colleague — and steer any new requirements toward Order Base.</dd>
+</dl>
+
+<footer>Reference page for the <b>retired</b> WMS Integration Framework — end-of-life, do not sell to new customers; use <b>Order Base</b> instead. The warehouse-integration concepts here are general industry practice; the exact behaviour of our old framework is not documented, as the code is legacy and not in the current codebase. Self-contained &amp; works offline.</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. release process — onboarding</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:40px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.card-svg{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:16px;margin:14px 0}
+svg{max-width:100%;height:auto;display:block}
+text.t{font-family:var(--sans);font-size:14px;fill:var(--text)}
+text.th{font-family:var(--sans);font-weight:500;font-size:14px;fill:var(--text)}
+text.ts{font-family:var(--sans);font-size:12px;fill:var(--text-2)}
+.box>rect{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:.5}
+.arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
+.c-purple>rect{fill:var(--mp-bg);stroke:#7F77DD;stroke-width:.5}.c-purple text{fill:var(--mp-fg)}
+.c-teal>rect{fill:var(--mt-bg);stroke:#1D9E75;stroke-width:.5}.c-teal text{fill:var(--mt-fg)}
+.c-blue>rect{fill:var(--mb-bg);stroke:#378ADD;stroke-width:.5}.c-blue text{fill:var(--mb-fg)}
+.c-coral>rect{fill:var(--mc-bg);stroke:#D85A30;stroke-width:.5}.c-coral text{fill:var(--mc-fg)}
+.c-amber>rect{fill:var(--ma-bg);stroke:#EF9F27;stroke-width:.5}.c-amber text{fill:var(--ma-fg)}
+.c-pink>rect{fill:var(--mk-bg);stroke:#D4537E;stroke-width:.5}.c-pink text{fill:var(--mk-fg)}
+.c-gray>rect{fill:var(--mg-bg);stroke:#888780;stroke-width:.5}.c-gray text{fill:var(--mg-fg)}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+.dir{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scn{color:var(--text-2);font-size:15px;margin:10px 0}
+.scn b{color:var(--text);font-weight:500}
+.rail{position:relative;margin:16px 0 4px}
+.rail:before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:var(--border)}
+.stg{display:flex;gap:14px;align-items:stretch;margin-bottom:10px;position:relative}
+.node{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;border:2px solid var(--fg);z-index:1}
+.card{flex:1;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:10px 14px;cursor:pointer}
+.card:hover{border-color:var(--border-strong)}
+.stg.sel .card{border-color:var(--fg);background:var(--surface-2)}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);color:var(--fg);font-size:12px;padding:2px 9px;border-radius:999px;white-space:nowrap;font-family:var(--mono)}
+.ttl{font-weight:500;font-size:15px}
+.ex{color:var(--text-2);font-size:13px;margin-top:3px}
+.det{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:14px 16px;margin-top:6px}
+.det h4{margin:0 0 2px;font-size:15px;font-weight:500}
+.det .lab{font-size:12px;color:var(--text-3);margin:10px 0 3px}
+.det p{margin:0;font-size:14px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border)}
+.chip.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.chip.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.chip.bad{background:var(--bg-danger);color:var(--text-danger);border-color:var(--border-danger)}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;padding-top:12px;border-top:1px solid var(--border)}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.dot{width:11px;height:11px;border-radius:3px;background:var(--fg)}
+.doc{display:none}
+.docmode #live{display:none}
+.docmode .doc{display:block}
+.doc h3{border-top:1px solid var(--border);padding-top:16px}
+footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{
+.noprint{display:none!important}
+body{background:#fff;font-size:12px}
+.wrap{max-width:none;padding:0}
+#live{display:none!important}
+.doc{display:block!important}
+.card-svg{break-inside:avoid;border:1px solid #ddd}
+.stg,.det,h3{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<h1>much. release process — onboarding</h1>
+<p class="lead">What a release is, when they happen, how it ships, and how we tell the world — for Product Owners &amp; Support.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="document.body.classList.toggle('docmode')">Handout view</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>1. The big picture</h2>
+<p>A release is a tagged version of a much. module (e.g. <code>v18.0.1.2.0</code>) bundling everything merged and QA-tested since the last version, then shipped to customers. It doesn't run on a fixed calendar — it's cut when enough fixes and features have piled up on the QA branch, or for an urgent fix. The dashed block is the customer-email step that <b>doesn't exist yet</b> — a future project.</p>
+<div class="card-svg">
+<svg width="100%" viewBox="0 0 680 386" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>What a release touches</title><desc>Merged QA code flows through the release process out to customers and partners.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="box"><rect x="40" y="153" width="160" height="70" rx="12"/><text class="th" x="120" y="181" text-anchor="middle" dominant-baseline="central">Merged QA code</text><text class="ts" x="120" y="201" text-anchor="middle" dominant-baseline="central">18.latest-qa</text></g>
+<g class="box"><rect x="480" y="153" width="160" height="70" rx="12"/><text class="th" x="560" y="181" text-anchor="middle" dominant-baseline="central">Customers</text><text class="ts" x="560" y="201" text-anchor="middle" dominant-baseline="central">partners · support</text></g>
+<line x1="203" y1="180" x2="227" y2="180" class="arr" marker-end="url(#ar)"/><line x1="227" y1="200" x2="203" y2="200" class="arr" marker-end="url(#ar)"/>
+<line x1="453" y1="180" x2="477" y2="180" class="arr" marker-end="url(#ar)"/><line x1="477" y1="200" x2="453" y2="200" class="arr" marker-end="url(#ar)"/>
+<g class="box"><rect x="230" y="30" width="220" height="316" rx="16"/><text class="th" x="340" y="52" text-anchor="middle" dominant-baseline="central">the release process</text></g>
+<g class="c-purple"><rect x="250" y="74" width="180" height="30" rx="8"/><text class="th" x="340" y="89" text-anchor="middle" dominant-baseline="central">Trigger /release</text></g>
+<g class="c-blue"><rect x="250" y="112" width="180" height="30" rx="8"/><text class="th" x="340" y="127" text-anchor="middle" dominant-baseline="central">Version &amp; branch</text></g>
+<g class="c-teal"><rect x="250" y="150" width="180" height="30" rx="8"/><text class="th" x="340" y="165" text-anchor="middle" dominant-baseline="central">Release notes ×2</text></g>
+<g class="c-amber"><rect x="250" y="188" width="180" height="30" rx="8"/><text class="th" x="340" y="203" text-anchor="middle" dominant-baseline="central">GitHub release</text></g>
+<g class="c-gray"><rect x="250" y="226" width="180" height="30" rx="8"/><text class="th" x="340" y="241" text-anchor="middle" dominant-baseline="central">CI build &amp; deploy</text></g>
+<g class="c-pink"><rect x="250" y="264" width="180" height="30" rx="8"/><text class="th" x="340" y="279" text-anchor="middle" dominant-baseline="central">Support &amp; docs</text></g>
+<g class="c-coral"><rect x="250" y="302" width="180" height="30" rx="8" style="stroke-dasharray:4 3"/><text class="th" x="340" y="317" text-anchor="middle" dominant-baseline="central">Email announce</text></g>
+</svg>
+</div>
+
+<h2>2. The four phases</h2>
+<p>The process runs left to right through the three phases you care about — the technical prep, publishing, and announcing — plus the future customer-email step (dashed, not built yet).</p>
+<div class="card-svg">
+<svg width="100%" viewBox="0 0 680 180" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>The release in four phases</title><desc>Technical prep, publish and CI, announce, and a future email step.</desc>
+<defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="c-blue"><rect x="40" y="80" width="138" height="60" rx="10"/><text class="th" x="109" y="104" text-anchor="middle" dominant-baseline="central">Technical prep</text><text class="ts" x="109" y="124" text-anchor="middle" dominant-baseline="central">bump · merge</text></g>
+<g class="c-gray"><rect x="192" y="80" width="138" height="60" rx="10"/><text class="th" x="261" y="104" text-anchor="middle" dominant-baseline="central">Publish &amp; CI</text><text class="ts" x="261" y="124" text-anchor="middle" dominant-baseline="central">GitHub · Jenkins</text></g>
+<g class="c-amber"><rect x="344" y="80" width="138" height="60" rx="10"/><text class="th" x="413" y="104" text-anchor="middle" dominant-baseline="central">Announce</text><text class="ts" x="413" y="124" text-anchor="middle" dominant-baseline="central">notes · support</text></g>
+<g class="c-coral"><rect x="496" y="80" width="138" height="60" rx="10" style="stroke-dasharray:4 3"/><text class="th" x="565" y="104" text-anchor="middle" dominant-baseline="central">Future: email</text><text class="ts" x="565" y="124" text-anchor="middle" dominant-baseline="central">mail marketing</text></g>
+<line x1="180" y1="110" x2="190" y2="110" class="arr" marker-end="url(#ar2)"/>
+<line x1="332" y1="110" x2="342" y2="110" class="arr" marker-end="url(#ar2)"/>
+<line x1="484" y1="110" x2="494" y2="110" class="arr" marker-end="url(#ar2)"/>
+</svg>
+</div>
+
+<h2>3. The flows (interactive)</h2>
+<p>Pick a view: what a release is and when they happen, the technical flow, the business/announcement flow, and the coming-soon customer email. Click any step for the business meaning and the technical detail. The real <code>v18.0.1.2.0</code> release is the running example. (Use "Handout view" above to expand every view for printing.)</p>
+
+<div id="live" class="noprint">
+<div class="bar">
+<select id="wf"></select>
+<span class="dir" id="dir"></span>
+</div>
+<div class="scn" id="scn"></div>
+<div class="rail" id="rail"></div>
+<div class="det" id="det"></div>
+</div>
+
+<div class="lg">
+<span class="lgi m-purple"><span class="dot"></span>Cadence &amp; trigger</span>
+<span class="lgi m-blue"><span class="dot"></span>Git &amp; versioning</span>
+<span class="lgi m-teal"><span class="dot"></span>Release notes</span>
+<span class="lgi m-gray"><span class="dot"></span>CI / deploy</span>
+<span class="lgi m-amber"><span class="dot"></span>Announce (external)</span>
+<span class="lgi m-pink"><span class="dot"></span>Support &amp; docs</span>
+<span class="lgi m-coral"><span class="dot"></span>Future / to-do</span>
+</div>
+
+<div class="doc" id="doc"></div>
+
+<footer>Built for PO &amp; support onboarding. Grounded in the <code>/release</code> workflow, the real release notes for v18.0.1.2.0, and the much product repos. Buttons: theme toggle, handout view (expands every view), print / save-as-PDF. The "Coming soon — customer email" view is a proposed project, not yet built.</footer>
+
+</div>
+<script>
+const WF=[
+{id:'basics',label:'1 · What & when',dir:'Orientation',scn:'A <b>release</b> is a tagged version of a much. module — e.g. <b>v18.0.1.2.0</b> — bundling the fixes and features merged since the last version.',steps:[
+{m:'m-purple',t:'What is a release',ex:'A tagged, versioned bundle of changes',biz:'A release packages everything merged and tested since the last version into one named version that customers can install. Nothing reaches a customer until it is released.',mo:'git tag v18.0.1.2.0',st:[],cfg:'One release = one version tag + two release-note files + a GitHub release'},
+{m:'m-blue',t:'Version scheme',ex:'18.0.1.2.0 = Odoo 18 · much 1.2.0',biz:'The first part (18.0) is the Odoo version the module targets; the rest (1.2.0) is much&#39;s own version that steps up every release.',mo:'__manifest__.py "version"',st:[],cfg:'Branches: <code>18.latest-qa</code> (staging) &rarr; <code>18.latest</code> (stable) &rarr; a version branch <code>18.0.1.2.0</code>'},
+{m:'m-purple',t:'When do they happen',ex:'When QA-approved changes have piled up',biz:'No fixed calendar. A release is cut when meaningful fixes and features have accumulated on the QA branch and passed testing; an urgent fix can trigger an out-of-band release.',mo:'commits on {major}.latest-qa since last tag',st:[],cfg:'The tool starts by listing every commit since the last <code>v{major}*</code> tag — no commits, no release'},
+{m:'m-pink',t:'Who is involved',ex:'Engineer runs it; PO & support need to know',biz:'A developer executes the release. The Product Owner validates what is in scope, and Support must know what changed to answer customers — which is exactly why this map exists.',mo:'product@muchconsulting.de',st:[],cfg:'PO owns the "what shipped & why"; support owns "how do we explain it"'}
+]},
+{id:'tech',label:'2 · Technical flow',dir:'Engineering',scn:'Cutting <b>v18.0.1.2.0</b>: bump versions, merge QA &rarr; stable, branch, tag, then let CI build and deploy.',steps:[
+{m:'m-purple',t:'Trigger /release',ex:'Run on the QA branch (18.latest-qa)',biz:'The engineer runs the release workflow. It works out the major version from the branch, finds the last tag, and shows every commit since then so scope is clear.',mo:'/release [major]',st:['on 18.latest-qa'],cfg:'<code>git log LAST_TAG..HEAD --oneline</code> · stops if there are no new commits'},
+{m:'m-blue',t:'Pick version & bump manifests',ex:'18.0.1.2.0 written to every __manifest__.py',biz:'The team decides the new number, and the tool stamps it into every module&#39;s manifest so all modules move to the same version together.',mo:'__manifest__.py "version"',st:['confirmed'],cfg:'Commit <code>chore[*] update manifest version</code>, signed-off'},
+{m:'m-blue',t:'Merge, branch & push',ex:'18.latest-qa &rarr; 18.latest &rarr; branch 18.0.1.2.0',biz:'The QA branch is merged into the stable branch, then a branch named after the exact version is created. Every push asks for confirmation first.',mo:'git merge · git branch 18.0.1.2.0',st:['pushed'],cfg:'QA = <code>{major}.latest-qa</code> · stable = <code>{major}.latest</code>'},
+{m:'m-teal',t:'Generate release notes (×2)',ex:'A technical file and a customer file',biz:'Two files are written from the real code diffs: a technical changelog for engineers and partners, and a plain-language version for customers.',mo:'RELEASE_NOTES_v*.md · USER_RELEASE_NOTES_v*.md',st:['Breaking','Features','Fixes'],cfg:'Commits sorted: <code>fix</code>&rarr;Fixes, <code>feat</code>&rarr;Features, <code>break/BREAKING</code>&rarr;Breaking · contributors via <code>gh api</code>'},
+{m:'m-amber',t:'Publish GitHub release',ex:'Tag v18.0.1.2.0 + changelog compare link',biz:'A GitHub release is published with the tag and a link comparing the previous version to this one, crediting all contributors.',mo:'gh release',st:['tagged','published'],cfg:'Changelog URL <code>compare/v18.0.1.1.6...v18.0.1.2.0</code>'},
+{m:'m-gray',t:'CI builds & deploys',ex:'Jenkins picks up the pushed branch/tag',biz:'The CI pipeline builds the modules and makes the new version available to install on customer Odoo instances.',mo:'Jenkinsfile · jenkinsfilePy()',st:['build','deploy'],cfg:'Shared <code>jenkins-templates</code> library'},
+{m:'m-gray',t:'Install / upgrade instances',ex:'"Standard module upgrade applies"',biz:'Customer and hosting instances upgrade the modules to the new version — most releases need no special steps.',mo:'Odoo module upgrade',st:['upgraded'],cfg:'Release notes flag any new dependencies or special upgrade steps'}
+]},
+{id:'biz',label:'3 · Business flow — telling the world',dir:'Communication',scn:'Once <b>v18.0.1.2.0</b> is out, the people who need to know are told — today this is mostly pull-based.',steps:[
+{m:'m-teal',t:'User release notes ready',ex:'"Cleaner B2C customer records …"',biz:'The customer-facing notes summarise what changed in everyday language — new features, improvements, bug fixes — with no developer jargon.',mo:'USER_RELEASE_NOTES_v18.0.1.2.0.md',st:['Features','Improvements','Fixes'],cfg:'Ends with a feedback contact: <code>product@muchconsulting.de</code>'},
+{m:'m-amber',t:'GitHub release / changelog',ex:'Public release page + full compare link',biz:'Partners and technical customers can see exactly what shipped through the GitHub release and its changelog.',mo:'github.com/much-GmbH/…/releases',st:['published'],cfg:'Technical notes route support/partners to <code>product@erp.muchconsulting.de</code>'},
+{m:'m-pink',t:'Update product documentation',ex:'Refresh the Knowledge article for the module',biz:'The Odoo Knowledge docs are updated so the help centre matches the new behaviour — the same docs support uses every day.',mo:'knowledge.article (muchdoo)',st:['updated'],cfg:'e.g. the iHub / connector user-doc articles'},
+{m:'m-pink',t:'Enable support',ex:'Support reads the notes, ready for tickets',biz:'Support specialists review the user notes so they can answer questions and set expectations about what changed for customers.',mo:'product@muchconsulting.de',st:['briefed'],cfg:'This is the key PO &rarr; support handover moment'},
+{m:'m-amber',t:'Customer finds out — today',ex:'Passive: they read notes or ask support',biz:'Right now customers mostly learn about a release by reading the notes, spotting the changelog, or contacting support. There is no proactive push — which the next view fixes.',mo:'manual / on-request',st:['pull-based'],cfg:'This is the gap the To-Do project closes'}
+]},
+{id:'todo',label:'4 · Coming soon — customer email (To-Do)',dir:'Future project',scn:'<b>Not built yet.</b> Proactively email customers when a product they use releases, via Odoo Email Marketing.',steps:[
+{m:'m-coral',t:'The gap today',ex:'No proactive announcement to customers',biz:'Customers are not actively told when a product they use gets a new release — they have to go looking. The goal is to move from pull to push.',mo:'future project',st:['To do'],cfg:'Turns a release into an outbound moment, not just a git tag'},
+{m:'m-coral',t:'Dynamic customer list',ex:'Auto-built list of product subscribers',biz:'Use Odoo Email Marketing to define a mailing list whose members are computed from a filter — e.g. every customer with an active subscription to the released product — so it stays current with no manual upkeep.',mo:'mailing.list · mailing.contact',st:['To do'],cfg:'Dynamic segment = a domain filter on subscribers'},
+{m:'m-coral',t:'Announcement mailing',ex:'Branded email built from the user notes',biz:'Compose a release-announcement email whose body is the customer-facing notes, targeted at that dynamic list.',mo:'mailing.mailing',st:['To do'],cfg:'Reuse the <code>USER_RELEASE_NOTES</code> content as the email body'},
+{m:'m-coral',t:'Trigger on release',ex:'Create/queue the mailing when published',biz:'Ideally the mailing is generated as part of the release itself, so announcing becomes automatic rather than a manual afterthought.',mo:'new final step in /release',st:['To do'],cfg:'Hook after step 10 (user notes) in the release workflow'},
+{m:'m-coral',t:'Measure & iterate',ex:'Opens/clicks show what customers value',biz:'Email Marketing&#39;s built-in stats reveal which releases and features resonate, feeding back into the roadmap.',mo:'Email Marketing statistics',st:['To do'],cfg:'Closes the loop between shipping and customer awareness'}
+]}
+];
+let wi=0,sel=0;
+const selEl=document.getElementById('wf');
+WF.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;selEl.appendChild(o);});
+function tone(s){s=s.toLowerCase();if(/fail|error|down|to do|pull-based|breaking|cancel/.test(s))return'bad';if(/done|published|tagged|upgraded|updated|briefed|deploy|features|confirmed|pushed/.test(s))return'ok';if(/build|manual|improvements|fixes|on 18/.test(s))return'warn';return'';}
+function chipHtml(st){return st&&st.length?'<div class="lab">States / tags</div><div class="chips">'+st.map(x=>'<span class="chip '+tone(x)+'">'+x+'</span>').join('')+'</div>':'';}
+function render(){
+const w=WF[wi];
+document.getElementById('dir').textContent=w.dir;
+document.getElementById('scn').innerHTML=w.scn;
+const rail=document.getElementById('rail');rail.innerHTML='';
+w.steps.forEach((s,i)=>{
+const stg=document.createElement('div');stg.className='stg '+s.m+(i===sel?' sel':'');
+stg.innerHTML='<div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div></div>';
+stg.querySelector('.card').onclick=()=>{sel=i;render();};
+rail.appendChild(stg);
+});
+const s=w.steps[sel];
+document.getElementById('det').innerHTML='<h4>'+s.t+'</h4><p>'+s.biz+'</p><div class="lab">Under the hood</div><p><code>'+s.mo+'</code></p>'+chipHtml(s.st)+'<div class="lab">Good to know</div><p>'+s.cfg+'</p>';
+}
+selEl.onchange=()=>{wi=+selEl.value;sel=0;render();};
+render();
+function renderDoc(){
+const doc=document.getElementById('doc');let h='';
+WF.forEach(w=>{
+h+='<h3>'+w.label+' &nbsp;·&nbsp; '+w.dir+'</h3><p class="scn">'+w.scn+'</p><div class="rail">';
+w.steps.forEach((s,i)=>{
+h+='<div class="stg '+s.m+'"><div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div><div class="det" style="margin-top:8px"><p>'+s.biz+'</p>'+chipHtml(s.st)+'<div class="lab">Good to know</div><p>'+s.cfg+'</p></div></div></div>';
+});
+h+='</div>';
+});
+doc.innerHTML=h;
+}
+renderDoc();
+</script>
+</body>
+</html>

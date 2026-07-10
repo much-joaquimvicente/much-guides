@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChannelEngine Integration (Retired) — Reference</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:840px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:36px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+a.inline{color:var(--mp-fg)}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.warnbar{background:var(--bg-danger);border:1px solid var(--border-danger);border-left:5px solid var(--text-danger);border-radius:12px;padding:14px 18px;margin:14px 0 8px}
+.warnbar .h{font-weight:600;color:var(--text-danger);font-size:15px;margin-bottom:4px}
+.warnbar p{margin:4px 0 0;font-size:14.5px;color:var(--text)}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--mp-fg);border-radius:10px;padding:13px 16px;margin:16px 0}
+.callout.ok{border-left-color:var(--border-success);background:var(--bg-success)}
+.callout.warn{border-left-color:var(--border-warning);background:var(--bg-warning)}
+.words{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:6px 18px;margin:14px 0}
+.words dt{font-weight:500;margin-top:10px}
+.words dd{margin:0 0 4px;color:var(--text-2);font-size:14.5px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.mchip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--mt-bg);color:var(--mt-fg);border:1px solid var(--border);white-space:nowrap}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:16px 0}
+.fbox{flex:1;min-width:150px;border:1px solid var(--border-strong);border-radius:12px;background:var(--surface-1);padding:12px}
+.fbox .n{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em}
+.fbox .t{font-weight:500;font-size:14.5px;margin-top:2px}
+.fbox .s{font-size:12.5px;color:var(--text-2);margin-top:3px}
+.farr{display:flex;align-items:center;color:var(--text-3);font-size:18px}
+.dirtbl{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.dirtbl th,.dirtbl td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:top}
+.dirtbl th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:500}
+.dirtbl td .d{font-family:var(--mono);font-size:12px;color:var(--mt-fg);white-space:nowrap}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--mg-bg);color:var(--mg-fg);border:1px solid var(--border-strong);margin-bottom:8px}
+footer{margin-top:44px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+footer a{color:var(--mp-fg)}
+@media print{.noprint{display:none!important}body{background:#fff;font-size:12px}.wrap{max-width:none;padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<div class="tag">Retired · End of life</div>
+<h1>ChannelEngine Integration</h1>
+<p class="lead">A reference page for a retired product — written in plain language for colleagues supporting customers who still use it, and for anyone who just wants to understand what it did.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<div class="warnbar">
+<div class="h">⚠️ Do not sell this to new customers</div>
+<p>This product has reached <b>end of life</b> (retired, no longer developed). Please do <b>not</b> offer or sell it to new customers. This page exists to explain what it was and to help you support customers who are <b>already</b> using it.</p>
+</div>
+
+<h2>1. First — what is ChannelEngine itself?</h2>
+<p><b>ChannelEngine</b> is an outside company and software platform (it is not ours). Its job is to be a single <b>middleman</b> between a business's own systems and the huge <b>online marketplaces</b> where people shop.</p>
+<p>A <b>marketplace</b> is a big website where many sellers list their products — think Amazon or eBay. Selling on lots of them is powerful but painful: each one has its own rules, its own screens, and its own way of sending you orders. ChannelEngine hides all that. You connect your systems to ChannelEngine <b>once</b>, and through it you can sell on <b>1,300+ marketplaces</b>. A few you'll recognise:</p>
+<div class="chips">
+<span class="mchip">Amazon</span><span class="mchip">eBay</span><span class="mchip">bol.com</span><span class="mchip">Zalando</span><span class="mchip">Kaufland</span><span class="mchip">Otto</span><span class="mchip">Cdiscount</span><span class="mchip">Google Shopping</span><span class="mchip">…and ~1,300 more</span>
+</div>
+<p>ChannelEngine keeps four things in sync across every channel automatically: <b>product info, stock, prices,</b> and <b>orders</b>. It's often called "<b>middleware</b>" — software that sits in the middle and passes messages between two other systems.</p>
+
+<h2>2. What the "ChannelEngine Integration" did</h2>
+<p>Our product was the <b>bridge between Odoo and ChannelEngine</b>. On its own, Odoo (the business's ERP — the system that runs orders, stock, and invoicing) doesn't know anything about ChannelEngine. The integration connected the two so information flowed automatically, in both directions, with no copy-pasting.</p>
+<div class="flow">
+<div class="fbox"><div class="n">Your systems</div><div class="t">Odoo</div><div class="s">Products, stock, prices, orders, invoices</div></div>
+<div class="farr">⇄</div>
+<div class="fbox"><div class="n">The middleman</div><div class="t">ChannelEngine</div><div class="s">One hub for all marketplaces</div></div>
+<div class="farr">⇄</div>
+<div class="fbox"><div class="n">The shops</div><div class="t">Marketplaces</div><div class="s">Amazon, eBay, bol.com, …</div></div>
+</div>
+
+<h2>3. What flowed where</h2>
+<p>The easiest way to picture an integration like this is by direction — what Odoo <b>sends out</b>, and what it <b>brings in</b>:</p>
+<table class="dirtbl">
+<tr><th>What</th><th>Direction</th><th>In plain words</th></tr>
+<tr><td><b>Products &amp; offers</b></td><td><span class="d">Odoo → out</span></td><td>Your product details (name, description, images, barcode) and your "offer" — the price and stock for each channel — are pushed up so the marketplaces can list them.</td></tr>
+<tr><td><b>Stock</b></td><td><span class="d">Odoo → out</span></td><td>Odoo keeps sending the current "how many are left" so the marketplaces don't sell something you no longer have (that's called overselling).</td></tr>
+<tr><td><b>Prices</b></td><td><span class="d">Odoo → out</span></td><td>Price changes in Odoo are pushed up so every channel shows the right price.</td></tr>
+<tr><td><b>Orders</b></td><td><span class="d">in → Odoo</span></td><td>When someone buys on a marketplace, that order comes back into Odoo as a normal sales order — ready to pick, pack and invoice.</td></tr>
+<tr><td><b>Shipments &amp; tracking</b></td><td><span class="d">Odoo → out</span></td><td>When you ship the order in Odoo, the "shipped" status and the tracking number are sent back so the marketplace can tell the customer.</td></tr>
+<tr><td><b>Cancellations &amp; returns</b></td><td><span class="d">in → Odoo</span></td><td>If a marketplace order is cancelled or the customer returns something, that update flows back into Odoo.</td></tr>
+</table>
+<div class="callout warn"><b>Honest note:</b> the exact buttons, menus and settings of our old ChannelEngine module aren't documented here — the code is retired and not in our current codebase. The flows above are how a marketplace integration like this normally works, and match ChannelEngine's own description of what it does.</div>
+
+<h2>4. Words you'll hear</h2>
+<dl class="words">
+<dt>Marketplace / Channel</dt><dd>A website where products are sold (Amazon, eBay…). "Channel" is just a more general word for the same thing.</dd>
+<dt>Offer</dt><dd>A product <b>as listed on one channel</b> — i.e. the product plus its price and stock for that specific marketplace.</dd>
+<dt>GTIN / EAN</dt><dd>The product's barcode number. Marketplaces use it to know exactly which product you mean.</dd>
+<dt>Middleware</dt><dd>Software that sits in the middle of two systems and passes messages between them. ChannelEngine is middleware.</dd>
+<dt>Mapping</dt><dd>Matching up two systems' data — e.g. "our category X = the marketplace's category Y" — so information lands in the right place.</dd>
+<dt>Overselling</dt><dd>Selling more than you actually have in stock. Keeping stock in sync is what prevents it.</dd>
+<dt>1P vs 3P</dt><dd>On Amazon: <b>1P</b> ("first-party") = you sell <i>to</i> Amazon and they resell it; <b>3P</b> ("third-party") = you sell directly to shoppers on Amazon's marketplace. ChannelEngine can handle both.</dd>
+<dt>Fulfilment</dt><dd>Who actually stores and ships the goods — you (seller-fulfilled) or the marketplace (e.g. Amazon's "FBA", Fulfilled By Amazon).</dd>
+</dl>
+
+<h2>5. Why it's retired</h2>
+<p>much. stopped building and maintaining this integration, so it reached <b>end of life</b>. Retired products get no new features or fixes and must not be sold to new customers. Customers already on it can keep using it, and we still help them.</p>
+<div class="callout ok"><b>Selling to a new customer who wants marketplaces?</b> Don't use this. Ask your team lead which marketplace approach is the current, recommended one to offer — this page should never be the answer for a brand-new project.</div>
+
+<h2>6. If a customer still uses it</h2>
+<div class="words">
+<dt>Where it lived in Odoo</dt><dd>Like our other connectors, under the <b>Integration Hub</b> menu — with its own settings, a <b>log</b> (the system's diary of what happened; your first place to look when something seems off), and scheduled jobs that ran on a timer.</dd>
+<dt>The most common tickets</dt><dd>"An order didn't come into Odoo" or "the marketplace shows the wrong stock/price." Both are usually answered by checking the logs and the last scheduled run — the same way you'd troubleshoot the Shopware connector.</dd>
+<dt>When in doubt</dt><dd>Because this product is retired and not in our current codebase, escalate anything tricky to a senior colleague rather than guessing.</dd>
+</dl>
+
+<footer>Reference page for the <b>retired</b> ChannelEngine Integration — end-of-life, do not sell to new customers. ChannelEngine is a third-party platform; the platform facts here are from its public materials (<a href="https://www.channelengine.com/" target="_blank" rel="noopener">channelengine.com</a>). The exact behaviour of our old module is not documented here because the code is legacy and not in the current codebase. Self-contained &amp; works offline.</footer>
+
+</div>
+</body>
+</html>

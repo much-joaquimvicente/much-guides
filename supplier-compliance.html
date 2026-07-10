@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplier Compliance — User Guide</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:40px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--mt-fg);border-radius:10px;padding:13px 16px;margin:16px 0}
+.callout.tip{border-left-color:var(--border-warning);background:var(--bg-warning)}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+.dir{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scn{color:var(--text-2);font-size:15px;margin:10px 0}
+.scn b{color:var(--text);font-weight:500}
+.rail{position:relative;margin:16px 0 4px}
+.rail:before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:var(--border)}
+.stg{display:flex;gap:14px;align-items:stretch;margin-bottom:10px;position:relative}
+.node{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;border:2px solid var(--fg);z-index:1}
+.card{flex:1;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:10px 14px;cursor:pointer}
+.card:hover{border-color:var(--border-strong)}
+.stg.sel .card{border-color:var(--fg);background:var(--surface-2)}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);color:var(--fg);font-size:12px;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.ttl{font-weight:500;font-size:15px}
+.ex{color:var(--text-2);font-size:13px;margin-top:3px}
+.det{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:14px 16px;margin-top:6px}
+.det h4{margin:0 0 2px;font-size:15px;font-weight:500}
+.det .lab{font-size:12px;color:var(--text-3);margin:10px 0 3px;text-transform:uppercase;letter-spacing:.04em}
+.det p{margin:0;font-size:14px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border)}
+.chip.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.chip.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.chip.bad{background:var(--bg-danger);color:var(--text-danger);border-color:var(--border-danger)}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.words{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:6px 18px;margin:14px 0}
+.words dt{font-weight:500;margin-top:10px}
+.words dd{margin:0 0 4px;color:var(--text-2);font-size:14.5px}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;padding-top:12px;border-top:1px solid var(--border)}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.dot{width:11px;height:11px;border-radius:3px;background:var(--fg)}
+.doc{display:none}
+.docmode #live{display:none}
+.docmode .doc{display:block}
+.doc h3{border-top:1px solid var(--border);padding-top:16px}
+footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{.noprint{display:none!important}body{background:#fff;font-size:12px}.wrap{max-width:none;padding:0}#live{display:none!important}.doc{display:block!important}.stg,.det,h3{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>Supplier Compliance — User Guide</h1>
+<p class="lead">Make sure a vendor is qualified — and their certificates are still valid — before you confirm a purchase order. Written for a new team member.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="document.body.classList.toggle('docmode')">Handout view</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>1. What is this?</h2>
+<p>This module adds a compliance layer to Odoo's purchasing flow. Each <b>product</b> can require a minimum supplier certification, and each <b>vendor</b> is given one or more supplier levels. When you try to confirm, email, or print a purchase order, Odoo checks whether the vendor's level actually covers what the products require. It also watches vendor <b>certificates</b> for expiry, and can warn you — or block the order — when one has lapsed.</p>
+<p><b>Why it exists:</b> procurement teams need to avoid ordering products from suppliers who aren't qualified, or whose quality certificates have expired. Doing this from memory doesn't scale and leaves no audit trail. This enforces the policy at the moment of purchase and records every exception.</p>
+
+<div class="callout"><b>Two independent checks run on the purchase order:</b><br>
+<b>1) Product vs. vendor</b> — if a product needs a certification the vendor's level doesn't cover, Odoo opens the <b>Compliance Fail Wizard</b>. It's a <i>block-with-override</i>: you either delete the product line or write a fail reason (per line or one general reason) to proceed.<br>
+<b>2) Expired certificate</b> — on Confirm, an expired vendor certificate can either <i>warn</i> (you can continue) or <i>block</i> (no confirm button until it's fixed), depending on its setting.</div>
+
+<h3>A few words you'll hear</h3>
+<dl class="words">
+<dt>Supplier Level</dt><dd>A simple quality tier — the module ships with three: A, B, C.</dd>
+<dt>Supplier Compliance Type</dt><dd>A level + an industry (e.g. "A Automotive"); this is what you assign to vendors and products.</dd>
+<dt>Included Levels</dt><dd>Lower tiers a compliance type also counts as — so a high tier automatically satisfies lower-tier requirements.</dd>
+<dt>Minimum Supplier Certification</dt><dd>The compliance type(s) a product requires from its supplier. Only products with this set are ever checked.</dd>
+<dt>Certificate</dt><dd>A document on a vendor with an expiry date and a state (Valid / Expiring Soon / Expired); can warn or block on PO confirm.</dd>
+<dt>Compliance Fail Reason</dt><dd>A written justification a buyer records to push an order through despite a mismatch — logged for audits.</dd>
+</dl>
+
+<h2>2. Step by step</h2>
+<p>Pick a task below. Click any step for the explanation, where to find it, and a tip.</p>
+
+<div id="live" class="noprint">
+<div class="bar"><select id="wf"></select><span class="dir" id="dir"></span></div>
+<div class="scn" id="scn"></div>
+<div class="rail" id="rail"></div>
+<div class="det" id="det"></div>
+</div>
+
+<div class="lg">
+<span class="lgi m-purple"><span class="dot"></span>Step you take</span>
+<span class="lgi m-teal"><span class="dot"></span>What Odoo does</span>
+<span class="lgi m-blue"><span class="dot"></span>Choice / option</span>
+<span class="lgi m-pink"><span class="dot"></span>One-time setup</span>
+</div>
+
+<div class="doc" id="doc"></div>
+
+<footer>Onboarding aid for the <code>po_compliance_check</code> module ("Purchase Order Vendor Compliance Check", Odoo 19). Checks, wizard messages and fields are drawn from the module source. Shipped levels are A/B/C. Self-contained &amp; offline.</footer>
+
+</div>
+<script>
+const WF=[
+{id:'setup',label:'A · Set up compliance on a vendor',dir:'One-time per vendor / product',scn:'A new supplier should be marked as "A Automotive" so orders for A-level products go through cleanly.',steps:[
+{m:'m-pink',t:'Create the compliance type',ex:'Level A + Industry "Automotive"',mo:'Contacts > Configuration > Supplier Compliance > Types',st:[],biz:'Pick a level and type an industry; the name becomes "A Automotive" automatically. This is what you assign to both vendors and products.',cfg:'Use Included Levels so an A supplier also satisfies B and C product requirements.'},
+{m:'m-purple',t:'Assign the level to the vendor',ex:'Set the Supplier Level tag',mo:'Vendor contact > Supplier Level field',st:[],biz:'Tells Odoo which tier(s) this vendor is qualified for.',cfg:'Leave it empty on a child contact to inherit the parent company’s level.'},
+{m:'m-purple',t:'Tag the product',ex:'Set Minimum Supplier Certification',mo:'Product form > Minimum Supplier Certification',st:[],biz:'Only products with this field set are ever checked against the vendor.',cfg:'No certification set = the product is never blocked.'},
+{m:'m-blue',t:'Add a certificate (optional)',ex:'Name + expiry + warn/block behaviour',mo:'Vendor contact > Supplier Compliance tab',st:['Valid','Expiring Soon','Expired'],biz:'Upload the document, set its expiration date, and choose whether expiry should warn or block PO confirmation.',cfg:'Set a "Compliance Notification User" in Purchase settings so someone is emailed when it expires.'},
+{m:'m-teal',t:'Save',ex:'Future POs are now validated',mo:'Vendor / product form',st:[],biz:'From now on, purchase orders to this vendor are checked automatically.',cfg:'A reminder activity is created ~29 days before a certificate expires.'}
+]},
+{id:'confirm',label:'B · Confirm a PO for a non-compliant vendor',dir:'What happens at Confirm',scn:'You raise an order for an A-level product, but the chosen vendor is only level C.',steps:[
+{m:'m-purple',t:'Create the PO and add the product',ex:'Add the A-level product + vendor',mo:'Purchase > Orders',st:['Draft'],biz:'Build the order as usual with the product line and vendor.',cfg:'The check runs on Confirm, Send by Email, and Print.'},
+{m:'m-teal',t:'Click Confirm → wizard pops up',ex:'"…can not be bought at this supplier"',mo:'Compliance Fail Wizard',st:[],biz:'Instead of confirming, Odoo lists the products that can’t be bought from this supplier.',cfg:'An expired "block" certificate would stop you even earlier, before this wizard.'},
+{m:'m-blue',t:'Decide per line',ex:'Delete a line, or write a reason',mo:'Wizard > per-line "Compliance fail reason"',st:[],biz:'For each failing line you either remove it or record why you are ordering it anyway.',cfg:'Deleting the line is the "correct" fix; a reason is the documented exception.'},
+{m:'m-purple',t:'Or set a general reason',ex:'One reason covers all lines',mo:'Wizard > General compliance fail reason',st:[],biz:'A single header reason justifies every failing line at once.',cfg:'You need either a general reason OR a reason on every failing line.'},
+{m:'m-teal',t:'Click Confirm → order proceeds',ex:'Reason saved on the PO',mo:'Purchase Order',st:['Purchase'],biz:'With the reasons in place, the original action completes and the order confirms. The reason stays on the PO as an audit note.',cfg:'Cancelling the PO clears the stored fail reasons.'}
+]}
+];
+let wi=0,sel=0;
+const selEl=document.getElementById('wf');
+WF.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;selEl.appendChild(o);});
+function tone(s){s=s.toLowerCase();if(/fail|error|bad|block|expired/.test(s))return'bad';if(/done|ok|success|valid|purchase/.test(s))return'ok';if(/draft|manual|expiring/.test(s))return'warn';return'';}
+function chipHtml(st){return st.length?'<div class="lab">Status</div><div class="chips">'+st.map(x=>'<span class="chip '+tone(x)+'">'+x+'</span>').join('')+'</div>':'';}
+function render(){
+const w=WF[wi];
+document.getElementById('dir').textContent=w.dir;
+document.getElementById('scn').innerHTML=w.scn;
+const rail=document.getElementById('rail');rail.innerHTML='';
+w.steps.forEach((s,i)=>{
+const stg=document.createElement('div');stg.className='stg '+s.m+(i===sel?' sel':'');
+stg.innerHTML='<div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div></div>';
+stg.querySelector('.card').onclick=()=>{sel=i;render();};
+rail.appendChild(stg);
+});
+const s=w.steps[sel];
+document.getElementById('det').innerHTML='<h4>'+s.t+'</h4><p>'+s.biz+'</p><div class="lab">Where to find it</div><p><code>'+s.mo+'</code></p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'');
+}
+selEl.onchange=()=>{wi=+selEl.value;sel=0;render();};
+render();
+function renderDoc(){
+const doc=document.getElementById('doc');let h='';
+WF.forEach(w=>{
+h+='<h3>'+w.label+' &nbsp;&middot;&nbsp; '+w.dir+'</h3><p class="scn">'+w.scn+'</p><div class="rail">';
+w.steps.forEach((s,i)=>{
+h+='<div class="stg '+s.m+'"><div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div><div class="det" style="margin-top:8px"><p>'+s.biz+'</p>'+chipHtml(s.st)+(s.cfg?'<div class="lab">&#128161; Tip</div><p>'+s.cfg+'</p>':'')+'</div></div></div>';
+});
+h+='</div>';
+});
+doc.innerHTML=h;
+}
+renderDoc();
+</script>
+</body>
+</html>
