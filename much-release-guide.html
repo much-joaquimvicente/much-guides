@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. Odoo Addon Release — New Joiner Handbook</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --ma-bg:#FAEEDA;--ma-fg:#633806;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--ma-fg);--brand-soft:var(--ma-bg);--brand-solid:#b45309;--accent:#b45309;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --ma-bg:#633806;--ma-fg:#FAC775;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+
+  /* Header (flat — matches the guide pages) */
+  header.hero{max-width:1180px;margin:0 auto;padding:30px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .logo{font-size:21px;font-weight:800;letter-spacing:-.4px;color:var(--brand);margin-bottom:10px}
+  .hero .logo b{color:var(--accent)}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:29px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1180px;margin:0 auto;padding:16px 20px 90px}
+  aside.sidebar{position:sticky;top:20px;flex:0 0 258px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;max-height:calc(100vh - 40px);overflow:auto}
+  aside.sidebar h3{margin:4px 8px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  aside.sidebar a{display:block;padding:8px 10px;border-radius:9px;color:var(--text);text-decoration:none;font-size:14.5px;font-weight:500}
+  aside.sidebar a .n{display:inline-block;width:22px;color:var(--text-3);font-weight:700;font-size:13px}
+  aside.sidebar a:hover{background:var(--brand-soft)}
+  aside.sidebar a.active{background:var(--brand-solid);color:#fff}
+  aside.sidebar a.active .n{color:rgba(255,255,255,.8)}
+  .content{flex:1 1 auto;min-width:0}
+
+  .welcome{background:var(--surface-1);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+  .welcome h2{margin:0 0 8px;font-size:20px}
+  .welcome p{margin:0 0 8px;color:var(--text-2)}
+  .welcome p:last-child{margin:0}
+  .welcome .wave{font-size:22px}
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:24px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+
+  .steps{display:grid;gap:12px;margin-top:6px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .step .dot{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center}
+  .step h4{margin:2px 0 4px;font-size:16px}
+  .step p{margin:0;color:var(--text-2)}
+  .step .hint{display:inline-block;margin-top:8px;font-size:13px;background:var(--blue-soft);color:var(--blue);padding:3px 10px;border-radius:8px;font-weight:600}
+
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#f0c88a;font-weight:600}
+  code.k{font-family:var(--mono);background:var(--brand-soft);color:var(--brand);padding:1px 6px;border-radius:5px;font-size:13px}
+
+  pre.cmd{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.6;overflow-x:auto;margin:12px 0}
+  pre.cmd .c{color:#8a8980}
+  pre.cmd b{color:#f0c88a;font-weight:600}
+
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+
+  .flow{display:grid;gap:10px;margin-top:8px}
+  .flow .f{display:flex;gap:14px;align-items:flex-start}
+  .flow .f b{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .flow .f span{color:var(--text-2)}
+
+  .life{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 4px}
+  .life .s{padding:7px 14px;border-radius:999px;font-weight:700;font-size:14px}
+  .life .s.d{background:var(--surface-0);color:var(--text-2)}
+  .life .s.p{background:var(--blue-soft);color:var(--blue)}
+  .life .s.paid{background:var(--green-soft);color:var(--green)}
+  .life .arrow{color:var(--text-3);font-weight:700}
+
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:480px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+  table.t td code{font-family:var(--mono);font-size:12.5px;background:var(--surface-0);padding:1px 5px;border-radius:4px}
+
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip.stop{background:var(--red-soft);border-color:var(--border-danger)}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+
+  dl.glossary{margin:0}
+  dl.glossary div{padding:13px 0;border-bottom:1px solid var(--border)}
+  dl.glossary div:last-child{border-bottom:0}
+  dl.glossary dt{font-weight:700;color:var(--brand)}
+  dl.glossary dt .de{color:var(--text-2);font-weight:500;font-style:italic}
+  dl.glossary dd{margin:4px 0 0;color:var(--text-2);font-size:15px}
+
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+
+  @media (max-width:900px){
+    .layout{flex-direction:column;padding-top:12px}
+    aside.sidebar{position:static;flex:none;width:100%;max-height:none}
+    aside.sidebar nav{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+  }
+  @media (max-width:560px){
+    .hero h1{font-size:24px}
+    .mini{grid-template-columns:1fr}
+    aside.sidebar nav{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <a class="backlink" href="index.html">← Back to Guide Hub</a>
+  <div class="logo">much<b>.</b> Release</div>
+  <span class="kicker">New Joiner Handbook · Internal</span>
+  <h1>Cutting an Odoo Addon Release</h1>
+  <p>How to release one of our Odoo addon repositories, step by step — written for someone doing it for the very first time.</p>
+  <div class="badge-v">much. GmbH · git + GitHub · example repo: much-order-shopware-integration</div>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <h3>Chapters</h3>
+    <nav>
+      <a href="#c1"><span class="n">1</span>What a release is</a>
+      <a href="#c2"><span class="n">2</span>Branch map &amp; vocabulary</a>
+      <a href="#c3"><span class="n">3</span>Find what to release</a>
+      <a href="#c4"><span class="n">4</span>Ask for the version</a>
+      <a href="#c5"><span class="n">5</span>Bump the manifests</a>
+      <a href="#c6"><span class="n">6</span>Commit the bump</a>
+      <a href="#c7"><span class="n">7</span>Push the QA branch</a>
+      <a href="#c8"><span class="n">8</span>Merge into Stable</a>
+      <a href="#c9"><span class="n">9</span>Create the version branch</a>
+      <a href="#c10"><span class="n">10</span>Write the release notes</a>
+      <a href="#c11"><span class="n">11</span>Wrap up &amp; cheat-sheet</a>
+      <a href="#glossary"><span class="n">★</span>Glossary</a>
+    </nav>
+  </aside>
+
+  <div class="content">
+
+    <div class="welcome">
+      <h2><span class="wave">👋</span> Welcome — start here</h2>
+      <p>This handbook walks you through <strong>releasing one of our Odoo addon repositories</strong>. If you've never done a git-based release before, don't worry — every step is spelled out, and nothing is assumed.</p>
+      <p>You should be comfortable with the basics of <strong>git</strong> (branches, commits, pushing) and have the <strong>GitHub CLI</strong> (<code class="k">gh</code>) installed and logged in. Everything else you'll learn here. The examples use <strong>much-order-shopware-integration</strong>, but the process is identical for every addon repo.</p>
+    </div>
+
+    <div class="bigidea">
+      <span class="tag">🧠 The one big idea</span>
+      <p>A release is simply: <strong>bump the version number</strong>, move the tested code from the <strong>QA branch</strong> onto the <strong>Stable branch</strong>, freeze it as a <strong>version branch</strong>, and write <strong>release notes</strong>. That's it. The golden rule that keeps you safe: <strong>always ask for confirmation before any <code class="k">git push</code></strong> or anything hard to undo.</p>
+    </div>
+
+    <!-- 1 WHAT A RELEASE IS -->
+    <section id="c1">
+      <h2><span class="num">1</span> What a release is</h2>
+      <p class="lead">Turning "tested work on the QA branch" into an official, named version our customers can install.</p>
+      <p class="para">Each of our repos is an <strong>Odoo addon repository</strong> — a folder of modules (each module is a sub-folder with its own <code class="k">__manifest__.py</code> that, among other things, declares a <code class="k">version</code>). Throughout a sprint, developers open pull requests; once a PR is reviewed and tested it gets merged into the <strong>QA branch</strong>. So at any moment the QA branch holds "everything we've finished and tested but haven't shipped yet."</p>
+      <p class="para">A <strong>release</strong> is the deliberate moment we say <em>"this batch is good — ship it."</em> Four things happen, and each exists for a concrete reason:</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>What we do</th><th>Why it's needed</th></tr>
+        <tr><td>Bump the <code>version</code> in every module's manifest</td><td>Odoo decides whether to run a module's upgrade scripts by comparing the installed version to the new one. If the number doesn't change, <strong>Odoo thinks nothing changed and skips the upgrade</strong> — so customers would keep running old code.</td></tr>
+        <tr><td>Merge QA → <strong>Stable branch</strong></td><td>Stable (<code>X.latest</code>) is the branch production systems actually pull from. Until code reaches Stable, no customer has it.</td></tr>
+        <tr><td>Create a <strong>version branch</strong></td><td>A permanent, frozen snapshot named for the exact version, so months later we can see (or re-deploy) precisely what shipped as <code>19.0.1.1.4</code> — even after Stable has moved on.</td></tr>
+        <tr><td>Write <strong>release notes</strong></td><td>So the team, the client, and their Steuerberater/end-users know what changed — and support can trace a bug to the release that introduced or fixed it.</td></tr>
+      </table></div>
+      <div class="mini">
+        <div class="m"><h4>🧪 QA branch</h4><p>Where tested work accumulates. A release always <em>starts</em> here, and it's the source of truth for "what's new."</p></div>
+        <div class="m"><h4>🏷️ Version branch</h4><p>A frozen, named snapshot (e.g. <code class="k">19.0.1.1.4</code>). Nobody commits to it again — it's the deliverable, kept for the record.</p></div>
+      </div>
+      <div class="tip note"><span class="i">ℹ️</span><p><strong>Who runs this?</strong> Usually the assistant runs it for you via the <code class="k">/release</code> command, pausing to ask for your confirmation at each push. This handbook explains <em>what that command does and why</em>, so you understand each step — and can do it by hand if the tooling ever isn't available.</p></div>
+    </section>
+
+    <!-- 2 BRANCH MAP & VOCAB -->
+    <section id="c2">
+      <h2><span class="num">2</span> Branch map &amp; vocabulary</h2>
+      <p class="lead">Four names built from one number. Learn these and the rest is mechanical. (Full list in the <a href="#glossary" style="color:var(--brand);font-weight:600">glossary</a>.)</p>
+      <p class="para">Everything derives from the <strong>major version</strong> — for example <code class="k">19</code>, which is the Odoo major we build for. From that single number you can derive every branch name in the release, which is exactly why the process is so mechanical:</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Name</th><th>What it is &amp; why it exists</th><th>Example</th></tr>
+        <tr><td><strong>MAJOR</strong></td><td>The Odoo major version everything is built for. Determines all three branch names below.</td><td><code>19</code></td></tr>
+        <tr><td><strong>QA branch</strong></td><td>Where finished, tested work lands during the sprint. A release <em>starts</em> here because it's the collecting point — the newest good code lives here.</td><td><code>19.latest-qa</code></td></tr>
+        <tr><td><strong>Stable branch</strong></td><td>The production-facing branch customers pull from. Kept "clean" — only released code reaches it, so it's always safe to deploy.</td><td><code>19.latest</code></td></tr>
+        <tr><td><strong>Version branch</strong></td><td>An immutable snapshot named exactly for the release. Never committed to again; it's the historical record of "what shipped as this version."</td><td><code>19.0.1.1.4</code></td></tr>
+        <tr><td><strong><code>__manifest__.py</code></strong></td><td>Each module's descriptor. Holds the <code>"version"</code> string we bump; Odoo reads it to decide whether to upgrade the module.</td><td><code>"19.0.1.1.4"</code></td></tr>
+      </table></div>
+      <h3 class="sub">Reading the version number</h3>
+      <p class="para">Our versions follow Odoo's five-part convention <code class="k">MAJOR . 0 . x . y . z</code>. Understanding the segments tells you (and the reviewer) how big a release is:</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Segment</th><th>In <code>19.0.1.1.4</code></th><th>Meaning</th></tr>
+        <tr><td>1 — Odoo major</td><td><code>19</code></td><td>The Odoo version. Rarely changes within a repo's life.</td></tr>
+        <tr><td>2 — Odoo minor</td><td><code>0</code></td><td>Odoo's own minor; we keep it at <code>0</code>.</td></tr>
+        <tr><td>3 — module major</td><td><code>1</code></td><td>Bumped for big/breaking changes to our module.</td></tr>
+        <tr><td>4 — feature</td><td><code>1</code></td><td>Bumped when a new feature ships.</td></tr>
+        <tr><td>5 — patch</td><td><code>4</code></td><td>Bumped for bug-fix-only releases (the most common — like this one).</td></tr>
+      </table></div>
+      <div class="tip note"><span class="i">💡</span><p>This is <em>why</em> the version is a human decision (Chapter 4), not automatic: only a person knows whether this batch is "just fixes" (bump the last digit) or "a new feature" (bump the fourth). The three fixes in our example release were all bug fixes → <code class="k">…1.1.3</code> became <code class="k">…1.1.4</code>.</p></div>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>Golden rule, again:</strong> ask for a clear "yes" before every push or destructive action. There are <strong>three</strong> pushes in a release (QA, Stable, version branch) — each gets its own confirmation, because each one publishes something to <code class="k">origin</code> that other people and systems will pull.</p></div>
+    </section>
+
+    <!-- 3 FIND WHAT TO RELEASE -->
+    <section id="c3">
+      <h2><span class="num">3</span> Find what to release</h2>
+      <p class="lead">Work out where you are, then list what's new since the last release.</p>
+
+      <h3 class="sub">Step 1 — Determine the context</h3>
+      <p class="para">Before touching anything, you need two facts: <strong>which branch am I on</strong>, and <strong>which major version am I releasing</strong>. Get them wrong and you could bump the wrong repo line entirely.</p>
+      <pre class="cmd">git branch --show-current
+<span class="c"># → prints e.g.  19.latest-qa</span></pre>
+      <ul class="clean">
+        <li><strong>Finding the major:</strong> it's either handed to you (e.g. you ran <code class="k">/release 19</code>) or you read it off the branch name, which follows the pattern <code class="k">X.latest-qa</code> — so <code class="k">19.latest-qa</code> → major <code class="k">19</code>. If <em>neither</em> is available (say you're on a feature branch), <strong>stop and ask</strong> rather than guessing.</li>
+        <li><strong>Why the branch matters:</strong> a release must start from the QA branch, because that's the branch that holds the newest tested code. If <code class="k">git branch --show-current</code> shows anything other than <code class="k">19.latest-qa</code>, ask the reviewer whether to switch (<code class="k">git checkout 19.latest-qa</code>) before continuing — don't switch silently.</li>
+      </ul>
+
+      <h3 class="sub">Step 2 — Show the commits since the last tag</h3>
+      <p class="para">Now answer "what's actually new?" The last release left behind a <strong>tag</strong> (a permanent marker on the commit that shipped). Everything committed <em>after</em> that tag is what this release will contain. First, find that tag:</p>
+      <pre class="cmd"><span class="c"># newest v19 tag, sorted by when it was created</span>
+git tag --list <b>'v19*'</b> --sort=-creatordate | head -1
+<span class="c"># → v19.0.1.1.3</span></pre>
+      <p class="para">Two flags matter here: <code class="k">--sort=-creatordate</code> orders tags by <em>creation time</em> (the leading <code class="k">-</code> means newest first) rather than alphabetically — important because <code class="k">v19.0.1.1.10</code> would sort <em>before</em> <code class="k">v19.0.1.1.9</code> alphabetically, giving you the wrong "latest." <code class="k">head -1</code> then keeps only the top (newest) one.</p>
+      <p class="para">Then list the commits between that tag and where you are now (<code class="k">HEAD</code>):</p>
+      <pre class="cmd">git log <b>v19.0.1.1.3</b>..HEAD --oneline --no-merges</pre>
+      <ul class="clean">
+        <li><code class="k">v19.0.1.1.3..HEAD</code> is a <strong>range</strong>: "everything reachable from HEAD that wasn't already in the tag" — i.e. exactly the new work.</li>
+        <li><code class="k">--oneline</code> prints one short line per commit (hash + subject) so it's easy to scan.</li>
+        <li><code class="k">--no-merges</code> hides merge commits, leaving only the real code changes — these are what you'll categorize into the release notes.</li>
+      </ul>
+      <p class="para">Display the result clearly (a table is ideal). Then run it <em>again with</em> <code class="k">--merges</code> to pull out the <strong>PR numbers</strong> — merge commits carry text like "Merge pull request #97", and you'll cite those numbers in the notes:</p>
+      <pre class="cmd">git log <b>v19.0.1.1.3</b>..HEAD --merges --oneline
+<span class="c"># → d44bb37 Merge pull request #97 from much-GmbH/56976-fix-vat-19</span></pre>
+      <div class="tip stop"><span class="i">🛑</span><p><strong>No new commits? Stop.</strong> If the range is empty, the last tag already points at HEAD — there is genuinely nothing to release. Tell the reviewer and end here; bumping a version with no changes would just create noise.</p></div>
+    </section>
+
+    <!-- 4 ASK FOR VERSION -->
+    <section id="c4">
+      <h2><span class="num">4</span> Ask for the version</h2>
+      <p class="lead">The new version number is a human decision — never guessed.</p>
+      <p class="para">Ask the reviewer plainly: <em>"What version should this release be?"</em> and <strong>do not proceed</strong> until they answer. This is deliberately a manual gate — see Chapter 2, only a human knows whether this batch counts as a patch, a feature, or a breaking change, and that judgement decides which digit moves.</p>
+      <div class="life">
+        <span class="s d">v19.0.1.1.3</span>
+        <span class="arrow">→</span>
+        <span class="s p">you ask</span>
+        <span class="arrow">→</span>
+        <span class="s paid">19.0.1.1.4</span>
+      </div>
+      <p class="para"><strong>Why not just auto-increment the last digit?</strong> Because it would silently mislabel releases. A release full of new features that only bumped the patch digit would tell customers "minor fixes" when it's actually a feature drop — the version number is a <em>promise</em> about what changed, so a person confirms it.</p>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>The most common beginner slip:</strong> the <code>v</code> prefix. The git <strong>tag</strong> carries it (<code class="k">v19.0.1.1.3</code>) because tags conventionally do. The <strong>manifest version</strong> and the <strong>branch name</strong> do <em>not</em> (<code class="k">19.0.1.1.4</code>). So when the reviewer says "make it v19.0.1.1.4", you write <code class="k">19.0.1.1.4</code> into the manifests and name the branch <code class="k">19.0.1.1.4</code> — the <code>v</code> only appears in tag-related places like the changelog URL.</p></div>
+    </section>
+
+    <!-- 5 BUMP MANIFESTS -->
+    <section id="c5">
+      <h2><span class="num">5</span> Bump the manifests</h2>
+      <p class="lead">Every module carries its own version, so every module gets bumped to the new number — together, in lockstep.</p>
+      <p class="para">First, locate every manifest that actually declares a version. A repo can have helper folders (tests, static assets) without manifests, so we search rather than assume:</p>
+      <pre class="cmd"><span class="c"># list every manifest file that contains a "version" key</span>
+find . -name <b>"__manifest__.py"</b> | xargs grep -l '"version"'</pre>
+      <p class="para">Reading that command: <code class="k">find . -name "__manifest__.py"</code> walks the whole repo and prints every manifest path; the pipe hands those paths to <code class="k">xargs grep -l '"version"'</code>, which opens each one and prints only the files that contain a <code class="k">"version"</code> line (<code class="k">-l</code> = "list filenames, not the matching text"). The result is your worklist.</p>
+      <p class="para">In each listed file, change the <code class="k">"version"</code> value to the new version — format <code class="k">19.0.1.1.4</code>, <strong>no <code>v</code> prefix</strong>. When you're done, tell the reviewer <em>how many</em> files you updated, so they can sanity-check nothing was missed.</p>
+      <h3 class="sub">Why bump them all at once?</h3>
+      <p class="para">Odoo treats each module's version independently — it upgrades a module only if that module's number increased. If you bumped some manifests and forgot others, half the repo would upgrade and half wouldn't, leaving a customer on a <strong>mismatched, half-updated install</strong> that's very hard to diagnose. Keeping every module on the same version is a deliberate convention that makes "which release is this system on?" answerable at a glance.</p>
+      <div class="tip"><span class="i">💡</span><p><strong>Some files may already be on the new number</strong> — a fix commit sometimes bumps a single module ahead of the pack (in our example, <code class="k">much_order_shopware_product_import</code> was already at <code class="k">19.0.1.1.4</code>). That's expected; just bring the <em>remaining</em> modules in line so all of them match. Bumping the ones already there is a harmless no-op.</p></div>
+      <div class="tip warn"><span class="i">⚠️</span><p>Only edit the <code class="k">"version"</code> line. A manifest also holds <code class="k">depends</code>, <code class="k">data</code>, author info and more — <strong>don't touch any of that</strong> during a release bump. Changing <code class="k">depends</code> here, for instance, would alter what the module installs and belongs in a real feature PR, not a version bump.</p></div>
+    </section>
+
+    <!-- 6 COMMIT -->
+    <section id="c6">
+      <h2><span class="num">6</span> Commit the bump</h2>
+      <p class="lead">Stage only the manifest files and commit with the exact message format.</p>
+      <pre class="cmd">git add */__manifest__.py
+git commit -m <b>"chore[*] update manifest version</b>
+
+<b>Signed-off-by : {name} &lt;{email}&gt;"</b></pre>
+      <p class="para"><code class="k">git add */__manifest__.py</code> stages <em>only</em> the manifest files — the <code class="k">*/</code> glob matches each module folder. Staging narrowly matters: it guarantees the commit contains the version bump and <strong>nothing else</strong>, so the history reads cleanly and a reviewer can trust that a "update manifest version" commit really only did that.</p>
+      <p class="para">Fill in <code class="k">{name}</code> and <code class="k">{email}</code> from your git config — these identify who cut the release:</p>
+      <pre class="cmd">git config user.name    <span class="c"># → Joaquim Vicente</span>
+git config user.email   <span class="c"># → joaquim.vicente@muchconsulting.com</span></pre>
+      <h3 class="sub">Why this exact format?</h3>
+      <ul class="clean">
+        <li><code class="k">chore[*]</code> — our commit-prefix convention. <code class="k">chore</code> marks non-feature, non-fix housekeeping (so it's correctly skipped when the release notes are categorized); the <code class="k">[*]</code> scope means "affects all modules," which a version bump does.</li>
+        <li>The blank line then <code class="k">Signed-off-by :</code> trailer records accountability for the release — the same convention used across our repos, so history stays uniform and greppable.</li>
+      </ul>
+      <div class="tip note"><span class="i">✍️</span><p>Keep the subject line <em>exactly</em> <code class="k">chore[*] update manifest version</code>. Consistency here is what lets us later filter release commits out of changelogs automatically — a one-word difference breaks that.</p></div>
+    </section>
+
+    <!-- 7 PUSH QA -->
+    <section id="c7">
+      <h2><span class="num">7</span> Push the QA branch</h2>
+      <p class="lead">The first of three pushes. Get the bump onto GitHub before you start moving code around.</p>
+      <div class="tip stop"><span class="i">🛑</span><p><strong>Ask for confirmation first.</strong> A push writes to <code class="k">origin</code>, where teammates and CI will immediately see it — that's why every push in this guide waits for a clear "yes."</p></div>
+      <pre class="cmd">git push origin <b>19.latest-qa</b></pre>
+      <p class="para"><strong>Why push QA first, before merging?</strong> The next step fast-forwards Stable to match QA. If QA on GitHub is behind your local copy, that merge would push commits to Stable that don't yet exist on the QA branch remotely — leaving the two branches inconsistent for anyone who pulls. Publishing QA first guarantees GitHub's QA and Stable end up pointing at the exact same, already-visible commit.</p>
+      <p class="para">A successful push prints the moved range, e.g. <code class="k">d44bb37..9794277&nbsp;&nbsp;19.latest-qa -&gt; 19.latest-qa</code> — that "old..new" hash pair is your confirmation it landed.</p>
+    </section>
+
+    <!-- 8 MERGE INTO STABLE -->
+    <section id="c8">
+      <h2><span class="num">8</span> Merge into Stable</h2>
+      <p class="lead">Bring the freshly-bumped QA work onto the production branch customers install from.</p>
+      <pre class="cmd">git checkout <b>19.latest</b>
+git merge <b>19.latest-qa</b> -m "Merge branch '19.latest-qa' into 19.latest"</pre>
+      <p class="para">Step by step: <code class="k">git checkout 19.latest</code> switches you onto the Stable branch (so the merge lands there), then <code class="k">git merge 19.latest-qa</code> pulls QA's commits into it.</p>
+      <h3 class="sub">What "fast-forward" means and why it's good</h3>
+      <p class="para">Because Stable hasn't diverged — nobody commits to Stable directly, it only ever receives releases — QA is simply "Stable plus the new commits." Git can therefore just slide the Stable pointer forward to QA's tip without inventing a merge commit. That's a <strong>fast-forward</strong>, and you'll see git say <code class="k">Fast-forward</code> in the output. It's the clean, expected result. (If git instead reports a real merge or a conflict, something committed to Stable out-of-band — pause and check with the team before proceeding.)</p>
+      <div class="tip stop"><span class="i">🛑</span><p><strong>Ask for confirmation, then</strong> push Stable — this is the moment the release becomes visible to production:</p></div>
+      <pre class="cmd">git push origin <b>19.latest</b></pre>
+      <div class="tip note"><span class="i">ℹ️</span><p><strong>Why merge into Stable at all?</strong> Stable (<code class="k">X.latest</code>) is the branch deployment systems and customers pull from. Code that only lives on QA has been tested but not <em>released</em>; merging is the act that promotes it to "shipped."</p></div>
+    </section>
+
+    <!-- 9 VERSION BRANCH -->
+    <section id="c9">
+      <h2><span class="num">9</span> Create the version branch</h2>
+      <p class="lead">Freeze this exact release under a branch named for the version — the permanent record.</p>
+      <p class="para">Right now you're on Stable, sitting on the exact commit that is the release. Create a branch named <strong>exactly</strong> as the version from that point, then push it with tracking:</p>
+      <pre class="cmd">git checkout -b <b>19.0.1.1.4</b>
+<span class="c"># then, only after confirmation:</span>
+git push -u origin <b>19.0.1.1.4</b></pre>
+      <p class="para"><code class="k">git checkout -b 19.0.1.1.4</code> creates <em>and</em> switches to the new branch in one go (the <code class="k">-b</code> = "make a new branch here"). It branches off wherever you currently are — which is why we do this while standing on Stable, so the snapshot captures exactly what shipped.</p>
+      <div class="tip stop"><span class="i">🛑</span><p><strong>Confirm before this third and final push too.</strong></p></div>
+      <h3 class="sub">Why <code class="k">-u</code>, and why a branch at all?</h3>
+      <ul class="clean">
+        <li><strong>The branch</strong> is the immutable, human-named marker of the release. Stable will keep moving with future releases, but <code class="k">19.0.1.1.4</code> stays frozen — so months later "check out exactly what we shipped as 19.0.1.1.4" is one command.</li>
+        <li><strong><code class="k">-u</code> (short for <code class="k">--set-upstream</code>)</strong> links your local branch to the new remote one, so a later bare <code class="k">git push</code> or <code class="k">git pull</code> knows where to go without you re-typing the remote and branch. It's a one-time convenience set at creation.</li>
+      </ul>
+      <div class="tip warn"><span class="i">⚠️</span><p>The workflow <strong>stops at the version branch</strong> — it does <em>not</em> create a git <em>tag</em> unless you're explicitly asked to. (Tagging is sometimes done separately as part of publishing.) Don't invent a <code class="k">v19.0.1.1.4</code> tag on your own; if the reviewer wants one, ask and do it deliberately.</p></div>
+      <div class="tip note"><span class="i">🔀</span><p><strong>Exception — these products skip the version branch.</strong> For <strong>MCP server</strong>, <strong>Odoo AI automated Actions</strong>, <strong>Paypall</strong> and <strong>Procuro</strong>, do <em>not</em> create a version branch as described above. After running <code class="k">/release</code> (e.g. <code class="k">/release 19</code>), instead of branching for this version, simply <strong>merge <code class="k">latest</code> into <code class="k">main</code></strong> — e.g. <code class="k">git checkout main</code> then <code class="k">git merge latest</code>. <em>(instead of creating a new branche for this Version, just merge latest into main!)</em></p></div>
+    </section>
+
+    <!-- 10 RELEASE NOTES -->
+    <section id="c10">
+      <h2><span class="num">10</span> Write the release notes</h2>
+      <p class="lead">Two files: one technical for GitHub, one friendly for end users. Read the diffs — don't just copy commit subjects.</p>
+
+      <h3 class="sub">Gather the data first</h3>
+      <ul class="clean">
+        <li><strong>Today's date</strong> as <code class="k">DD Mon YYYY</code> (e.g. <code class="k">13 Jul 2026</code>).</li>
+        <li><strong>Contributors</strong> (deduplicated, each prefixed with <code class="k">@</code>):</li>
+      </ul>
+      <pre class="cmd">gh api repos/<b>{OWNER}/{REPO}</b>/compare/<b>{LAST_TAG}...{VERSION_BRANCH}</b> \
+  --jq '.commits[].author.login'</pre>
+      <ul class="clean">
+        <li><strong>Full changelog URL:</strong> <code class="k">.../compare/{LAST_TAG}...v{NEW_VERSION}</code></li>
+        <li><strong>Read the actual diff</strong> of each commit and write a real, human description — <code class="k">git show {hash} --stat</code> then <code class="k">git show {hash}</code>. Include the PR number if the message has one (e.g. <code class="k">#97</code>).</li>
+        <li>Check for <strong>new dependencies</strong>: look at <code class="k">depends</code> in <code class="k">__manifest__.py</code> diffs and any <code class="k">requirements.txt</code> change.</li>
+      </ul>
+
+      <h3 class="sub">Categorize each non-chore, non-merge commit</h3>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Commit starts with…</th><th>Goes under</th></tr>
+        <tr><td><code>fix…</code></td><td><strong>Fixes</strong></td></tr>
+        <tr><td><code>feat…</code></td><td><strong>New Features</strong></td></tr>
+        <tr><td><code>break…</code> / contains <code>BREAKING</code></td><td><strong>Breaking Changes</strong></td></tr>
+      </table></div>
+
+      <h3 class="sub">File 1 — <code class="k">RELEASE_NOTES_v{NEW_VERSION}.md</code> (technical)</h3>
+      <p class="para">Follow the skill's exact template, in this order: <em>Breaking Changes · New Features · Fixes · Deprecated Features · Contributors · full changelog link · Installation/Upgrade instructions · Feedback and support</em>. Support address for these notes: <code class="k">product@erp.muchconsulting.de</code>.</p>
+
+      <h3 class="sub">File 2 — <code class="k">USER_RELEASE_NOTES_v{NEW_VERSION}.md</code> (user-friendly)</h3>
+      <p class="para">Same facts, written for <strong>end users</strong> — plain language, no developer jargon. Use the emoji sections: <code class="k">New Features :tada:</code>, <code class="k">Improvements :microscope:</code>, <code class="k">Bug Fixes :hammer:</code> (each fix described in user terms, referencing its PR number). Feedback address here is <strong>different</strong>: <code class="k">product@muchconsulting.de</code>.</p>
+      <div class="tip warn"><span class="i">📧</span><p><strong>Two different emails!</strong> Technical notes → <code class="k">product@erp.muchconsulting.de</code>. User notes → <code class="k">product@muchconsulting.de</code>. Easy to mix up.</p></div>
+    </section>
+
+    <!-- 11 WRAP UP -->
+    <section id="c11">
+      <h2><span class="num">11</span> Wrap up &amp; cheat-sheet</h2>
+      <p class="lead">Tell the reviewer what happened, and keep this table handy.</p>
+      <h3 class="sub">Final message to the reviewer</h3>
+      <ul class="clean">
+        <li>The release is <strong>complete</strong>.</li>
+        <li>List the <strong>two generated files</strong>.</li>
+        <li>Remind them <strong>which branch they're on</strong> (the version branch).</li>
+        <li><strong>Open both files</strong> so they can review them.</li>
+      </ul>
+
+      <h3 class="sub">The whole release at a glance</h3>
+      <div class="tablewrap"><table class="t">
+        <tr><th>#</th><th>Step</th><th>Confirmation?</th></tr>
+        <tr><td>1</td><td>Determine context (branch, major)</td><td>—</td></tr>
+        <tr><td>2</td><td>Show commits since last tag</td><td>stop if none</td></tr>
+        <tr><td>3</td><td>Ask for the new version</td><td><strong>wait for answer</strong></td></tr>
+        <tr><td>4</td><td>Bump all <code>__manifest__.py</code></td><td>—</td></tr>
+        <tr><td>5</td><td>Commit the bump</td><td>—</td></tr>
+        <tr><td>6</td><td>Push QA branch</td><td><strong>confirm</strong></td></tr>
+        <tr><td>7</td><td>Merge QA → Stable, push</td><td><strong>confirm push</strong></td></tr>
+        <tr><td>8</td><td>Create + push version branch</td><td><strong>confirm push</strong></td></tr>
+        <tr><td>9</td><td>Write both release-notes files</td><td>—</td></tr>
+        <tr><td>10</td><td>Report done &amp; open the files</td><td>—</td></tr>
+      </table></div>
+      <div class="tip"><span class="i">✅</span><p><strong>That's a full release.</strong> Three pushes, two notes files, one frozen version branch — and a confirmation before anything that touches <code class="k">origin</code>.</p></div>
+    </section>
+
+    <!-- GLOSSARY -->
+    <section id="glossary">
+      <h2><span class="num">★</span> Release Glossary</h2>
+      <p class="lead">The terms in this handbook, decoded.</p>
+      <dl class="glossary">
+        <div><dt>Release</dt><dd>Stamping a new version onto every module, publishing it on Stable, and freezing it as a version branch — plus release notes.</dd></div>
+        <div><dt>MAJOR</dt><dd>The big version number everything is built from (e.g. <code class="k">19</code>).</dd></div>
+        <div><dt>QA branch <span class="de">(X.latest-qa)</span></dt><dd>Where tested work accumulates. A release always starts here.</dd></div>
+        <div><dt>Stable branch <span class="de">(X.latest)</span></dt><dd>The released, production-facing branch that customers install from.</dd></div>
+        <div><dt>Version branch</dt><dd>An immutable branch named exactly for the release (e.g. <code class="k">19.0.1.1.4</code>) — the permanent snapshot.</dd></div>
+        <div><dt>__manifest__.py</dt><dd>Each Odoo module's descriptor file; holds the <code class="k">"version"</code> string that a release bumps.</dd></div>
+        <div><dt>Tag <span class="de">(vX…)</span></dt><dd>A git marker for a past release, carrying a <code class="k">v</code> prefix (<code class="k">v19.0.1.1.3</code>). Used to find "what changed since last time."</dd></div>
+        <div><dt>Fast-forward</dt><dd>A merge where the target branch simply advances to match the source — no new merge commit, no divergence. The normal, healthy outcome when merging QA into Stable.</dd></div>
+        <div><dt>Signed-off-by</dt><dd>A trailer line on the commit message identifying who made the change (name + email from git config).</dd></div>
+        <div><dt>gh</dt><dd>The GitHub CLI. Used here to fetch contributor handles via the compare API.</dd></div>
+        <div><dt>PR number <span class="de">(#97)</span></dt><dd>The pull-request identifier, found in merge-commit messages; cited in the release notes.</dd></div>
+        <div><dt>Buchungsstapel</dt><dd>(Not this guide — that's DATEV 😉.) See the DATEV handbook.</dd></div>
+      </dl>
+    </section>
+
+    <footer>
+      <p>Internal training · <strong>much. GmbH</strong> · git + GitHub release workflow (the <code class="k">/release</code> command)</p>
+      <p style="margin-top:8px">Related reading: the <a href="much-datev-training.html">much. DATEV Integration handbook</a> · When in doubt, ask before you push 💪</p>
+    </footer>
+
+  </div>
+</div>
+
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+
+<script>
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}
+  });
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  var links=Array.prototype.slice.call(document.querySelectorAll('aside.sidebar a'));
+  var map={};
+  links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.remove('active')});
+        var a=map[e.target.id]; if(a){a.classList.add('active')}
+      }
+    })
+  },{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+</script>
+
+</body>
+</html>

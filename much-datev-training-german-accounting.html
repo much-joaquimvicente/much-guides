@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. DATEV — German Accounting, Applied</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --ma-bg:#FAEEDA;--ma-fg:#633806;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--ma-fg);--brand-soft:var(--ma-bg);--brand-solid:#b45309;--accent:#b45309;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --ma-bg:#633806;--ma-fg:#FAC775;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+
+  /* Header (flat — matches the guide pages) */
+  header.hero{max-width:1180px;margin:0 auto;padding:30px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .logo{font-size:21px;font-weight:800;letter-spacing:-.4px;color:var(--brand);margin-bottom:10px}
+  .hero .logo b{color:var(--accent)}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:29px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1180px;margin:0 auto;padding:16px 20px 90px}
+  .content{flex:1 1 auto;min-width:0;max-width:860px;margin:0 auto}
+
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:26px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#f0c88a;font-weight:600}
+  code.k{font-family:var(--mono);background:var(--brand-soft);color:var(--brand);padding:1px 6px;border-radius:5px;font-size:13px}
+
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+
+  .flow{display:grid;gap:10px;margin-top:8px}
+  .flow .f{display:flex;gap:14px;align-items:flex-start}
+  .flow .f b{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .flow .f span{color:var(--text-2)}
+
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:480px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+  table.t td code,table.t th code{font-family:var(--mono);font-size:12.5px;background:var(--surface-0);padding:1px 5px;border-radius:4px}
+
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+
+  .figure{border:1px solid var(--border);border-radius:12px;background:var(--surface-2);padding:14px 14px 8px;margin:14px 0}
+  .figure svg{display:block;width:100%;height:auto}
+  .figure figcaption{font-size:12.5px;color:var(--text-3);text-align:center;padding:6px 8px 4px}
+  .svg-box{fill:var(--surface-1);stroke:var(--border-strong)}
+  .svg-t{fill:var(--text);font:600 13px var(--sans)}
+  .svg-ts{fill:var(--text-2);font:13px var(--sans)}
+  .svg-tm{fill:var(--text);font:600 13px var(--mono)}
+  .svg-hd{fill:var(--text-3);font:700 11px var(--sans);letter-spacing:.05em;text-transform:uppercase}
+  .svg-mut{fill:var(--text-3);font:12px var(--sans)}
+  .chip-ok{fill:var(--green-soft);stroke:var(--border-success)}
+  .chip-ok-t{fill:var(--green);font:600 11px var(--sans)}
+  .chip-warn{fill:var(--amber-soft);stroke:var(--border-warning)}
+  .chip-warn-t{fill:var(--amber);font:600 11px var(--sans)}
+  .chip-blue{fill:var(--blue-soft);stroke:#8fbcec}
+  .chip-blue-t{fill:var(--blue);font:600 11px var(--sans)}
+  .svg-arrow{stroke:var(--brand);stroke-width:1.5;fill:none;marker-end:url(#ah)}
+  .svg-brand{fill:var(--brand)}
+
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+
+  @media (max-width:560px){
+    .hero h1{font-size:24px}
+    .mini{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <a class="backlink" href="index.html">← Back to Guide Hub</a>
+  <div class="logo">much<b>.</b> DATEV</div>
+  <span class="kicker">New Joiner Handbook · Add-on chapter · Internal</span>
+  <h1>German Accounting, Applied</h1>
+  <p>The accounting ideas from the Odoo handbook change shape when they hit DATEV. This chapter is the mental model that makes the export files make sense — only the parts that matter for DATEV.</p>
+  <div class="badge-v">much. GmbH · Odoo 19 · SKR03/04 · slots in after Chapter 3 (Vocabulary)</div>
+</header>
+
+<div class="layout">
+  <div class="content">
+
+    <div class="bigidea">
+      <span class="tag">🧠 The one big idea</span>
+      <p>Odoo thinks in <strong>balanced entries and net lines</strong>. DATEV thinks in <strong>single gross rows</strong> where a small tax key does the VAT maths. The export doesn't translate word-for-word — it <strong>collapses</strong> each Odoo entry into DATEV's one-row-per-booking, gross-plus-key shape. Learn that one shift and everything downstream clicks.</p>
+    </div>
+
+    <!-- SECTION: German accounting applied -->
+    <section id="accounting">
+      <h2><span class="num">§</span> German Accounting, Applied to Odoo</h2>
+      <p class="lead">First the German-bookkeeping baseline Odoo already gives you, then the four things that change shape once that data has to go to DATEV.</p>
+
+      <!-- 0 baseline -->
+      <h3 class="sub">0 · The German baseline — what Odoo already gives you</h3>
+      <p class="para">Before anything DATEV-specific, these are the German-bookkeeping fundamentals. In Odoo they come from the <strong>German localization</strong> (<code class="k">l10n_de</code> plus the SKR chart) — you mostly <em>configure</em> them, you don't build them. The job here is knowing where each one lives:</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>German concept</th><th>What it is</th><th>Where it lives in Odoo</th></tr>
+        <tr><td><strong>Doppelte Buchführung · Soll / Haben</strong></td><td>Double-entry bookkeeping — every posting has equal debits (Soll) and credits (Haben).</td><td>Every <code>account.move</code>; Odoo enforces the balance. Accounting → Journal Entries.</td></tr>
+        <tr><td><strong>SKR03 / SKR04 · Sachkonten</strong></td><td>The two standard German charts of accounts; every G/L account is a numbered <em>Konto</em>.</td><td>Installed by the localization. Accounting → Configuration → <strong>Chart of Accounts</strong>.</td></tr>
+        <tr><td><strong>Debitoren / Kreditoren</strong></td><td>Customers and vendors kept as their own numbered sub-accounts (Personenkonten), not just contacts.</td><td>Customers / Vendors (<code>res.partner</code>) with receivable/payable accounts.</td></tr>
+        <tr><td><strong>Umsatzsteuer / Vorsteuer</strong></td><td>Output VAT on sales and input VAT on purchases — 19% standard, 7% reduced — feeding the periodic <em>USt-Voranmeldung</em>.</td><td>Taxes (<code>account.tax</code>). Accounting → Configuration → <strong>Taxes</strong>.</td></tr>
+        <tr><td><strong>Belegprinzip · GoBD</strong></td><td>“Keine Buchung ohne Beleg” — no entry without a document; GoBD mandates retention &amp; immutability of records.</td><td>PDF attachments on invoices; <strong>posted entries are locked</strong>.</td></tr>
+      </table></div>
+      <div class="tip note"><span class="i">🧑‍💼</span><p><strong>Why this leads into DATEV:</strong> under GoBD the <em>official</em> books live with the <strong>Steuerberater</strong> in DATEV, not in Odoo. Odoo keeps this baseline cleanly — which is exactly what lets it hand the data over. Everything below is where that handover forces Odoo's data into DATEV's shape.</p></div>
+
+      <!-- 1 -->
+      <h3 class="sub">1 · One booking = one row (not a balanced entry)</h3>
+      <p class="para">In Odoo every posting is a <strong>balanced journal entry</strong>: two or more lines whose debits (Soll) equal credits (Haben). DATEV's <strong>Buchungsstapel</strong> is different — each business transaction is a <strong>single row</strong> carrying an amount, a <strong>Soll/Haben</strong> letter, a <strong>Konto</strong> and a <strong>Gegenkonto</strong>. DATEV fills in the other side automatically.</p>
+      <p class="para">So the export can't copy Odoo's lines one-to-one. For each entry it fixes one account as the <strong>Gegenkonto</strong> (the move's <em>main account</em> — for a sales invoice, the customer's Debitor), <strong>skips</strong> that main-account line and the separate tax line, and turns each remaining ordinary line into <strong>one gross row</strong> booked against that Gegenkonto.</p>
+
+      <figure class="figure">
+        <svg viewBox="0 0 680 388" role="img" aria-labelledby="figA-t figA-d">
+          <title id="figA-t">One Odoo invoice becomes one DATEV row</title>
+          <desc id="figA-d">A balanced three-line Odoo journal entry for a 119 euro invoice collapses into a single gross DATEV Buchungsstapel row: Umsatz 119,00, Haben, Konto 8400, Gegenkonto 10001, BU 9.</desc>
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" class="svg-brand"/>
+            </marker>
+          </defs>
+
+          <!-- Odoo panel -->
+          <text x="40" y="24" class="svg-hd">In Odoo — one balanced journal entry (account.move)</text>
+          <rect x="40" y="34" width="600" height="132" rx="10" class="svg-box"/>
+          <!-- row 1 -->
+          <text x="58" y="62" class="svg-tm">10001 · Debitor — Anna Müller</text>
+          <text x="360" y="62" class="svg-ts">Soll</text>
+          <text x="470" y="62" class="svg-tm">119,00</text>
+          <rect x="520" y="49" width="110" height="18" rx="9" class="chip-warn"/>
+          <text x="530" y="62" class="chip-warn-t">main → Gegenkonto</text>
+          <!-- row 2 -->
+          <text x="58" y="98" class="svg-tm">8400 · Umsatzerlöse</text>
+          <text x="360" y="98" class="svg-ts">Haben</text>
+          <text x="470" y="98" class="svg-tm">100,00</text>
+          <rect x="520" y="85" width="110" height="18" rx="9" class="chip-ok"/>
+          <text x="530" y="98" class="chip-ok-t">becomes the row</text>
+          <!-- row 3 -->
+          <text x="58" y="134" class="svg-tm">1776 · Umsatzsteuer 19%</text>
+          <text x="360" y="134" class="svg-ts">Haben</text>
+          <text x="470" y="134" class="svg-tm">19,00</text>
+          <rect x="520" y="121" width="110" height="18" rx="9" class="chip-blue"/>
+          <text x="530" y="134" class="chip-blue-t">tax line → skipped</text>
+          <line x1="40" y1="150" x2="640" y2="150" stroke="var(--border)" stroke-width="1"/>
+          <text x="58" y="162" class="svg-mut">Soll 119,00 = Haben 100,00 + 19,00 — balanced</text>
+
+          <!-- arrow -->
+          <line x1="340" y1="172" x2="340" y2="210" class="svg-arrow"/>
+          <text x="356" y="196" class="svg-ts">collapses to one gross row + tax key</text>
+
+          <!-- DATEV panel -->
+          <text x="40" y="234" class="svg-hd">In DATEV — one row (Buchungsstapel)</text>
+          <rect x="40" y="244" width="600" height="104" rx="10" class="svg-box"/>
+          <!-- column headers -->
+          <text x="58" y="270" class="svg-hd">Umsatz</text>
+          <text x="200" y="270" class="svg-hd">S/H</text>
+          <text x="270" y="270" class="svg-hd">Konto</text>
+          <text x="370" y="270" class="svg-hd">Gegenkonto</text>
+          <text x="520" y="270" class="svg-hd">BU-Schlüssel</text>
+          <line x1="58" y1="278" x2="622" y2="278" stroke="var(--border)" stroke-width="1"/>
+          <!-- data row -->
+          <text x="58" y="302" class="svg-tm">119,00</text>
+          <text x="200" y="302" class="svg-tm">H</text>
+          <text x="270" y="302" class="svg-tm">8400</text>
+          <text x="370" y="302" class="svg-tm">10001</text>
+          <text x="520" y="302" class="svg-tm">9</text>
+          <text x="58" y="332" class="svg-mut">Gross incl. VAT · DATEV derives the €19 from BU 9 and books it to the tax account itself.</text>
+        </svg>
+        <figcaption>A €119 sales invoice: three balanced Odoo lines → one gross DATEV row. The Debitor is the fixed <em>Gegenkonto</em>; the revenue line becomes the <em>Konto</em>; the VAT line is dropped because BU 9 recreates it in DATEV.</figcaption>
+      </figure>
+
+      <div class="tip note"><span class="i">🔎</span><p><strong>In the code:</strong> the row is assembled in <code class="k">much_account_datev_csv_export/models/core/account_move.py</code> — <code class="k">_get_line_match_values()</code> sets <code>account</code> (Konto), <code>counteraccount</code> (Gegenkonto) and <code>letter = "S" if aml.balance &gt; 0 else "H"</code> (Soll/Haben). <code class="k">_should_ignore_line()</code> drops the main-account line, tax lines, and any line where <code>debit == credit</code>.</p></div>
+
+      <!-- 2 -->
+      <h3 class="sub">2 · DATEV books gross — a tax key does the VAT</h3>
+      <p class="para">In Odoo a taxed invoice has a <strong>net</strong> revenue line plus a separate <strong>tax</strong> line. DATEV usually does <strong>neither</strong>: the row carries the <strong>gross</strong> amount (net + VAT together, the <em>Umsatz</em> column) and you tag it with a <strong>BU-Schlüssel</strong> (Buchungsschlüssel / Steuerschlüssel). DATEV reads the key, works out the VAT, and posts it to the correct tax account on its own — no explicit VAT line.</p>
+      <p class="para">Our export writes the tax-included amount to <em>Umsatz</em> (<code class="k">_get_gross_value()</code> returns <code>abs(amount)</code>) and puts the Odoo tax's DATEV code into the BU column (<code class="k">account.tax.l10n_de_datev_code</code>, via <code class="k">_get_code_correction()</code>). The handful of keys you'll actually see:</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>BU-Schlüssel</th><th>Means</th><th>Amount in the row</th></tr>
+        <tr><td><code>9</code></td><td>19% domestic VAT (Umsatzsteuer / Vorsteuer)</td><td><strong>Gross</strong> — DATEV splits out the 19%</td></tr>
+        <tr><td><code>40</code></td><td>The control key — <strong>“no automatic tax on this line”</strong></td><td>Gross, but DATEV adds no VAT</td></tr>
+        <tr><td><code>94</code></td><td>§13b reverse charge (see below)</td><td><strong>Net</strong> — the exception</td></tr>
+      </table></div>
+      <div class="tip"><span class="i">💡</span><p><strong>Key 40 is the safety default.</strong> When a line has no mappable tax, the export falls back to the configured <em>DATEV Key</em> — <code class="k">control_datev_key</code>, default <code>"40"</code> in <code class="k">much_account_datev_base</code> — so DATEV never invents VAT we didn't intend.</p></div>
+
+      <!-- 3 -->
+      <h3 class="sub">3 · The exception: §13b reverse charge is <em>net</em></h3>
+      <p class="para">Under <strong>§13b UStG (reverse charge)</strong> — typically an EU or foreign supplier — the <strong>German buyer</strong>, not the supplier, owes the VAT. The supplier invoices <strong>net</strong>, so the DATEV row for a reverse-charge booking (BU-Schlüssel <code>94</code>) carries the <strong>net</strong> amount, and DATEV books <em>both</em> the input- and output-VAT itself.</p>
+      <p class="para">This is the one place the “DATEV is gross” rule flips, and getting it wrong is expensive: treat a §13b row as gross and you divide an amount that was never grossed-up — understating the expense and both VAT lines and leaving a suspense line (ticket <strong>#55495</strong>).</p>
+      <div class="tip warn"><span class="i">⚠️</span><p><strong>How the code knows:</strong> a reverse-charge tax is recognised by its <em>invoice tax repartition factors netting to zero</em> — an input-VAT line cancelled by an output-VAT line. <code class="k">_is_reverse_charge_tax()</code> in <code class="k">much_account_datev_csv_import/wizards/base/import_datev_wizard.py</code> checks <code>len(tax_reps) &gt;= 2 and abs(sum(factor_percent)) &lt; 1e-6</code>, and the importer then <strong>skips the ÷(1 + rate)</strong> it applies to normal gross codes like BU 9.</p></div>
+
+      <!-- 4 -->
+      <h3 class="sub">4 · Account numbers: Sachkonten, Personenkonten &amp; length</h3>
+      <p class="para">DATEV numbers everything, and the <strong>digit length</strong> is not cosmetic — it decides which number is a G/L account and which is a customer/vendor.</p>
+      <div class="mini">
+        <div class="m"><h4>📒 Sachkonto (G/L account)</h4><p>Fixed length — <strong>4 digits</strong> by default (min 4), set once and matched to your SKR chart. Config: <code class="k">length_general_accounts</code>. Example: <code>8400</code> revenue.</p></div>
+        <div class="m"><h4>👤 Personenkonto (Debitor / Kreditor)</h4><p>Always <strong>one digit longer</strong> than the G/L length, so it sits “under” the G/L range. Config: <code class="k">length_personal_accounts</code>. Example: <code>10001</code> Debitor.</p></div>
+      </div>
+      <p class="para">That +1 rule is why a 4-digit chart gives 5-digit customer/vendor numbers. Debitoren (customers) are auto-assigned from <strong>10000</strong>, Kreditoren (vendors) from <strong>70000</strong> — the <code class="k">l10n_de_datev_identifier_customer</code> and <code class="k">l10n_de_datev_identifier</code> fields on the partner.</p>
+      <div class="tip note"><span class="i">🇩🇪</span><p><strong>SKR03 vs SKR04</strong> is just <em>which chart of accounts you picked at company setup</em> — SKR03 is process-/expense-oriented (the older, very common one), SKR04 mirrors the financial statements. Our modules don't choose it; they only need <em>Length General Accounts</em> to match whichever chart the company uses, or the numbers won't line up in DATEV.</p></div>
+
+      <!-- Engineer altitude -->
+      <h3 class="sub">Under the hood — the identifiers</h3>
+      <p class="para">Same concepts, engineer altitude. Everything below is real and greppable.</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Concept</th><th>Identifier</th><th>Where</th></tr>
+        <tr><td>One gross row per line</td><td><code>_build_datev_export_line()</code> · <code>_should_ignore_line()</code></td><td><code>csv_export/models/core/account_move.py</code></td></tr>
+        <tr><td>Konto / Gegenkonto / Soll-Haben</td><td><code>account</code> · <code>counteraccount</code> · <code>soll_haben</code></td><td>same, <code>_get_line_match_values()</code></td></tr>
+        <tr><td>Gross amount (Umsatz)</td><td><code>_get_gross_value()</code> → <code>abs(amount)</code></td><td>same file</td></tr>
+        <tr><td>BU-Schlüssel from the tax</td><td><code>_get_code_correction()</code> → <code>tax_ids[0].l10n_de_datev_code</code></td><td>same file</td></tr>
+        <tr><td>Control key (default 40)</td><td><code>control_datev_key</code> (default <code>"40"</code>)</td><td><code>datev_base/models/core/res_config_settings.py</code></td></tr>
+        <tr><td>§13b detection (net, not gross)</td><td><code>_is_reverse_charge_tax()</code></td><td><code>csv_import/wizards/base/import_datev_wizard.py</code></td></tr>
+        <tr><td>Account lengths (+1 rule)</td><td><code>length_general_accounts</code> (≥4) · <code>length_personal_accounts</code></td><td><code>datev_base/models/core/res_config_settings.py</code></td></tr>
+        <tr><td>Debitor / Kreditor numbers</td><td><code>l10n_de_datev_identifier_customer</code> · <code>l10n_de_datev_identifier</code></td><td><code>datev_base/models/core/res_partner.py</code></td></tr>
+      </table></div>
+    </section>
+
+    <footer>
+      <p>Add-on chapter for the <a href="much-datev-training.html">much. DATEV Integration handbook</a> · <strong>much. GmbH</strong></p>
+      <p style="margin-top:8px">Slots in after Chapter 3 (DATEV Vocabulary) · built on the standard German localization (<code class="k">l10n_de</code>)</p>
+    </footer>
+
+  </div>
+</div>
+
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+<script>
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}
+  });
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+</script>
+
+</body>
+</html>
