@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. PayPal Official Integration — Onboarding</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+--bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+--bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+--mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
+}
+.dark{
+--page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+--bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+--bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+--mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;font-weight:500;margin:0 0 4px}
+h2{font-size:20px;font-weight:500;margin:40px 0 8px}
+h3{font-size:16px;font-weight:500;margin:22px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--text-2)}
+a.back{display:inline-block;font-size:13px;color:var(--mp-fg);text-decoration:none;margin-bottom:6px}
+a.back:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
+a{color:var(--mb-fg)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.btns{display:flex;gap:8px;flex-shrink:0}
+button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+.card-svg{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:16px;margin:14px 0}
+svg{max-width:100%;height:auto;display:block}
+text.t{font-family:var(--sans);font-size:14px;fill:var(--text)}
+text.th{font-family:var(--sans);font-weight:500;font-size:14px;fill:var(--text)}
+text.ts{font-family:var(--sans);font-size:12px;fill:var(--text-2)}
+.box>rect{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:.5}
+.arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
+.c-purple>rect{fill:var(--mp-bg);stroke:#7F77DD;stroke-width:.5}.c-purple text{fill:var(--mp-fg)}
+.c-teal>rect{fill:var(--mt-bg);stroke:#1D9E75;stroke-width:.5}.c-teal text{fill:var(--mt-fg)}
+.c-blue>rect{fill:var(--mb-bg);stroke:#378ADD;stroke-width:.5}.c-blue text{fill:var(--mb-fg)}
+.c-coral>rect{fill:var(--mc-bg);stroke:#D85A30;stroke-width:.5}.c-coral text{fill:var(--mc-fg)}
+.c-amber>rect{fill:var(--ma-bg);stroke:#EF9F27;stroke-width:.5}.c-amber text{fill:var(--ma-fg)}
+.c-pink>rect{fill:var(--mk-bg);stroke:#D4537E;stroke-width:.5}.c-pink text{fill:var(--mk-fg)}
+.c-gray>rect{fill:var(--mg-bg);stroke:#888780;stroke-width:.5}.c-gray text{fill:var(--mg-fg)}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+select{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+.dir{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-1);border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scn{color:var(--text-2);font-size:15px;margin:10px 0}
+.scn b{color:var(--text);font-weight:500}
+.rail{position:relative;margin:16px 0 4px}
+.rail:before{content:"";position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:var(--border)}
+.stg{display:flex;gap:14px;align-items:stretch;margin-bottom:10px;position:relative}
+.node{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;border:2px solid var(--fg);z-index:1}
+.card{flex:1;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:10px 14px;cursor:pointer}
+.card:hover{border-color:var(--border-strong)}
+.stg.sel .card{border-color:var(--fg);background:var(--surface-2)}
+.crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);color:var(--fg);font-size:12px;padding:2px 9px;border-radius:999px;white-space:nowrap;font-family:var(--mono)}
+.ttl{font-weight:500;font-size:15px}
+.ex{color:var(--text-2);font-size:13px;margin-top:3px}
+.det{border:1px solid var(--border);border-radius:12px;background:var(--surface-1);padding:14px 16px;margin-top:6px}
+.det h4{margin:0 0 2px;font-size:15px;font-weight:500}
+.det .lab{font-size:12px;color:var(--text-3);margin:10px 0 3px}
+.det p{margin:0;font-size:14px;color:var(--text-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--surface-0);color:var(--text-2);border:1px solid var(--border)}
+.chip.ok{background:var(--bg-success);color:var(--text-success);border-color:var(--border-success)}
+.chip.warn{background:var(--bg-warning);color:var(--text-warning);border-color:var(--border-warning)}
+.chip.bad{background:var(--bg-danger);color:var(--text-danger);border-color:var(--border-danger)}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;padding-top:12px;border-top:1px solid var(--border)}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.dot{width:11px;height:11px;border-radius:3px;background:var(--fg)}
+.info{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:12px 0}
+.info h3{margin-top:6px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:14px;margin:8px 0}
+.kv dt{color:var(--text-3)}
+.kv dd{margin:0;color:var(--text)}
+.warn-box{background:var(--bg-warning);border:1px solid var(--border-warning);color:var(--text-warning);border-radius:12px;padding:12px 16px;margin:12px 0;font-size:14px}
+.doc{display:none}
+.docmode #live{display:none}
+.docmode .doc{display:block}
+.doc h3{border-top:1px solid var(--border);padding-top:16px}
+footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+@media print{
+.noprint{display:none!important}
+body{background:#fff;font-size:12px}
+.wrap{max-width:none;padding:0}
+#live{display:none!important}
+.doc{display:block!important}
+.card-svg{break-inside:avoid;border:1px solid #ddd}
+.stg,.det,h3,.info{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+<div>
+<a class="back noprint" href="index.html">← Back to Guide Hub</a>
+<h1>much. PayPal Official Integration — onboarding process map</h1>
+<p class="lead">How much.'s PayPal payment suite connects Odoo to PayPal — for a new engineer, support, or PM. Every step is grounded in the actual code, with one named example running through each workflow.</p>
+</div>
+<div class="btns noprint">
+<button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+<button onclick="document.body.classList.toggle('docmode')">Handout view</button>
+<button onclick="window.print()">Print / PDF</button>
+</div>
+</div>
+
+<h2>1. The big picture</h2>
+<p>The suite sits between Odoo and PayPal. A merchant connects their PayPal Business account once (no copy-pasting keys); after that, every shopper payment, refund, saved card and webhook flows through a small set of reusable building blocks. Two things live outside Odoo: PayPal's v2 REST API, and a much.-owned Google Cloud service that hands out the partner-level credentials so they are never stored in the Odoo database.</p>
+<div class="card-svg">
+<svg viewBox="0 0 680 415" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>much. PayPal Suite big picture</title>
+<desc>Odoo connects through the much. PayPal suite building blocks to PayPal's REST API and a Google Cloud secrets service.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="var(--text-3)" stroke-width="1.2"/></marker></defs>
+<g class="box"><rect x="40" y="160" width="115" height="105" rx="10"/></g>
+<text class="th" x="97" y="200" text-anchor="middle">Odoo</text>
+<text class="ts" x="97" y="219" text-anchor="middle">Shop · Invoicing</text>
+<text class="ts" x="97" y="235" text-anchor="middle">Sales · Portal</text>
+<g class="box"><rect x="205" y="42" width="265" height="350" rx="12"/></g>
+<text class="th" x="337" y="66" text-anchor="middle">much. PayPal Suite</text>
+<g class="c-purple"><rect x="222" y="80" width="231" height="30" rx="8"/><text class="t" x="337" y="99" text-anchor="middle">Onboarding &amp; referral</text></g>
+<g class="c-blue"><rect x="222" y="116" width="231" height="30" rx="8"/><text class="t" x="337" y="135" text-anchor="middle">Secret manager (cloud)</text></g>
+<g class="c-gray"><rect x="222" y="152" width="231" height="30" rx="8"/><text class="t" x="337" y="171" text-anchor="middle">Orders, capture &amp; refund</text></g>
+<g class="c-coral"><rect x="222" y="188" width="231" height="30" rx="8"/><text class="t" x="337" y="207" text-anchor="middle">Merchant config</text></g>
+<g class="c-teal"><rect x="222" y="224" width="231" height="30" rx="8"/><text class="t" x="337" y="243" text-anchor="middle">Webhook queue + cron</text></g>
+<g class="c-pink"><rect x="222" y="260" width="231" height="30" rx="8"/><text class="t" x="337" y="279" text-anchor="middle">Vaulting</text></g>
+<g class="c-amber"><rect x="222" y="296" width="231" height="30" rx="8"/><text class="t" x="337" y="315" text-anchor="middle">API event log</text></g>
+<g class="box"><rect x="515" y="112" width="125" height="86" rx="10"/></g>
+<text class="th" x="577" y="148" text-anchor="middle">PayPal</text>
+<text class="ts" x="577" y="166" text-anchor="middle">v2 REST API</text>
+<text class="ts" x="577" y="182" text-anchor="middle">api-m.paypal.com</text>
+<g class="box"><rect x="515" y="250" width="125" height="82" rx="10"/></g>
+<text class="th" x="577" y="284" text-anchor="middle">Google Cloud</text>
+<text class="ts" x="577" y="302" text-anchor="middle">paypal_secrets</text>
+<text class="ts" x="577" y="318" text-anchor="middle">Cloud Function</text>
+<path class="arr" d="M158,204 L201,204" marker-end="url(#arrow)"/>
+<path class="arr" d="M201,222 L158,222" marker-end="url(#arrow)"/>
+<path class="arr" d="M473,150 L512,150" marker-end="url(#arrow)"/>
+<path class="arr" d="M512,168 L473,168" marker-end="url(#arrow)"/>
+<path class="arr" d="M473,284 L512,284" marker-end="url(#arrow)"/>
+<path class="arr" d="M512,300 L473,300" marker-end="url(#arrow)"/>
+</svg>
+</div>
+
+<h2>2. The architecture</h2>
+<p>The suite is six Odoo modules layered on Odoo's core <code>payment</code> framework. <code>payment_paypal_suite</code> is a meta-installer that pulls in the other five (it is set to <code>auto-install</code>). The core is <code>payment_paypal_integration</code> — provider, onboarding, the PayPal v2 Orders API, refunds and the secret manager. The other modules bolt on capabilities: reliable webhooks, merchant display config, vaulting, and the storefront / express-checkout experience.</p>
+<div class="card-svg">
+<svg viewBox="0 0 680 420" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>much. PayPal Suite module stack</title>
+<desc>Six PayPal modules layered on Odoo's payment framework, with Odoo on the left and PayPal plus Google Cloud on the right.</desc>
+<g class="box"><rect x="40" y="150" width="105" height="130" rx="10"/></g>
+<text class="th" x="92" y="210" text-anchor="middle">Odoo</text>
+<text class="ts" x="92" y="228" text-anchor="middle">payment</text>
+<g class="c-gray"><rect x="180" y="58" width="310" height="40" rx="8"/><text class="th" x="196" y="75">website_sale_paypal</text><text class="ts" x="196" y="91">storefront · express checkout · shipping sync</text></g>
+<g class="c-pink"><rect x="180" y="104" width="310" height="40" rx="8"/><text class="th" x="196" y="121">payment_paypal_vaulting</text><text class="ts" x="196" y="137">save &amp; reuse cards, PayPal, Venmo</text></g>
+<g class="c-coral"><rect x="180" y="150" width="310" height="40" rx="8"/><text class="th" x="196" y="167">paypal_merchant_configurator</text><text class="ts" x="196" y="183">which buttons, banners &amp; methods to show</text></g>
+<g class="c-teal"><rect x="180" y="196" width="310" height="40" rx="8"/><text class="th" x="196" y="213">paypal_webhook_base</text><text class="ts" x="196" y="229">signed webhook queue + cron processor</text></g>
+<g class="c-purple"><rect x="180" y="242" width="310" height="40" rx="8"/><text class="th" x="196" y="259">payment_paypal_integration</text><text class="ts" x="196" y="275">core: provider · onboarding · orders · refunds</text></g>
+<g class="box"><rect x="180" y="288" width="310" height="34" rx="8"/><text class="t" x="335" y="309" text-anchor="middle">payment_paypal_suite · meta-installer (auto-install)</text></g>
+<g class="box"><rect x="180" y="330" width="310" height="34" rx="8"/><text class="t" x="335" y="351" text-anchor="middle">Odoo payment framework (provider · transaction · token)</text></g>
+<g class="box"><rect x="530" y="110" width="110" height="86" rx="10"/></g>
+<text class="th" x="585" y="146" text-anchor="middle">PayPal</text>
+<text class="ts" x="585" y="164" text-anchor="middle">v2 REST API</text>
+<text class="ts" x="585" y="180" text-anchor="middle">+ webhooks</text>
+<g class="box"><rect x="530" y="238" width="110" height="80" rx="10"/></g>
+<text class="th" x="585" y="272" text-anchor="middle">Google Cloud</text>
+<text class="ts" x="585" y="290" text-anchor="middle">secrets +</text>
+<text class="ts" x="585" y="306" text-anchor="middle">install registry</text>
+<path class="arr" d="M148,205 L177,205" marker-end="url(#arrow)"/>
+<path class="arr" d="M177,223 L148,223" marker-end="url(#arrow)"/>
+<path class="arr" d="M493,150 L527,150" marker-end="url(#arrow)"/>
+<path class="arr" d="M527,168 L493,168" marker-end="url(#arrow)"/>
+<path class="arr" d="M493,272 L527,272" marker-end="url(#arrow)"/>
+<path class="arr" d="M527,288 L493,288" marker-end="url(#arrow)"/>
+</svg>
+</div>
+
+<h2>3. The workflows</h2>
+<p>Pick a workflow below and click any step to see the business meaning, the exact Odoo model / method / route / API endpoint, the states involved, and the config notes. Colour encodes the building block (see the legend), so you can see at a glance which blocks each workflow leans on — onboarding is purple-heavy, webhooks are teal, vaulting is pink, and almost everything logs. Two named examples travel through: the merchant <b>Bella Boutique</b> connecting their account, and the shopper <b>Anna Mueller</b> buying a <b>Merino Wool Scarf</b> (<code>SCARF-014</code>, €89.90).</p>
+
+<div id="live" class="noprint">
+<div class="bar">
+<select id="wf"></select>
+<span class="dir" id="dir"></span>
+</div>
+<div class="scn" id="scn"></div>
+<div class="rail" id="rail"></div>
+<div class="det" id="det"></div>
+</div>
+
+<div class="lg">
+<span class="lgi m-purple"><span class="dot"></span>Onboarding &amp; referral</span>
+<span class="lgi m-blue"><span class="dot"></span>Secret manager (cloud)</span>
+<span class="lgi m-gray"><span class="dot"></span>Orders, capture &amp; refund</span>
+<span class="lgi m-coral"><span class="dot"></span>Merchant config</span>
+<span class="lgi m-teal"><span class="dot"></span>Webhook queue &amp; cron</span>
+<span class="lgi m-pink"><span class="dot"></span>Vaulting</span>
+<span class="lgi m-amber"><span class="dot"></span>API event log</span>
+</div>
+
+<div class="doc" id="doc"></div>
+
+<h2>4. On the marketplace &amp; the PayPal partnership</h2>
+<div class="info">
+<p>This is an <b>official PayPal integration</b>, published on the Odoo App Store and built in a <b>paid partnership with PayPal</b> — PayPal funded the development of the module.</p>
+<dl class="kv">
+<dt>Marketplace</dt><dd><a href="https://apps.odoo.com/apps/modules/19.0/payment_paypal_suite">apps.odoo.com/apps/modules/19.0/payment_paypal_suite</a></dd>
+<dt>Author</dt><dd>much. Consulting &amp; PayPal Inc. (per the module manifest)</dd>
+<dt>Partner role</dt><dd>much. onboards merchants as a PayPal <b>partner</b> — the referral flow (<code>/v2/customer/partner-referrals</code>) and the <code>PayPal-Partner-Attribution-Id</code> / BN code baked into the code exist because of this partner relationship.</dd>
+</dl>
+</div>
+
+<h2>5. Running it day to day (operations)</h2>
+<div class="info">
+<p>When a customer completes the <b>Get Started</b> call (connecting Odoo to their live PayPal account), the install is registered in <b>Google Cloud Datastore</b> — the same much.-owned project (<code>much-auth-api-pay</code>) that hosts the <code>paypal_secrets</code> Cloud Function the module reads its partner credentials from.</p>
+<dl class="kv">
+<dt>Onboarded customers</dt><dd><a href="https://console.cloud.google.com/datastore/databases/-default-/entities;kind=PaypalInstallation;ns=__$DEFAULT$__/query/kind?project=much-auth-api-pay">Datastore → kind <code>PaypalInstallation</code></a> (project <code>much-auth-api-pay</code>)</dd>
+<dt>Secrets endpoint</dt><dd><code>https://europe-central2-much-auth-api-pay.cloudfunctions.net/paypal_secrets</code></dd>
+<dt>PayPal — sales</dt><dd>Rebecca Fraser</dd>
+<dt>PayPal — technical support</dt><dd>Mert Sevindink</dd>
+</dl>
+</div>
+
+<h2>6. Internal testing flow</h2>
+<div class="info">
+<p>To test the suite end to end you sign in to our shared <b>PayPal Live account</b>, which holds the partner-level credentials that customers' installs use when logging in to PayPal.</p>
+<dl class="kv">
+<dt>Live account</dt><dd><code>product+pp@muchconsulting.de</code> — credentials in <b>1Password</b> (item "PayPal Live Account", www.paypal.com)</dd>
+<dt>Registered contact</dt><dd>Simon Stappen</dd>
+</dl>
+<div class="warn-box">Keep the live password in 1Password — do not paste it into tickets, chat, or this file. Reference the 1Password item instead.</div>
+<p>1Password also holds two kinds of <b>sandbox test accounts</b>, and the naming tells you which side of the flow each one is for:</p>
+<dl class="kv">
+<dt>"merchant" accounts</dt><dd>Simulate the <b>merchant</b> side — logging in during onboarding and configuring the provider (workflows 0 and 6).</dd>
+<dt>"buyer" accounts</dt><dd>Simulate the <b>shopper</b> flow on the merchant's website — checkout, express checkout, and vaulting (workflows 1–3).</dd>
+</dl>
+<p>Typical loop: put the provider in <b>Sandbox</b>, onboard with a <b>merchant</b> test account, then shop as a <b>buyer</b> test account, and watch the <b>Queue</b> (webhook events) and <b>Logs</b> (API calls) smart buttons on the provider form to confirm what happened.</p>
+</div>
+
+<footer>Generated for internal onboarding · grounded in the code of much-paypal-integration (v18.0.1.2.2) and Knowledge article 2810. This file is untracked by git, self-contained, and safe to move, print, or share internally. It contains internal operational references — do not publish it externally.</footer>
+
+</div>
+<script>
+const WF = [
+{id:"onboard",label:"0 · Connect a PayPal account (merchant)",dir:"Odoo ⇄ PayPal Partner",scn:"<b>Bella Boutique</b> clicks <b>Get Started</b> on the PayPal Business Integration provider and connects their live PayPal account in a popup — no copy-pasting API keys.",steps:[
+{m:"m-purple",t:"Get Started wizard",ex:"Merchant picks Production + country DE",biz:"The merchant opens a small wizard to choose the environment (Sandbox or Production) and their business country — the country decides which methods are available (Venmo is US-only, Apple/Google Pay are country-gated).",mo:"payment.panel.onboarding",st:["Sandbox","Production"],cfg:"Kanban 'Setup PayPal Account'. <code>action_connect_paypal</code> sets the provider state, then calls <code>action_connect_to_paypal()</code>."},
+{m:"m-purple",t:"Create partner referral",ex:"Odoo asks PayPal for a scoped signup link",biz:"Because much. is a PayPal partner, Odoo generates a referral link that scopes exactly the products, features and capabilities this merchant needs.",mo:"/v2/customer/partner-referrals",st:[],cfg:"<code>PartnerReferral.create_referral</code> (POST). Sets a 44-char nonce; <code>return_url = /seller-onboarding-return</code>; header <code>PayPal-Partner-Attribution-Id</code>."},
+{m:"m-purple",t:"PayPal minibrowser login",ex:"Merchant logs into live PayPal &amp; grants access",biz:"A PayPal popup opens where the merchant logs into their real PayPal Business account and authorises Odoo — their password never passes through us.",mo:"action_connect_to_paypal",st:[],cfg:"Opens <code>https://www.paypal.com</code> (or <code>...sandbox.paypal.com</code> in test) with <code>displayMode=minibrowser</code>; client action <code>payment_paypal_integration.isu_process_view</code>."},
+{m:"m-blue",t:"Fetch partner secrets",ex:"Odoo pulls the shared partner keys",biz:"The much. partner-level credentials (client id/secret, BN code) are fetched on demand from a secure Google Cloud Function — never stored in Odoo's config.",mo:"PaypalSecretManager",st:[],cfg:"URL <code>europe-central2-much-auth-api-pay.cloudfunctions.net/paypal_secrets</code>; 5 retries, exponential backoff; param <code>payment_paypal_integration.secret_provider_url</code>."},
+{m:"m-gray",t:"Onboarding callback",ex:"PayPal returns authCode + sharedId",biz:"When the merchant finishes, PayPal calls back with a one-time code that Odoo exchanges for this merchant's own client id, secret and Merchant ID.",mo:"/seller-onboarding-callback",st:["Done","Error"],cfg:"<code>get_merchant_credentials</code> → <code>GET /v1/customer/partners/{id}/merchant-integrations/credentials/</code>; writes <code>paypal_business_client_id / secret / merchant_id</code>."},
+{m:"m-teal",t:"Subscribe to webhooks",ex:"Odoo registers /paypal/webhook with PayPal",biz:"Odoo subscribes to the PayPal events it cares about (payments, refunds, vault changes) so PayPal will notify it whenever anything happens later.",mo:"action_subscribe_to_webhook",st:[],cfg:"<code>POST /v1/notifications/webhooks</code> pointing at <code>/paypal/webhook</code>; default events include <code>VAULT.PAYMENT-TOKEN.CREATED/DELETED</code> plus capture/order topics."},
+{m:"m-purple",t:"Publish the provider",ex:"Provider goes Enabled — PayPal live on shop",biz:"The merchant clicks Publish and the PayPal provider becomes enabled, so customers now see the PayPal options at checkout.",mo:"payment.provider",st:["Draft","Test","Enabled","Disabled"],cfg:"Provider <code>code = paypal_business</code>; state <code>enabled</code> = production, <code>test</code> = sandbox."}
+]},
+{id:"checkout",label:"1 · Customer pays at checkout",dir:"Shop → PayPal → Odoo",scn:"<b>Anna Mueller</b> checks out a <b>Merino Wool Scarf</b> (<code>SCARF-014</code>, €89.90) and pays with her PayPal wallet; Odoo creates a PayPal Order, captures it, and marks the transaction Done.",steps:[
+{m:"m-coral",t:"Load merchant config",ex:"Shop asks which buttons to show",biz:"The checkout page fetches the merchant's enabled methods and display settings so it renders exactly the right PayPal buttons.",mo:"/merchant-configuration-settings",st:[],cfg:"<code>generate_paypal_merchant_config()</code> returns funding sources plus card / Apple / Google / Venmo flags."},
+{m:"m-gray",t:"Create PayPal Order",ex:"Odoo opens a €89.90 order at PayPal",biz:"When Anna picks PayPal, Odoo creates an Order at PayPal for the cart total with intent CAPTURE.",mo:"POST /v2/checkout/orders",st:["Created","Approved"],cfg:"<code>Order.create_order</code>; <code>intent = CAPTURE</code>; driven by <code>_get_specific_processing_values</code>."},
+{m:"m-gray",t:"Buyer approves",ex:"Anna logs into PayPal &amp; approves",biz:"Anna approves the payment inside the PayPal widget; the order moves to APPROVED. A 3-D Secure or other challenge sends her to a PayPal action URL first.",mo:"payment.transaction",st:["Approved","Payer action required"],cfg:"<code>PAYER_ACTION_REQUIRED</code> adds a <code>payer_action_url</code>; PayPal status mapping in <code>libs/constants.py</code>."},
+{m:"m-gray",t:"Capture the order",ex:"Odoo captures the funds",biz:"Odoo captures the approved order to actually take the money, and records PayPal's capture id.",mo:"/v2/checkout/orders/{id}/capture",st:["Completed","Declined","Failed"],cfg:"Route <code>/payment/paypal_business/approve_order</code> → <code>Order.capture_order</code>; <code>provider_reference</code> set to the capture id."},
+{m:"m-gray",t:"Confirm the transaction",ex:"Tx set to Done, sale order confirmed",biz:"The capture result is written back to the Odoo payment transaction; COMPLETED becomes Done, which confirms the sale order.",mo:"_process_notification_data",st:["Pending","Done","Cancel","Error"],cfg:"COMPLETED → done; transaction matched on <code>custom_id</code>."},
+{m:"m-amber",t:"Log the exchange",ex:"Every request/response is stored",biz:"Each API call to PayPal and its response is logged so support can diagnose failed payments later.",mo:"paypal.event.log",st:["Info","Error"],cfg:"Visible via the Logs smart button on the provider; <code>log_level</code> is info or error."}
+]},
+{id:"express",label:"2 · Express checkout (product / cart)",dir:"Product/Cart → PayPal → Odoo",scn:"Anna clicks the PayPal button straight on the <b>Merino Wool Scarf</b> product page, approves in PayPal, then returns to Odoo to confirm shipping before the order is finalised.",steps:[
+{m:"m-coral",t:"Express buttons shown",ex:"PayPal / GPay / ApplePay on product page",biz:"When Express Checkout is on, wallet buttons appear on product and cart pages so buyers can skip ahead to payment.",mo:"_get_express_checkout_values_without_order",st:[],cfg:"Injected by the <code>navigation_buttons</code> template; config key <code>show_{page}_payment_buttons</code>."},
+{m:"m-gray",t:"Create product order",ex:"One click builds a cart for SCARF-014",biz:"Clicking the button builds a temporary single-product order so PayPal can be opened immediately, without a full cart.",mo:"/shop/paypal/create_product_order",st:[],cfg:"<code>create_product_order(product_id, add_qty=1)</code>."},
+{m:"m-teal",t:"Sync shipping address",ex:"Anna's PayPal address flows into Odoo",biz:"The shipping address Anna holds in PayPal (or Apple Pay) is pushed into the Odoo order so delivery options and taxes are correct.",mo:"/shop/paypal/sync_shipping_address",st:["Changed","Unchanged"],cfg:"<code>_update_shipping_from_paypal</code> reads <code>purchase_units[0].shipping</code>; Apple Pay via <code>_update_shipping_from_apple_pay</code>."},
+{m:"m-gray",t:"Patch the order",ex:"Order total updated with shipping",biz:"Odoo patches the PayPal order to reflect the chosen delivery method and the new total before capture.",mo:"/shop/paypal/patch_order",st:[],cfg:"<code>paypal_order.update_order</code> → <code>PATCH /v2/checkout/orders/{id}</code>."},
+{m:"m-gray",t:"Confirm &amp; validate",ex:"Anna clicks Confirm Purchase",biz:"Back in Odoo, Anna confirms shipping and the order skips the standard payment page, going straight to capture.",mo:"shop_payment_validate",st:["Completed","Currency mismatch"],cfg:"Sentinels <code>MUCH_CAPTURE_COMPLETED</code> / <code>MUCH_CURRENCY_MISMATCH</code>; lands on <code>/shop/payment/validate</code>."}
+]},
+{id:"vault",label:"3 · Save &amp; reuse a payment method",dir:"PayPal Vault ⇄ Odoo",scn:"Anna ticks <b>Save your card</b> at checkout; PayPal vaults it, notifies Odoo by webhook, and on her next visit the card appears as a one-click option in <b>My Payment Methods</b>.",steps:[
+{m:"m-pink",t:"Opt in to vaulting",ex:"Anna ticks 'Save your card'",biz:"Vaulting-enabled buyers can save a card, their PayPal, or Venmo for faster future checkout.",mo:"enable_vaulting",st:["Active","Inactive"],cfg:"Provider <code>enable_vaulting</code> (default on); per-partner <code>vault_account</code> / <code>vault_venmo_account</code> flags on <code>res.partner</code>."},
+{m:"m-gray",t:"Request vault on payment",ex:"Order sent with store_in_vault",biz:"The payment is sent to PayPal with an instruction to store the payment source in the vault if it succeeds.",mo:"_get_card_source_vals",st:[],cfg:"<code>vault.store_in_vault = ON_SUCCESS</code>; PayPal source uses <code>usage_type = MERCHANT</code>. Pay Later is skipped."},
+{m:"m-teal",t:"Vault webhook arrives",ex:"PayPal fires VAULT.PAYMENT-TOKEN.CREATED",biz:"PayPal confirms the token was created by calling Odoo's webhook — the reliable source of truth, not the browser.",mo:"handle_vault_payment_token_created",st:["Created","Deleted"],cfg:"Events <code>VAULT.PAYMENT-TOKEN.CREATED / DELETED</code> arrive through the webhook queue."},
+{m:"m-pink",t:"Store customer id &amp; flags",ex:"Anna's partner marked vaulted",biz:"Odoo records PayPal's customer id and marks the partner as vaulted, so saved methods can be listed later.",mo:"res.partner.paypal_customer_id",st:["Vaulted"],cfg:"<code>_handle_vaulting</code> sets the flag when <code>status == VAULTED</code>. No local <code>payment.token</code> — tokens live in PayPal's vault."},
+{m:"m-pink",t:"List saved methods",ex:"Card offered one-click next visit",biz:"On the next checkout or in the portal, Odoo fetches the buyer's saved tokens from PayPal to offer one-click payment.",mo:"GET /v3/vault/payment-tokens",st:[],cfg:"Fetched by <code>customer_id</code>; surfaced through the payment form and the portal."},
+{m:"m-pink",t:"Manage in the portal",ex:"Anna deletes an old card",biz:"Buyers manage saved methods in My Account — set a default or delete one they no longer use.",mo:"/my/payment_tokens/delete",st:["Deleted"],cfg:"<code>DELETE /v3/vault/payment-tokens/{token_id}</code>; default via <code>/my/payment_tokens/set_default</code>."}
+]},
+{id:"webhook",label:"4 · Async webhook processing",dir:"PayPal → Odoo (queue)",scn:"PayPal sends a <b>PAYMENT.CAPTURE.COMPLETED</b> event; Odoo verifies its signature, queues it, and a cron processes it moments later — nothing is lost even if the server was busy.",steps:[
+{m:"m-teal",t:"Receive the webhook",ex:"PayPal POSTs the capture event",biz:"PayPal notifies Odoo of anything asynchronous — captures, refunds, vault changes — at a single endpoint.",mo:"/paypal/webhook",st:[],cfg:"json, public, POST, csrf=False; de-duplicates on <code>data_id</code>."},
+{m:"m-teal",t:"Verify the signature",ex:"Certificate &amp; signature checked",biz:"Every event is cryptographically verified against PayPal's certificate, so forged calls are rejected.",mo:"validate_webhook",st:["Checked","Failed"],cfg:"Builds <code>transmissionId|time|webhookId|crc32</code>; verifies with <code>PKCS1v15 + SHA256</code>; cert host limited to <code>.paypal.com</code>."},
+{m:"m-teal",t:"Enqueue the item",ex:"Event stored as a queue item",biz:"The verified event is stored in a queue so the webhook returns instantly and processing happens safely in the background.",mo:"paypal.webhook.queue.item",st:["Active","Processed"],cfg:"Boolean flags <code>active</code> / <code>processed</code> / <code>fail_count</code> — not a selection state."},
+{m:"m-teal",t:"Cron drains the queue",ex:"Cron runs every minute",biz:"A scheduled job drains the queue and dispatches each event to the right handler, committing in batches so a crash never loses work.",mo:"cj_process_webhook_queues",st:["In progress","Done"],cfg:"Cron <code>webhook_queue_cj_1</code> 'PayPal: Process Webhook Queue', every 1 min; commits every 50 items."},
+{m:"m-gray",t:"Dispatch to handler",ex:"COMPLETED → confirm the transaction",biz:"Each topic maps to a handler — a completed capture confirms the transaction, a refund event records the refund, a vault event updates the partner.",mo:"process_item_from_queue",st:["Done","Retry","Failed"],cfg:"<code>WEBHOOK_TOPIC_TO_FIELD_MAP</code>; gives up after <code>fail_count &gt;= 5</code>; PayPal itself retries delivery up to 25 times."}
+]},
+{id:"refund",label:"5 · Refund from Odoo",dir:"Odoo → PayPal",scn:"Bella Boutique refunds €20 of Anna's €89.90 order as a shipping goodwill credit, directly from the Odoo transaction — no PayPal dashboard needed.",steps:[
+{m:"m-gray",t:"Open transaction &amp; refund",ex:"Admin clicks REFUND on the tx",biz:"Support opens the Done transaction on the sale order and clicks Refund, entering a full or partial amount.",mo:"_send_refund_request",st:["Done"],cfg:"Partial amounts allowed when <code>paypal_support_refund = partial</code>."},
+{m:"m-gray",t:"Send refund to PayPal",ex:"€20 refunded on the capture",biz:"Odoo calls PayPal to refund against the original capture id and reads the refund back.",mo:"/v2/payments/captures/{id}/refund",st:["Completed","Failed"],cfg:"<code>Payment.refund_payment</code> then <code>Payment.get_refund</code> → <code>GET /v2/payments/refunds/{id}</code>."},
+{m:"m-gray",t:"Create refund transaction",ex:"A −€20 refund tx appears",biz:"A matching refund transaction is created in Odoo; the customer receives the funds per PayPal's standard timing.",mo:"payment.transaction",st:["Done"],cfg:"Refund tx linked to the source; the <code>PAYMENT.CAPTURE.REFUNDED</code> webhook confirms it asynchronously."},
+{m:"m-amber",t:"Log the refund",ex:"Refund request/response stored",biz:"The refund API exchange is logged like any other call for auditing.",mo:"paypal.event.log",st:["Info","Error"],cfg:"Visible via the Logs smart button on the provider."}
+]},
+{id:"config",label:"6 · Merchant display configuration",dir:"Odoo (config) → Shop",scn:"Bella Boutique enables <b>Pay Later</b> and <b>Apple Pay</b> and a Pay Later banner on the cart; the settings flow to the storefront and drive which buttons and messages every shopper sees.",steps:[
+{m:"m-coral",t:"Toggle payment options",ex:"Pay Later + Apple Pay switched on",biz:"On the Configuration tab the merchant turns individual methods on or off; country rules disable the ones that aren't supported.",mo:"pay_later_active",st:["Active","Inactive"],cfg:"Fields <code>pay_later_active</code>, <code>apple_pay_active</code>, <code>venmo_active</code>, <code>acdc_is_active</code>, <code>alt_payment_method_active</code>; each guarded by a country constraint."},
+{m:"m-coral",t:"Configure messaging &amp; display",ex:"Pay Later banner on cart, blue 8x1",biz:"Display Options control where promotional banners appear and how the buttons and banners look across the site.",mo:"plm_active",st:[],cfg:"<code>plm_cart_page</code>, <code>plm_banner_bg_color</code>, <code>plm_banner_ratio</code>; Venmo badge via <code>venmo_msg_*</code> fields."},
+{m:"m-coral",t:"Build the merchant config",ex:"One dict describes the storefront",biz:"All the toggles are compiled into a single config object the storefront reads to know what to render.",mo:"generate_paypal_merchant_config",st:[],cfg:"Keys <code>checkout_button_placements</code>, <code>pay_later_option</code>, <code>apple_pay_active</code>, <code>venmo_messaging_option</code>, and more."},
+{m:"m-coral",t:"Sync payment methods",ex:"Card / Apple / Google rows synced",biz:"Enabling a method also links the matching Odoo payment method record so it shows as its own row at checkout.",mo:"_sync_payment_method_ids",st:["Linked"],cfg:"<code>_BOOL_TO_PM_XMLID</code> maps each toggle to a <code>payment_method</code> xml id."},
+{m:"m-coral",t:"Storefront renders",ex:"Shopper sees Pay Later + Apple Pay",biz:"The website normalises the config per page and shows the right buttons, cards and banners to each shopper.",mo:"_normalize_paypal_website_data",st:[],cfg:"Emits <code>show_{page}_payment_buttons</code> / <code>show_{page}_paylater_message</code>; Venmo shows only for US / USD shoppers."}
+]}
+];
+let wi=0,sel=0;
+const selEl=document.getElementById('wf');
+WF.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;selEl.appendChild(o);});
+function tone(s){s=s.toLowerCase();if(/fail|error|critical|down|archiv|cancel|retour|unchanged/.test(s))return'bad';if(/done|active|linked|info|shipped|ship|changed|checked|success/.test(s)&&!/not checked/.test(s))return'ok';if(/progress|retry|partial|warning|manual|inactive|draft|open|not checked/.test(s))return'warn';return'';}
+function chipHtml(st){return st&&st.length?'<div class="lab">States</div><div class="chips">'+st.map(x=>'<span class="chip '+tone(x)+'">'+x+'</span>').join('')+'</div>':'';}
+function render(){
+const w=WF[wi];
+document.getElementById('dir').textContent=w.dir;
+document.getElementById('scn').innerHTML=w.scn;
+const rail=document.getElementById('rail');rail.innerHTML='';
+w.steps.forEach((s,i)=>{
+const stg=document.createElement('div');stg.className='stg '+s.m+(i===sel?' sel':'');
+stg.innerHTML='<div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div></div>';
+stg.querySelector('.card').onclick=()=>{sel=i;render();};
+rail.appendChild(stg);
+});
+const s=w.steps[sel];
+document.getElementById('det').innerHTML='<h4>'+s.t+'</h4><p>'+s.biz+'</p><div class="lab">Under the hood</div><p><code>'+s.mo+'</code></p>'+chipHtml(s.st)+'<div class="lab">Good to know</div><p>'+s.cfg+'</p>';
+}
+selEl.onchange=()=>{wi=+selEl.value;sel=0;render();};
+render();
+function renderDoc(){
+const doc=document.getElementById('doc');let h='';
+WF.forEach(w=>{
+h+='<h3>'+w.label+' &nbsp;·&nbsp; '+w.dir+'</h3><p class="scn">'+w.scn+'</p><div class="rail">';
+w.steps.forEach((s,i)=>{
+h+='<div class="stg '+s.m+'"><div class="node">'+(i+1)+'</div><div class="card"><div class="crow"><span class="ttl">'+s.t+'</span><span class="pill">'+s.mo+'</span></div><div class="ex">'+s.ex+'</div><div class="det" style="margin-top:8px"><p>'+s.biz+'</p>'+chipHtml(s.st)+'<div class="lab">Good to know</div><p>'+s.cfg+'</p></div></div></div>';
+});
+h+='</div>';
+});
+doc.innerHTML=h;
+}
+renderDoc();
+</script>
+</body>
+</html>
