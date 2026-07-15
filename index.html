@@ -11,6 +11,7 @@
 --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
 --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
 --border:#e4e2da;--border-strong:#cfcdc3;
+--link:#2563eb;
 --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
 --mp-bg:#EEEDFE;--mp-fg:#3C3489;--mt-bg:#E1F5EE;--mt-fg:#085041;--mb-bg:#E6F1FB;--mb-fg:#0C447C;--mc-bg:#FAECE7;--mc-fg:#712B13;--ma-bg:#FAEEDA;--ma-fg:#633806;--mk-bg:#FBEAF0;--mk-fg:#72243E;--mg-bg:#F1EFE8;--mg-fg:#444441;
 }
@@ -18,6 +19,7 @@
 --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
 --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
 --border:#3a3833;--border-strong:#4d4b44;
+--link:#6ea8fe;
 --mp-bg:#3C3489;--mp-fg:#CECBF6;--mt-bg:#085041;--mt-fg:#9FE1CB;--mb-bg:#0C447C;--mb-fg:#B5D4F4;--mc-bg:#712B13;--mc-fg:#F5C4B3;--ma-bg:#633806;--ma-fg:#FAC775;--mk-bg:#72243E;--mk-fg:#F4C0D1;--mg-bg:#2C2C2A;--mg-fg:#D3D1C7;
 }
 *{box-sizing:border-box}
@@ -43,23 +45,6 @@ body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);l
 button{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
 button:hover{border-color:var(--text-3)}
 .hero{text-align:center;padding:24px 0 48px;position:relative;overflow:hidden}
-.bfly{position:absolute;top:0;left:0;width:26px;height:26px;pointer-events:none;z-index:5;animation:bflyPath 30s ease-in-out infinite;will-change:transform}
-.bfly .w{transform-box:fill-box}
-.bfly .wl{transform-origin:bottom right;animation:flapL .32s ease-in-out infinite alternate}
-.bfly .wr{transform-origin:bottom left;animation:flapR .32s ease-in-out infinite alternate}
-@keyframes flapL{from{transform:rotate(-4deg)}to{transform:rotate(-30deg)}}
-@keyframes flapR{from{transform:rotate(4deg)}to{transform:rotate(30deg)}}
-@keyframes bflyPath{
-0%{transform:translate(620px,30px) rotate(-8deg)}
-15%{transform:translate(500px,92px) rotate(10deg)}
-30%{transform:translate(360px,18px) rotate(-10deg)}
-45%{transform:translate(220px,84px) rotate(8deg)}
-60%{transform:translate(80px,26px) rotate(-6deg)}
-72%{transform:translate(250px,98px) rotate(10deg)}
-86%{transform:translate(470px,24px) rotate(-8deg)}
-100%{transform:translate(620px,30px) rotate(-8deg)}
-}
-@media (prefers-reduced-motion:reduce){.bfly{animation:none;left:auto;right:14px;top:8px}.bfly .w{animation:none}}
 .hero h2{font-size:32px;font-weight:600;margin:0 0 10px;letter-spacing:-.02em}
 .hero p{color:var(--text-2);font-size:17px;max-width:520px;margin:0 auto}
 .search{position:relative;margin:0 0 22px}
@@ -82,18 +67,27 @@ button:hover{border-color:var(--text-3)}
 .sec-label.collapsed .chev{transform:rotate(-90deg)}
 .sec-txt{display:inline-flex;align-items:center;gap:9px}
 .sec-ico{display:inline-block;transform-origin:50% 60%;font-size:1.15em;line-height:1}
+.sec-ico.has-svg{position:relative;line-height:0}
+.sec-ico svg{width:1.5em;height:1.5em;display:block;overflow:visible}
+.ico-fire .flame{transform-box:fill-box;transform-origin:50% 100%}
+/* particles emitted on hover (leaves / notes) */
+.sec-ico .pt{position:absolute;top:.05em;left:52%;font-size:.6em;line-height:1;opacity:0;pointer-events:none}
+.sec-ico .bub{position:absolute;top:.2em;left:56%;width:5px;height:5px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#d3ecff,#5aa7ee);opacity:0;pointer-events:none}
 @media (prefers-reduced-motion:no-preference){
-.sec-label:hover .ico-bird{animation:mg-flap .45s ease-in-out infinite}
-.sec-label:hover .ico-alien{animation:mg-alien 1.1s linear infinite}
-.sec-label:hover .ico-puzzle{animation:mg-spin .9s linear infinite}
-.sec-label:hover .ico-unicorn{animation:mg-unicorn .7s ease-in-out infinite}
-.sec-label:hover .ico-dragon{animation:mg-dragon .6s ease-in-out infinite}
+.sec-label:hover .sec-ico.has-svg{animation:mg-bob .7s ease-in-out infinite}
+.sec-label:hover .ico-fire{filter:drop-shadow(0 0 6px rgba(255,110,20,.85))}
+.sec-label:hover .ico-fire .flame{animation:mg-flame .32s ease-in-out infinite}
+.sec-label:hover .pt{animation:mg-float 1s ease-out infinite}
+.sec-label:hover .pt.p2{animation-delay:.34s}
+.sec-label:hover .pt.p3{animation-delay:.68s}
+.sec-label:hover .bub{animation:mg-bubble 1s ease-out infinite}
+.sec-label:hover .bub.b2{animation-delay:.34s}
+.sec-label:hover .bub.b3{animation-delay:.68s}
 }
-@keyframes mg-flap{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
-@keyframes mg-alien{0%{filter:hue-rotate(0deg);transform:translateY(0)}25%{transform:translateY(-3px)}50%{filter:hue-rotate(180deg);transform:translateY(0)}75%{transform:translateY(-3px)}100%{filter:hue-rotate(360deg);transform:translateY(0)}}
-@keyframes mg-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes mg-unicorn{0%,100%{transform:translateY(0);filter:hue-rotate(0deg)}50%{transform:translateY(-7px);filter:hue-rotate(180deg)}}
-@keyframes mg-dragon{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.35) rotate(-8deg)}}
+@keyframes mg-flame{0%,100%{transform:scale(1) rotate(-6deg)}50%{transform:scale(1.4) rotate(6deg)}}
+@keyframes mg-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes mg-bubble{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:1}100%{opacity:0;transform:translate(11px,-15px) scale(1)}}
+@keyframes mg-float{0%{opacity:0;transform:translate(-50%,0) scale(.5) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translate(7px,-16px) scale(1) rotate(35deg)}}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:48px}
 .guide-card{display:block;text-decoration:none;color:inherit;border:1px solid var(--border);border-radius:14px;background:var(--surface-1);padding:20px 20px 18px;transition:border-color .15s,box-shadow .15s,transform .12s}
 .guide-card:hover{border-color:var(--border-strong);box-shadow:0 4px 18px rgba(0,0,0,.07);transform:translateY(-2px)}
@@ -112,6 +106,20 @@ button:hover{border-color:var(--text-3)}
 .gc-btn{flex:1 1 130px;text-align:center;text-decoration:none;font-size:12.5px;font-weight:600;padding:9px 12px;border-radius:9px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);transition:border-color .12s,background .12s,transform .12s}
 .gc-btn:hover{border-color:var(--fg);transform:translateY(-1px)}
 .gc-btn.primary{background:var(--bg);color:var(--fg);border-color:var(--fg)}
+.gc-btn.fill-pink{background:var(--mk-bg);color:var(--mk-fg);border-color:var(--mk-fg)}
+/* collapsible cards — collapsed by default, uniform height, no memory */
+.guide-card.collapsed .gc-body{display:none}
+.gc-toggle{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:14px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface-0);color:var(--text-2);font:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:border-color .12s,color .12s}
+.gc-toggle:hover{border-color:var(--border-strong);color:var(--text)}
+.gc-toggle .chev{font-size:10px;transition:transform .18s ease}
+.guide-card:not(.collapsed) .gc-toggle .chev{transform:rotate(180deg)}
+.guide-card.collapsible.collapsed .gc-title{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3;min-height:2.6em;margin-bottom:6px}
+.guide-card.collapsible.collapsed .gc-desc{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5;min-height:3em;margin-bottom:0}
+/* KB resource links — small boxed panel */
+.gc-res{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:12px;padding:9px 11px;background:var(--surface-0);border:1px solid var(--border);border-radius:9px}
+.gc-res a{display:inline-flex;align-items:center;gap:3px;font-size:11.5px;line-height:1.4;color:var(--link);text-decoration:none}
+.gc-res a:hover{text-decoration:underline}
+.gc-res a svg{width:9px;height:9px;flex-shrink:0}
 /* color themes */
 .m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}
 .m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}
@@ -120,17 +128,6 @@ button:hover{border-color:var(--text-3)}
 .m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}
 .m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}
 .m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
-/* stack */
-.stack-wrap{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:48px}
-.stack-layer{border-radius:10px;padding:12px 16px;margin:3px 0}
-.stack-arrow{text-align:center;font-size:16px;color:var(--text-3);line-height:1;padding:2px 0}
-.sl-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
-.sl-name{font-size:15px;font-weight:600;margin:0}
-.sl-desc{font-size:12px;color:var(--text-2);margin:2px 0 0}
-.sl-purple{background:var(--mp-bg);border:1px solid #7F77DD}.sl-purple .sl-label,.sl-purple .sl-name{color:var(--mp-fg)}
-.sl-blue{background:var(--mb-bg);border:1px solid #378ADD}.sl-blue .sl-label,.sl-blue .sl-name{color:var(--mb-fg)}
-.sl-teal{background:var(--mt-bg);border:1px solid #1D9E75}.sl-teal .sl-label,.sl-teal .sl-name{color:var(--mt-fg)}
-.sl-gray{background:var(--mg-bg);border:1px solid #888780}.sl-gray .sl-label,.sl-gray .sl-name{color:var(--mg-fg)}
 .foot{text-align:center;font-size:13px;color:var(--text-3);padding-top:32px;border-top:1px solid var(--border)}
 .foot .owner{color:var(--text-2);font-weight:600;font-size:14px;margin-bottom:5px}
 code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding:1px 5px;border-radius:5px}
@@ -157,23 +154,6 @@ code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding
   <div class="hero">
     <h2>Onboarding guides</h2>
     <p>New joiner guide — step-by-step walkthroughs for setting up, using, and extending much. products.</p>
-    <svg class="bfly noprint" viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M21 19 q6 1.5 8.5 -2.5 q.3 5.2 -4.6 6.4 q2.6 .2 3.7 2 q-5 1.4 -8 -2.2 z" fill="#F2C037"/>
-      <path d="M28.6 15.6 l3.4 -1.3 -1.5 3.3 z" fill="#E23B2E"/>
-      <g class="w wl"><path d="M15 14 C 10 6 4 6 2 9 L 5.5 10.4 L 2.6 12 L 6.6 12.6 L 4.2 14.6 L 8.4 14 L 6.4 16.4 C 11 15 14 14.6 15 14.6 Z" fill="#E23B2E"/></g>
-      <g class="w wr"><path d="M17 14 C 22 6 28 6 30 9 L 26.5 10.4 L 29.4 12 L 25.4 12.6 L 27.8 14.6 L 23.6 14 L 25.6 16.4 C 21 15 18 14.6 17 14.6 Z" fill="#E23B2E"/></g>
-      <path d="M13 12 l1.4 -2.6 1.4 2.6 z M16.4 12 l1.4 -2.6 1.4 2.6 z" fill="#E23B2E"/>
-      <ellipse cx="16" cy="18" rx="7" ry="5.2" fill="#F2C037"/>
-      <ellipse cx="16" cy="19.6" rx="4.2" ry="3.2" fill="#FADE7E"/>
-      <path d="M13 22.6 l-.7 3 M18.5 22.8 l.7 3" stroke="#F2C037" stroke-width="2.1" stroke-linecap="round"/>
-      <circle cx="10" cy="14" r="4.3" fill="#F2C037"/>
-      <path d="M5.8 14 q-2.4 0 -3.6 1.6 q1.8 1.1 3.4 .8 z" fill="#F2C037"/>
-      <circle cx="4.6" cy="15" r=".5" fill="#8a5a00"/>
-      <path d="M11 10 l.8 -2.8 1.1 2.6 z" fill="#E23B2E"/>
-      <path d="M13.6 10.6 l1.3 -2.1 .6 2.3 z" fill="#E23B2E"/>
-      <circle cx="9.4" cy="13.1" r="1.1" fill="#2b2016"/>
-      <circle cx="9.8" cy="12.7" r=".38" fill="#fff"/>
-    </svg>
   </div>
 
   <div class="search noprint">
@@ -183,19 +163,16 @@ code{font-family:var(--mono);font-size:.85em;background:var(--surface-0);padding
   <div id="results" class="results noprint" hidden></div>
 
   <div id="browse">
-  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-bird">🐣</span> Available guides</span></div>
+  <div class="sec-label no-collapse"><span class="sec-txt"><span class="sec-ico ico-fire has-svg" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 30 Q33 30 33 18" fill="none" stroke="#E07E38" stroke-width="4" stroke-linecap="round"/><g class="flame"><path d="M33 5 C 28 11 29.5 15.5 33 17.5 C 37 15.5 38 11 33 5 Z" fill="#FF7A18"/><path d="M33 9 C 30.5 12 31 14.5 33 15.8 C 35.2 14.5 35.5 12 33 9 Z" fill="#FFCE1F"/></g><path d="M7 22 C 7 11 28 11 28 22 C 28 31 21 35 17.5 35 C 14 35 7 31 7 22 Z" fill="#F0954E"/><ellipse cx="17.5" cy="27" rx="5.5" ry="7" fill="#FBEAD2"/><ellipse cx="12.5" cy="35" rx="3" ry="2" fill="#E07E38"/><ellipse cx="22.5" cy="35" rx="3" ry="2" fill="#E07E38"/><circle cx="17.5" cy="14" r="9.5" fill="#F0954E"/><ellipse cx="13.5" cy="13" rx="2.7" ry="3.1" fill="#fff"/><circle cx="14" cy="13.7" r="1.7" fill="#123a52"/><circle cx="14.6" cy="12.9" r=".5" fill="#fff"/><ellipse cx="21.5" cy="13" rx="2.7" ry="3.1" fill="#fff"/><circle cx="22" cy="13.7" r="1.7" fill="#123a52"/><circle cx="22.6" cy="12.9" r=".5" fill="#fff"/><path d="M14 18 Q17.5 21 21 18" fill="none" stroke="#b5602f" stroke-width="1.2" stroke-linecap="round"/></svg></span> Available guides</span></div>
   <div class="grid" id="grid"></div>
 
-  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-alien">👾</span> Testing</span></div>
+  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-leaf has-svg" aria-hidden="true"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="12" rx="9" ry="7.5" fill="#4E9E53"/><path d="M20 3 C 16 6 16.5 11 20 12.5 C 23.5 11 24 6 20 3 Z" fill="#63B365"/><ellipse cx="19" cy="25" rx="14" ry="10" fill="#79C267"/><circle cx="9" cy="22" r="1.8" fill="#4E9E53"/><circle cx="29" cy="23" r="2" fill="#4E9E53"/><rect x="7" y="32" width="5" height="5" rx="2" fill="#69B558"/><rect x="26" y="32" width="5" height="5" rx="2" fill="#69B558"/><ellipse cx="12.5" cy="24" rx="3" ry="3.6" fill="#fff"/><ellipse cx="12.9" cy="24.7" rx="1.7" ry="2.1" fill="#D64545"/><circle cx="13.5" cy="23.7" r=".5" fill="#fff"/><ellipse cx="24.5" cy="24" rx="3" ry="3.6" fill="#fff"/><ellipse cx="24.9" cy="24.7" rx="1.7" ry="2.1" fill="#D64545"/><circle cx="25.5" cy="23.7" r=".5" fill="#fff"/><path d="M15 30 Q18.5 33 22 30" fill="none" stroke="#3d6b39" stroke-width="1.2" stroke-linecap="round"/></svg><span class="pt p1">🍃</span><span class="pt p2">🍃</span><span class="pt p3">🍃</span></span> Testing</span></div>
   <div class="grid" id="testing-grid"></div>
 
-  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-puzzle">🧩</span> How the layers fit together</span></div>
-  <div class="stack-wrap" id="stack"></div>
-
-  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-unicorn">🦄</span> Products &amp; Training</span></div>
+  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-water has-svg" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M9 31 Q3 31 5 24" fill="none" stroke="#5FA8D8" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="23" cy="26" rx="13" ry="11" fill="#E0B84A"/><ellipse cx="23" cy="26" rx="8.5" ry="7" fill="none" stroke="#B8922F" stroke-width="1" opacity=".5"/><circle cx="15" cy="16" r="9.5" fill="#7FC4E8"/><ellipse cx="12" cy="35" rx="3" ry="2" fill="#6FB6DE"/><ellipse cx="27" cy="35" rx="3" ry="2" fill="#6FB6DE"/><ellipse cx="11" cy="15" rx="2.6" ry="3.1" fill="#fff"/><ellipse cx="11.4" cy="15.7" rx="1.5" ry="1.9" fill="#D64545"/><circle cx="12" cy="14.8" r=".5" fill="#fff"/><ellipse cx="18.5" cy="15" rx="2.6" ry="3.1" fill="#fff"/><ellipse cx="18.9" cy="15.7" rx="1.5" ry="1.9" fill="#D64545"/><circle cx="19.5" cy="14.8" r=".5" fill="#fff"/><path d="M11.5 19.5 Q15 22.5 18.5 19.5" fill="none" stroke="#3a6f8c" stroke-width="1.2" stroke-linecap="round"/></svg><span class="bub b1"></span><span class="bub b2"></span><span class="bub b3"></span></span> Products &amp; Training</span></div>
   <div class="grid" id="extras-grid"></div>
 
-  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-dragon">🐉</span> Training Odoo sections</span></div>
+  <div class="sec-label"><span class="sec-txt"><span class="sec-ico ico-note has-svg" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M9 15 L 5 5 L 14 12 Z" fill="#EFA6B9"/><path d="M31 15 L 35 5 L 26 12 Z" fill="#EFA6B9"/><path d="M10 14 L 7.5 7.5 L 13.5 12 Z" fill="#D98298"/><path d="M30 14 L 32.5 7.5 L 26.5 12 Z" fill="#D98298"/><circle cx="20" cy="22" r="15" fill="#F5B8C4"/><path d="M20 9 Q14.5 8 16 13.5 Q17.5 10 20.5 11" fill="none" stroke="#E58AA0" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="14" cy="21" rx="4.2" ry="5.2" fill="#fff"/><ellipse cx="14.6" cy="22" rx="2.6" ry="3.4" fill="#2E93A6"/><circle cx="15.6" cy="20.4" r="1.1" fill="#fff"/><ellipse cx="26" cy="21" rx="4.2" ry="5.2" fill="#fff"/><ellipse cx="25.4" cy="22" rx="2.6" ry="3.4" fill="#2E93A6"/><circle cx="26.4" cy="20.4" r="1.1" fill="#fff"/><path d="M17 28.5 Q20 30.5 23 28.5" fill="none" stroke="#c66a80" stroke-width="1.2" stroke-linecap="round"/></svg><span class="pt p1">🎵</span><span class="pt p2">🎶</span><span class="pt p3">🎵</span></span> Training Odoo sections</span></div>
   <div class="grid" id="odoo-training-grid"></div>
   </div>
 
@@ -228,8 +205,12 @@ const GUIDES = [
     title: 'Integration Hub and Order Base integration',
     desc:  'Overview of iHub — integrations, scheduled jobs, background jobs, logs, mappers, queues and webhooks.',
     tags:  ['Technical', '7 workflows'],
-       links: [
+    links: [
       { label: 'Guide',        href: 'ihub-onboarding.html' }
+    ],
+    resources: [
+      { label: 'iHub Knowledge article', href: 'https://erp.muchconsulting.de/odoo/knowledge/1569' },
+      { label: 'GitHub',                 href: 'https://github.com/much-GmbH/much-order-base-integration' }
     ]
   },
   {
@@ -243,6 +224,11 @@ const GUIDES = [
     links: [
       { label: 'Guide',        href: 'shopware-Onboarding.html' },
       { label: 'Import & export (orders & products)', href: 'import-export-orders-products.html' }
+    ],
+    resources: [
+      { label: 'Product Description', href: 'https://erp.muchconsulting.de/odoo/knowledge/1533' },
+      { label: 'Documentation',       href: 'https://erp.muchconsulting.de/odoo/knowledge/1541' },
+      { label: 'Sales Page',          href: 'https://erp.muchconsulting.de/odoo/products/1738' }
     ]
   },
   {
@@ -255,6 +241,14 @@ const GUIDES = [
     links: [
       { label: 'Guide',        href: 'procuros-onboarding.html' },
       { label: 'Testing',      href: 'procuros-testing.html' }
+    ],
+    resources: [
+      { label: 'Product Description',  href: 'https://erp.muchconsulting.de/odoo/knowledge/1535' },
+      { label: 'Testing Instructions', href: 'https://erp.muchconsulting.de/odoo/knowledge/2957' },
+      { label: 'Procuros Website',     href: 'https://procuros.io/' },
+      { label: 'App Store',            href: 'https://apps.odoo.com/apps/modules/16.0/procuros_connector' },
+      { label: 'GitHub',               href: 'https://github.com/much-GmbH/procuros-connector' },
+      { label: 'Sales Page',           href: 'https://erp.muchconsulting.de/odoo/products/1799' }
     ]
   },
   {
@@ -266,6 +260,9 @@ const GUIDES = [
     tags:  ['MCP', 'Setup'],
     links: [
       { label: 'Guide',        href: 'mcp-claude-odoo.html' }
+    ],
+    resources: [
+      { label: 'GitHub',       href: 'https://github.com/much-GmbH/much-mcp-server' }
     ]
   },
 
@@ -274,11 +271,21 @@ const GUIDES = [
     color: 'm-amber',
     badge: 'Consultant',
     title: 'DATEV',
-    desc:  'How our much. DATEV modules hand Odoo accounting data to DATEV — Buchungsstapel (CSV) & XML export, DATEV import, and automatic syncing over the DATEV API.',
+    desc:  'How our much. DATEV modules hand Odoo accounting data to DATEV — Buchungsstapel (CSV) & XML export, DATEV import, and automatic syncing over the DATEV API.<br><span style="display:inline-block;margin-top:8px;padding:3px 11px;border-radius:999px;background:var(--bg);color:var(--fg);font-weight:700;font-size:12.5px">👤 DATEV specialist — Michael Becker</span>',
     tags:  ['Accounting', 'Germany'],
     links: [
       { label: 'Odoo → DATEV Integration', href: 'much-datev-training.html' },
-      { label: 'German Accounting, Applied', href: 'much-datev-training-german-accounting.html' }
+      { label: 'German Accounting, Applied', href: 'much-datev-training-german-accounting.html' },
+      { label: 'API — Onboarding a Customer', href: 'much-datev-guide-api-onboarding.html', fill: 'pink' },
+      { label: 'API — Testing the Integration', href: 'much-datev-guide-api-testing.html', fill: 'pink' }
+    ],
+    resources: [
+      { label: 'Product Description', href: 'https://erp.muchconsulting.de/odoo/knowledge/1886' },
+      { label: 'Documentation',       href: 'https://erp.muchconsulting.de/odoo/knowledge/1887' },
+      { label: 'Brochures & Demo',    href: 'https://drive.google.com/drive/folders/1pOXZegPNayi-hLSCf_s8LmMA2q0YMBzu' },
+      { label: 'GitHub',              href: 'https://github.com/much-GmbH/much-datev-integration/tree/18.latest-qa' },
+      { label: 'Sales Page (API)',    href: 'https://erp.muchconsulting.de/odoo/products/1822' },
+      { label: 'Sales Page (no API)', href: 'https://erp.muchconsulting.de/odoo/products/57' }
     ]
   },
 
@@ -291,6 +298,10 @@ const GUIDES = [
     tags:  ['AI', 'No-code'],
     links: [
       { label: 'Guide', href: 'ai-automated-actions.html' }
+    ],
+    resources: [
+      { label: 'App Store', href: 'https://apps.odoo.com/apps/modules/18.0/much_automated_agent_actions' },
+      { label: 'GitHub',    href: 'https://github.com/much-GmbH/much_automated_agent_actions' }
     ]
   },
   {
@@ -302,6 +313,12 @@ const GUIDES = [
     tags:  ['PayPal', 'Payments'],
     links: [
       { label: 'Guide', href: 'payment-providers-paypal.html' }
+    ],
+    resources: [
+      { label: 'Product Description', href: 'https://erp.muchconsulting.de/odoo/knowledge/1527' },
+      { label: 'Documentation',       href: 'https://erp.muchconsulting.de/odoo/knowledge/2456' },
+      { label: 'GitHub',              href: 'https://github.com/much-GmbH/much-transactions/tree/17.0-qa' },
+      { label: 'Sales Page',          href: 'https://erp.muchconsulting.de/odoo/products/1599' }
     ]
   },
   {
@@ -313,6 +330,11 @@ const GUIDES = [
     tags:  ['German', 'Documents'],
     links: [
       { label: 'Guide', href: 'german-documents-din5008.html' }
+    ],
+    resources: [
+      { label: 'Documentation', href: 'https://erp.muchconsulting.de/odoo/action-1305/1743' },
+      { label: 'GitHub',        href: 'https://github.com/much-GmbH/much-german-documents/tree/17.latest-qa' },
+      { label: 'Sales Page',    href: 'https://erp.muchconsulting.de/odoo/products/1798' }
     ]
   },
   {
@@ -324,6 +346,11 @@ const GUIDES = [
     tags:  ['German', 'Accounting/HR'],
     links: [
       { label: 'Guide', href: 'german-data-translations.html' }
+    ],
+    resources: [
+      { label: 'Product Description', href: 'https://erp.muchconsulting.de/odoo/knowledge/1744' },
+      { label: 'Documentation',       href: 'https://erp.muchconsulting.de/odoo/knowledge/1789' },
+      { label: 'GitHub',              href: 'https://github.com/much-GmbH/much-german-data-translation' }
     ]
   },
   {
@@ -335,6 +362,12 @@ const GUIDES = [
     tags:  ['Traceability', 'Repair'],
     links: [
       { label: 'Guide', href: 'enhanced-traceability.html' }
+    ],
+    resources: [
+      { label: 'Product Description', href: 'https://erp.muchconsulting.de/odoo/knowledge/1530' },
+      { label: 'Documentation',       href: 'https://erp.muchconsulting.de/odoo/knowledge/2206' },
+      { label: 'GitHub',              href: 'https://github.com/much-GmbH/much_manufacturing_traceability/tree/18.latest-qa' },
+      { label: 'Sales Page',          href: 'https://erp.muchconsulting.de/odoo/products/1786' }
     ]
   },
   {
@@ -346,6 +379,12 @@ const GUIDES = [
     tags:  ['Compliance', 'Purchasing'],
     links: [
       { label: 'Guide', href: 'supplier-compliance.html' }
+    ],
+    resources: [
+      { label: 'Product Description', href: 'https://erp.muchconsulting.de/odoo/knowledge/1531' },
+      { label: 'Documentation',       href: 'https://erp.muchconsulting.de/odoo/knowledge/2604' },
+      { label: 'GitHub',              href: 'https://github.com/much-GmbH/purchase_order_vendor_compliance_check' },
+      { label: 'Sales Page',          href: 'https://erp.muchconsulting.de/odoo/products/1706' }
     ]
   },
   {
@@ -357,6 +396,12 @@ const GUIDES = [
     tags:  ['Retired', 'Support only'],
     links: [
       { label: 'Reference (retired)', href: 'channelengine-integration.html' }
+    ],
+    resources: [
+      { label: 'Product Description', href: 'https://erp.muchconsulting.de/odoo/knowledge/1534' },
+      { label: 'Documentation',       href: 'https://erp.muchconsulting.de/odoo/knowledge/1702' },
+      { label: 'GitHub',              href: 'https://github.com/much-GmbH/much-order-channelengine-integration' },
+      { label: 'Sales Page',          href: 'https://erp.muchconsulting.de/odoo/products/1717' }
     ]
   },
   {
@@ -368,6 +413,10 @@ const GUIDES = [
     tags:  ['Retired', 'Support only'],
     links: [
       { label: 'Reference (retired)', href: 'wms-integration-framework.html' }
+    ],
+    resources: [
+      { label: 'GitHub',     href: 'https://github.com/much-GmbH/wms_integration' },
+      { label: 'Sales Page', href: 'https://erp.muchconsulting.de/odoo/products/1741' }
     ]
   },
 
@@ -380,6 +429,9 @@ const GUIDES = [
     tags:  ['Payments', 'Reconciliation'],
     links: [
       { label: 'Deep dive', href: 'transaction-importer.html' }
+    ],
+    resources: [
+      { label: 'GitHub', href: 'https://github.com/much-GmbH/much-transactions' }
     ]
   },
 
@@ -464,6 +516,17 @@ const SCRIPTS_NAV = [
     desc:  'Full transcripts of the onboarding calls — Product knowledge base, Test environment & tools, Helpdesk & project overview, Shopware integration setup, and MCP setup with Claude Desktop.',
     tags:  ['5 sessions'],
     href:  'meeting-scripts.html'
+  }
+];
+const VIDEOS_NAV = [
+  {
+    icon:  '🎥',
+    color: 'm-coral',
+    badge: 'Recordings',
+    title: 'Video-Call videos',
+    desc:  'Recorded video-call sessions — each with the recording embedded, a summary and notes.',
+    tags:  ['5 videos'],
+    href:  'video-calls.html'
   }
 ];
 const ODOO_TRAINING_NAV = [
@@ -559,33 +622,31 @@ const ODOO_TRAINING_NAV = [
   }
 ];
 
-/* ─────────────────────────────────────────────────────────────
-   STACK LAYERS
-   Shows how the integration layers relate to each other.
-   Order: top layer first (most specific), bottom last (foundation).
-───────────────────────────────────────────────────────────── */
-const STACK = [
-  {
-    style: 'sl-gray',
-    label: 'Platform connectors',
-    name:  'Shopware Connector, Shopify Connector, …',
-    desc:  'Platform-specific API calls, credential handling, and field mapping'
-  },
-  {
-    style: 'sl-blue',
-    label: 'Integration framework',
-    name:  'Shop Base Connector',
-    desc:  'Shared models, cron runners, dataclasses, and lifecycle hooks for all connectors'
-  },
-  {
-    style: 'sl-purple',
-    label: 'Foundation',
-    name:  'iHub — Integration Hub',
-    desc:  'Integrations, Scheduled Jobs, Background Jobs, Logs, Mappers, Queues, Webhooks, Cronwatch'
-  }
-];
-
 /* ── render ── */
+/* Icons for resource links, matched by label. Others render as plain text. */
+const RES_ICONS = {
+  github: '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  app: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  sales: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
+  code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+  tv: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>',
+  desc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>',
+  person: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  pc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>'
+};
+function resIcon(label) {
+  if (/github/i.test(label))               return RES_ICONS.github;
+  if (/\bno api\b|\(api\)|\bapi\b/i.test(label)) return RES_ICONS.code;   // Sales Page (API) / (no API)
+  if (/knowledge|documentation/i.test(label)) return RES_ICONS.book;
+  if (/sales/i.test(label))                return RES_ICONS.sales;        // plain Sales Page
+  if (/app store/i.test(label))            return RES_ICONS.app;
+  if (/brochure/i.test(label))             return RES_ICONS.tv;
+  if (/product description/i.test(label))  return RES_ICONS.desc;
+  if (/testing/i.test(label))              return RES_ICONS.person;       // Testing Instructions
+  if (/website/i.test(label))              return RES_ICONS.pc;           // Procuros Website
+  return '';
+}
 function cardHTML(g) {
   const head = `
       <div class="gc-top">
@@ -594,15 +655,24 @@ function cardHTML(g) {
       </div>
       <div class="gc-title">${g.title}</div>
       <div class="gc-desc">${g.desc}</div>`;
-  // Card with several destinations → render buttons instead of a whole-card link.
+  // KB resource links → small blue text links, each opens in a new tab.
+  const resHTML = g.resources ? `
+        <div class="gc-res">
+          ${g.resources.map(r => `<a href="${r.href}" target="_blank" rel="noopener">${resIcon(r.label)}${r.label}</a>`).join('')}
+        </div>` : '';
+  // Card with several destinations → collapsible: header always shown, the rest
+  // (tags + buttons + resource links) hidden until expanded. Collapsed by default.
   if (g.links) {
     return `
-      <div class="guide-card multi ${g.color}">
+      <div class="guide-card multi collapsible collapsed ${g.color}">
         ${head}
-        <div class="gc-tags">${g.tags.map(t => `<span class="gc-tag">${t}</span>`).join('')}</div>
-        <div class="gc-btns">
-          ${g.links.map((l, i) => `<a class="gc-btn ${i === 0 ? 'primary' : ''}" href="${l.href}">${l.label} →</a>`).join('')}
+        <div class="gc-body">
+          <div class="gc-tags">${g.tags.map(t => `<span class="gc-tag">${t}</span>`).join('')}</div>
+          <div class="gc-btns">
+            ${g.links.map((l, i) => { const ext=/^https?:/i.test(l.href); const cls=`gc-btn ${i === 0 ? 'primary' : ''}${l.fill ? ' fill-'+l.fill : ''}`; return `<a class="${cls}" href="${l.href}"${ext?' target="_blank" rel="noopener"':''}>${l.label} →</a>`; }).join('')}
+          </div>${resHTML}
         </div>
+        <button type="button" class="gc-toggle" onclick="toggleCard(this)" aria-expanded="false"><span class="lbl">Show details</span><span class="chev">▾</span></button>
       </div>`;
   }
   // Single destination → whole card is one link.
@@ -618,17 +688,16 @@ function cardHTML(g) {
 
 function render() {
   document.getElementById('grid').innerHTML = GUIDES.map(cardHTML).join('');
-  document.getElementById('extras-grid').innerHTML = PRODUCTS_NAV.concat(TRAINING_NAV, SCRIPTS_NAV).map(cardHTML).join('');
+  document.getElementById('extras-grid').innerHTML = PRODUCTS_NAV.concat(TRAINING_NAV, SCRIPTS_NAV, VIDEOS_NAV).map(cardHTML).join('');
   document.getElementById('odoo-training-grid').innerHTML = ODOO_TRAINING_NAV.map(cardHTML).join('');
   document.getElementById('testing-grid').innerHTML = TESTING.map(cardHTML).join('');
+}
 
-  document.getElementById('stack').innerHTML = STACK.map((s, i) => `
-    ${i > 0 ? '<div class="stack-arrow">↑ builds on</div>' : ''}
-    <div class="stack-layer ${s.style}">
-      <div class="sl-label">${s.label}</div>
-      <div class="sl-name">${s.name}</div>
-      <div class="sl-desc">${s.desc}</div>
-    </div>`).join('');
+function toggleCard(btn) {
+  const card = btn.closest('.guide-card');
+  const collapsed = card.classList.toggle('collapsed');
+  btn.setAttribute('aria-expanded', String(!collapsed));
+  btn.querySelector('.lbl').textContent = collapsed ? 'Show details' : 'Hide details';
 }
 
 function toggleDark() {
@@ -700,14 +769,11 @@ try{(function(){
 (function(){try{
   var browse=document.getElementById('browse');
   if(!browse) return;
-  var KEY='muchSections.v1';
-  var state={};
-  try{ state=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){}
   var labels=browse.querySelectorAll('.sec-label');
   Array.prototype.forEach.call(labels,function(lab){
+    if(lab.classList.contains('no-collapse')) return; // Available guides: always shown, no toggle
     var content=lab.nextElementSibling;
     if(!content) return;
-    var id=lab.textContent.trim();
     lab.classList.add('collapsible');
     var chev=document.createElement('span');
     chev.className='chev';
@@ -717,12 +783,9 @@ try{(function(){
       if(collapsed){lab.classList.add('collapsed');content.style.display='none';}
       else{lab.classList.remove('collapsed');content.style.display='';}
     }
-    apply(state[id]!==false);
+    apply(true); // always collapsed on load — no memory across refresh
     lab.addEventListener('click',function(){
-      var nowCollapsed=!lab.classList.contains('collapsed');
-      apply(nowCollapsed);
-      state[id]=nowCollapsed;
-      try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+      apply(!lab.classList.contains('collapsed'));
     });
   });
 }catch(e){}})();

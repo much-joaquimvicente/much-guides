@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. DATEV — Testing the DATEV Integration</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --ma-bg:#FAEEDA;--ma-fg:#633806;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--ma-fg);--brand-soft:var(--ma-bg);--brand-solid:#b45309;--accent:#b45309;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --ma-bg:#633806;--ma-fg:#FAC775;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+
+  header.hero{max-width:1180px;margin:0 auto;padding:30px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .logo{font-size:21px;font-weight:800;letter-spacing:-.4px;color:var(--brand);margin-bottom:10px}
+  .hero .logo b{color:var(--accent)}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:29px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1180px;margin:0 auto;padding:16px 20px 90px}
+  .content{flex:1 1 auto;min-width:0;max-width:860px;margin:0 auto}
+
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+
+  .toc-card{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
+  .toc-card h3{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3)}
+  .toc-card ol{margin:0;padding-left:22px}
+  .toc-card li{margin:5px 0}
+  .toc-card a{color:var(--brand);text-decoration:none;font-weight:600}
+  .toc-card a:hover{text-decoration:underline}
+
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:26px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#f0c88a;font-weight:600}
+  code.k{font-family:var(--mono);background:var(--brand-soft);color:var(--brand);padding:1px 6px;border-radius:5px;font-size:13px;word-break:break-word}
+  a.link{color:var(--blue);font-weight:600;text-decoration:none;word-break:break-word}
+  a.link:hover{text-decoration:underline}
+
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+
+  .stepper{display:grid;gap:16px;margin:16px 0 4px}
+  .stepper .s{display:flex;gap:16px;align-items:flex-start}
+  .stepper .s .n{flex:0 0 auto;width:30px;height:30px;border-radius:8px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:14px;display:grid;place-items:center;margin-top:1px}
+  .stepper .s .b{flex:1 1 auto;min-width:0}
+  .stepper .s .b h4{margin:1px 0 4px;font-size:16px}
+  .stepper .s .b p{margin:5px 0;font-size:14.5px;color:var(--text-2)}
+  .stepper .s .b ul{margin:6px 0 0;padding-left:18px}
+  .stepper .s .b ul li{margin:5px 0;font-size:14.5px;color:var(--text-2)}
+
+  .cred{border:1px solid var(--border-strong);border-radius:12px;background:var(--surface-2);padding:6px 16px;margin:12px 0}
+  .cred .row{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;align-items:baseline}
+  .cred .row:last-child{border-bottom:0}
+  .cred .row .lbl{flex:0 0 160px;color:var(--text-3);font-weight:600}
+  .cred .row .val{font-family:var(--mono);color:var(--text);word-break:break-word}
+
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:480px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+  table.t td code,table.t th code{font-family:var(--mono);font-size:12.5px;background:var(--surface-0);padding:1px 5px;border-radius:4px}
+
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip.danger{background:var(--red-soft);border-color:var(--border-danger)}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+
+  .figure{border:1px solid var(--border);border-radius:12px;background:var(--surface-2);padding:14px 14px 8px;margin:14px 0}
+  .figure svg{display:block;width:100%;height:auto}
+  .figure figcaption{font-size:12.5px;color:var(--text-3);text-align:center;padding:6px 8px 4px}
+  .svg-box{fill:var(--surface-1);stroke:var(--border-strong)}
+  .svg-t{fill:var(--text);font:600 13px var(--sans)}
+  .svg-ts{fill:var(--text-2);font:13px var(--sans)}
+  .svg-tm{fill:var(--text);font:600 13px var(--mono)}
+  .svg-hd{fill:var(--text-3);font:700 11px var(--sans);letter-spacing:.05em;text-transform:uppercase}
+  .svg-mut{fill:var(--text-3);font:12px var(--sans)}
+  .chip-ok{fill:var(--green-soft);stroke:var(--border-success)}
+  .chip-ok-t{fill:var(--green);font:600 11px var(--sans)}
+  .chip-warn{fill:var(--amber-soft);stroke:var(--border-warning)}
+  .chip-warn-t{fill:var(--amber);font:600 11px var(--sans)}
+  .chip-blue{fill:var(--blue-soft);stroke:#8fbcec}
+  .chip-blue-t{fill:var(--blue);font:600 11px var(--sans)}
+  .svg-arrow{stroke:var(--brand);stroke-width:1.5;fill:none;marker-end:url(#ah)}
+  .svg-brand{fill:var(--brand)}
+
+  .crosslink{display:flex;gap:14px;align-items:center;background:var(--blue-soft);border:1px solid #8fbcec;border-radius:12px;padding:15px 18px;margin-top:16px}
+  .crosslink .i{font-size:22px}
+  .crosslink a{color:var(--blue);font-weight:700;text-decoration:none}
+  .crosslink a:hover{text-decoration:underline}
+  .crosslink p{margin:0;font-size:14px;color:var(--text-2)}
+
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+
+  @media (max-width:560px){
+    .hero h1{font-size:24px}
+    .mini{grid-template-columns:1fr}
+    .cred .row{flex-direction:column;gap:2px}
+    .cred .row .lbl{flex-basis:auto}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <a class="backlink" href="much-datev-training.html">← Back to the DATEV Handbook</a>
+  <div class="logo">much<b>.</b> DATEV</div>
+  <span class="kicker">Internal Ops · DATEV API · Testing</span>
+  <h1>Testing the DATEV Integration</h1>
+  <p>Run the whole pipeline end-to-end against our test DATEV clients — configure, push data from Odoo, then open DATEV in Citrix to watch it arrive.</p>
+  <div class="badge-v">much. GmbH · Odoo 19 · DATEVconnect · internal use only</div>
+</header>
+
+<div class="layout">
+  <div class="content">
+
+    <div class="bigidea">
+      <span class="tag">🧠 The one big idea</span>
+      <p>Testing = <strong>push real financial data</strong> through the API and <strong>log into the DATEV test environment</strong> to confirm it landed. The quick path is to use an <strong>existing product test instance</strong> — they all already have a configured DATEV integration. Only if you're testing setup itself do you build a <strong>new integration</strong> with one of our test clients. Two things you can't skip: the <strong>DATEV SmartLogin</strong> (QR) for the access token, and — to <em>view</em> DATEV — the <strong>DATEV USB token</strong> that must be plugged in <em>before</em> you log in to Citrix.</p>
+    </div>
+
+    <div class="tip note"><span class="i">📚</span><p><strong>Reference docs:</strong> the full configuration walkthrough lives at <a class="link" href="https://erp.muchconsulting.de/odoo/knowledge/1887" target="_blank" rel="noopener">erp.muchconsulting.de/odoo/knowledge/1887</a>. This page is the hands-on test playbook that sits on top of it.</p></div>
+
+    <div class="toc-card">
+      <h3>On this page</h3>
+      <ol>
+        <li><a href="#need">What you need before you start</a></li>
+        <li><a href="#odoo">Part A — set up &amp; push data from Odoo</a></li>
+        <li><a href="#datev">Part B — open DATEV (Citrix) to see it</a></li>
+        <li><a href="#view">Find your client &amp; “Mandant ergänzen”</a></li>
+        <li><a href="#trouble">Troubleshooting</a></li>
+      </ol>
+    </div>
+
+    <!-- pipeline diagram -->
+    <div class="figure">
+      <svg viewBox="0 0 680 130" role="img" aria-labelledby="figP-t figP-d">
+        <title id="figP-t">The end-to-end test pipeline</title>
+        <desc id="figP-d">Configure the test client in Odoo, get a token via SmartLogin QR, export to the DATEV API, then view it in the Citrix DATEV environment.</desc>
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" class="svg-brand"/>
+          </marker>
+        </defs>
+        <rect x="16" y="40" width="140" height="50" rx="10" class="svg-box"/>
+        <text x="86" y="62" text-anchor="middle" class="svg-t">Configure</text>
+        <text x="86" y="80" text-anchor="middle" class="svg-mut">5671448 / 1000x</text>
+        <rect x="186" y="40" width="140" height="50" rx="10" class="svg-box"/>
+        <text x="256" y="62" text-anchor="middle" class="svg-t">Get token</text>
+        <text x="256" y="80" text-anchor="middle" class="svg-mut">SmartLogin QR</text>
+        <rect x="356" y="40" width="140" height="50" rx="10" class="svg-box"/>
+        <text x="426" y="62" text-anchor="middle" class="svg-t">Export → API</text>
+        <text x="426" y="80" text-anchor="middle" class="svg-mut">sales·purchase·bank</text>
+        <rect x="526" y="40" width="140" height="50" rx="10" class="svg-box"/>
+        <text x="596" y="62" text-anchor="middle" class="svg-t">View in DATEV</text>
+        <text x="596" y="80" text-anchor="middle" class="svg-mut">Citrix env</text>
+        <line x1="156" y1="65" x2="186" y2="65" class="svg-arrow"/>
+        <line x1="326" y1="65" x2="356" y2="65" class="svg-arrow"/>
+        <line x1="496" y1="65" x2="526" y2="65" class="svg-arrow"/>
+      </svg>
+      <figcaption>Odoo side (configure → token → export) on the left; DATEV side (view) on the right.</figcaption>
+    </div>
+
+    <!-- NEED -->
+    <section id="need">
+      <h2><span class="num">0</span> What you need before you start</h2>
+      <p class="lead">A mix of an Odoo instance, two phone apps, and some hardware for the Citrix side.</p>
+      <div class="mini">
+        <div class="m"><h4>🧩 A test instance + client</h4><p>Easiest: an existing product test instance (they all have a DATEV integration already). Or build a new integration against a much. test DATEV client (numbers below).</p></div>
+        <div class="m"><h4>📱 DATEV SmartLogin app</h4><p>On your phone — used to approve the <em>access token</em> by scanning a QR code.</p></div>
+        <div class="m"><h4>📱 MobilePass+ app</h4><p>On your phone — the <em>2-factor token</em> app for logging in to the Citrix DATEV environment.</p></div>
+        <div class="m"><h4>🖥️ Citrix + USB token</h4><p>Citrix Workspace installed, plus the <strong>DATEV USB token</strong> (“pen”) and a completed KUHN-IT activation.</p></div>
+      </div>
+      <div class="tip"><span class="i">💡</span><p>Two different phone apps, two different jobs: <strong>SmartLogin</strong> authorises the <em>API token in Odoo</em>; <strong>MobilePass+</strong> is the <em>2FA for the DATEV Citrix login</em>. Don't mix them up.</p></div>
+    </section>
+
+    <!-- ODOO -->
+    <section id="odoo">
+      <h2><span class="num">A</span> Set up &amp; push data from Odoo</h2>
+      <p class="lead">Configure the integration against a test client, authorise it, then export.</p>
+
+      <h3 class="sub">1 · Create the integration with a test client</h3>
+      <p class="para">In Germany every company has a <strong>consultant number</strong> (Beraternummer — the tax-advisor ID) and a <strong>client number</strong> (Mandantennummer — the client within that advisor). These are standard Odoo fields the integration reuses. Use our test values:</p>
+      <div class="cred">
+        <div class="row"><div class="lbl">Consultant no.</div><div class="val">5671448</div></div>
+        <div class="row"><div class="lbl">Client no.</div><div class="val">10001 &nbsp;·&nbsp; 10002 &nbsp;·&nbsp; 10003</div></div>
+      </div>
+      <p class="para">Pick one client number and create the integration. If you're practising, do the <strong>full API setup from scratch</strong> — register the client in the DCS and add the redirect URL in the DATEV portal (that's the <a class="link" href="much-datev-guide-api-onboarding.html">onboarding guide</a>).</p>
+
+      <h3 class="sub">2 · Get an access token via SmartLogin (QR)</h3>
+      <div class="stepper">
+        <div class="s"><div class="n">1</div><div class="b">
+          <h4>Click “Get Access Token”</h4>
+          <p>A QR code appears (this window is only allowed because your instance URL is registered as a redirect).</p>
+        </div></div>
+        <div class="s"><div class="n">2</div><div class="b">
+          <h4>Scan with DATEV SmartLogin on your phone</h4>
+          <p>Approve the permissions. The token turns <strong style="color:var(--green)">green</strong> = valid.</p>
+        </div></div>
+        <div class="s"><div class="n">3</div><div class="b">
+          <h4>Click “Enable Integration”</h4>
+          <p>The integration is now active and will export on schedule.</p>
+        </div></div>
+      </div>
+
+      <h3 class="sub">3 · Configure the export settings (quick reference)</h3>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Setting</th><th>What to pick for a test</th></tr>
+        <tr><td>Export frequency</td><td><code>daily</code> or <code>monthly</code> — daily is handy for testing.</td></tr>
+        <tr><td>Accounting journals</td><td>Pick whichever journals you want to test — e.g. sales · purchase · bank.</td></tr>
+        <tr><td>Batch size</td><td>Groups entries so big exports don't time out. Default is fine.</td></tr>
+        <tr><td>Export start date</td><td>Defaults to the day you created the integration; set it back to catch existing data.</td></tr>
+        <tr><td>Master data</td><td>The customers + vendors list (partners).</td></tr>
+        <tr><td>PDF documents</td><td><strong>Mandatory</strong> = an invoice with no PDF is skipped; <strong>optional</strong> = exported without the PDF.</td></tr>
+      </table></div>
+
+      <h3 class="sub">4 · Export to the API</h3>
+      <p class="para">In the integration, run <strong>Export the API</strong> from a start date until now (e.g. <code class="k">1 April → today</code>). This pushes the sales/purchase/bank data <strong>straight to the DATEV API</strong> — it's not a download. A cron job named <code class="k">export data</code> also runs this automatically.</p>
+      <div class="tip note"><span class="i">🔎</span><p><strong>Check the logs.</strong> They show what was sent and the per-timeframe status — e.g. <em>Partner export successful</em>, <em>Account move export successful</em> — and any failures (a missing PDF shows as a <em>REST API multipart upload fault</em>). Open a failed entry to see exactly what did and didn't go.</p></div>
+    </section>
+
+    <!-- DATEV -->
+    <section id="datev">
+      <h2><span class="num">B</span> Open DATEV (Citrix) to see the data</h2>
+      <p class="lead">The DATEV test environment runs inside Citrix. First-time setup, then login — and the one rule that trips everyone up.</p>
+
+      <h3 class="sub">One-time setup</h3>
+      <div class="stepper">
+        <div class="s"><div class="n">1</div><div class="b"><h4>Install Citrix Workspace</h4><p>The client that opens the virtual DATEV machine.</p></div></div>
+        <div class="s"><div class="n">2</div><div class="b"><h4>Install “MobilePass+” on your phone</h4><p>The 2-factor token app for the DATEV login.</p></div></div>
+        <div class="s"><div class="n">3</div><div class="b"><h4>Wait for the KUHN-IT confirmation email</h4><p>It activates your 2-factor authentication token.</p></div></div>
+        <div class="s"><div class="n">4</div><div class="b"><h4>Open the email link &amp; scan the QR in MobilePass+</h4><p>The app guides you through the rest of activation.</p></div></div>
+      </div>
+
+      <div class="tip danger"><span class="i">🔌</span><p><strong>Plug the USB token in BEFORE you log in.</strong> The DATEV USB stick (the “pen” / hardware token) must be inserted <em>before</em> the Citrix login, or DATEV won't recognise the key — <em>“USB stick always goes before login.”</em> If it says the pen isn't detected, re-seat it and try again.</p></div>
+
+      <h3 class="sub">Login</h3>
+      <p class="para">Open the DATEV test-environment login site and sign in:</p>
+      <div class="cred">
+        <div class="row"><div class="lbl">User name</div><div class="val">developer@muchconsulting.de</div></div>
+        <div class="row"><div class="lbl">Password</div><div class="val">FinanceDatev$247</div></div>
+        <div class="row"><div class="lbl">Token</div><div class="val">code generated by MobilePass+ on your phone</div></div>
+      </div>
+      <p class="para">Enter the three fields, wait — it auto-connects and opens a new window, and you're in.</p>
+      <div class="tip warn"><span class="i">🔐</span><p>These are shared <strong>internal test credentials</strong> — keep them off screenshots, tickets and anything customer-facing.</p></div>
+
+      <h3 class="sub">The DATEV desktop — what the icons do</h3>
+      <div class="mini">
+        <div class="m"><h4>🚪 Close-environment button</h4><p>Always close the environment with this when you're done, so you don't disturb other users sharing it.</p></div>
+        <div class="m"><h4>▶️ Open working environment</h4><p>Launches the individual DATEV programs — the actual working environment.</p></div>
+        <div class="m"><h4>⚙️ General service settings</h4><p>Lets KUHN-IT / DATEV reach the environment to make settings.</p></div>
+      </div>
+    </section>
+
+    <!-- VIEW -->
+    <section id="view">
+      <h2><span class="num">C</span> Find your client &amp; pull in the API data</h2>
+      <p class="lead">Now open the client you exported to and bring in what the API sent.</p>
+      <div class="stepper">
+        <div class="s"><div class="n">1</div><div class="b">
+          <h4>Open your test client (Mandant)</h4>
+          <p>DATEV lists all the clients. Open the one you pushed data to (e.g. <code class="k">10001</code>) — that gives you access to all its financial data for the current year (2026).</p>
+        </div></div>
+        <div class="s"><div class="n">2</div><div class="b">
+          <h4>Open <em>Buchführung</em> for the current year</h4>
+          <p>Go into the bookkeeping / <strong>Buchung</strong> area for the current year of your client.</p>
+        </div></div>
+        <div class="s"><div class="n">3</div><div class="b">
+          <h4>Click <em>“Mandant ergänzen”</em></h4>
+          <p>This pulls in the data shared via the API — the export you just sent from Odoo now shows up in DATEV.</p>
+        </div></div>
+      </div>
+      <div class="tip"><span class="i">🎉</span><p>If your Odoo export logs said <em>successful</em> and the entries appear here after <em>Mandant ergänzen</em>, the full round-trip works — Odoo → DATEV API → tax-advisor's books.</p></div>
+    </section>
+
+    <!-- TROUBLE -->
+    <section id="trouble">
+      <h2><span class="num">4</span> Troubleshooting</h2>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+        <tr><td>“Could not get access token” (a customer's instance)</td><td>Not subscribed / user lacks rights</td><td>Have them confirm their subscription is active and their user has access to the needed services (documented at the knowledge link above).</td></tr>
+        <tr><td>DATEV says the pen isn't detected</td><td>USB token inserted too late / loose</td><td>Log out, re-insert the DATEV USB token, then log in again — token first, always.</td></tr>
+        <tr><td>Export entry failed in the logs</td><td>e.g. missing PDF (multipart upload fault)</td><td>Open the failed log entry to see what was/wasn't sent; add the PDF or set PDF to optional and re-export.</td></tr>
+        <tr><td>Client doesn't show the key / rights</td><td>Timing — rights can take a moment to propagate</td><td>Wait a little and retry; the “Check clients” endpoint verifies each client's rights.</td></tr>
+      </table></div>
+
+      <div class="crosslink"><span class="i">🛠️</span><p>Setting up a real customer rather than testing? Follow the provisioning steps — <a href="much-datev-guide-api-onboarding.html">Onboarding a DATEV API Customer →</a></p></div>
+    </section>
+
+    <footer>
+      <p>Internal ops guide for the <a href="much-datev-training.html">much. DATEV Integration handbook</a> · <strong>much. GmbH</strong></p>
+      <p style="margin-top:8px">Testing the DATEV API integration · Odoo 19 · DATEVconnect · internal use only · full config docs at <a href="https://erp.muchconsulting.de/odoo/knowledge/1887">knowledge/1887</a></p>
+    </footer>
+
+  </div>
+</div>
+
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+<script>
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}
+  });
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. DATEV — Onboarding a DATEV API Customer</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --page:#f4f3ee;--surface-0:#eceae2;--surface-1:#fbfaf7;--surface-2:#ffffff;
+    --text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+    --border:#e4e2da;--border-strong:#cfcdc3;
+    --bg-success:#EAF3DE;--text-success:#3B6D11;--border-success:#97C459;
+    --bg-warning:#FAEEDA;--text-warning:#854F0B;--border-warning:#EF9F27;
+    --bg-danger:#FCEBEB;--text-danger:#A32D2D;--border-danger:#F09595;
+    --ma-bg:#FAEEDA;--ma-fg:#633806;--mb-bg:#E6F1FB;--mb-fg:#0C447C;
+    --bg:var(--page);--card:var(--surface-1);--ink:var(--text);--muted:var(--text-2);--line:var(--border);
+    --brand:var(--ma-fg);--brand-soft:var(--ma-bg);--brand-solid:#b45309;--accent:#b45309;
+    --green:var(--text-success);--green-soft:var(--bg-success);--red:var(--text-danger);--red-soft:var(--bg-danger);
+    --blue:var(--mb-fg);--blue-soft:var(--mb-bg);--amber:var(--text-warning);--amber-soft:var(--bg-warning);
+    --shadow:none;--radius:12px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --page:#1c1b19;--surface-0:#191816;--surface-1:#26251f;--surface-2:#2c2b27;
+    --text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+    --border:#3a3833;--border-strong:#4d4b44;
+    --bg-success:#173404;--text-success:#C0DD97;--border-success:#3B6D11;
+    --bg-warning:#412402;--text-warning:#FAC775;--border-warning:#854F0B;
+    --bg-danger:#501313;--text-danger:#F09595;--border-danger:#A32D2D;
+    --ma-bg:#633806;--ma-fg:#FAC775;--mb-bg:#0C447C;--mb-fg:#B5D4F4;
+  }}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;}
+
+  header.hero{max-width:1180px;margin:0 auto;padding:30px 20px 6px;text-align:left;background:none;color:var(--text)}
+  .backlink{display:inline-block;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;margin-bottom:10px}
+  .backlink:hover{text-decoration:underline}
+  .hero .logo{font-size:21px;font-weight:800;letter-spacing:-.4px;color:var(--brand);margin-bottom:10px}
+  .hero .logo b{color:var(--accent)}
+  .hero .kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--brand-soft);color:var(--brand);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 8px;font-size:29px;line-height:1.15;font-weight:700;color:var(--text)}
+  .hero p{margin:0;max-width:680px;font-size:17px;color:var(--text-2)}
+  .hero .badge-v{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+
+  .layout{display:flex;gap:28px;align-items:flex-start;max-width:1180px;margin:0 auto;padding:16px 20px 90px}
+  .content{flex:1 1 auto;min-width:0;max-width:860px;margin:0 auto}
+
+  .bigidea{background:var(--brand-soft);border:1px dashed var(--brand);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px}
+  .bigidea .tag{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .bigidea p{margin:8px 0 0}
+  .bigidea strong{color:var(--brand)}
+
+  .toc-card{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
+  .toc-card h3{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3)}
+  .toc-card ol{margin:0;padding-left:22px}
+  .toc-card li{margin:5px 0}
+  .toc-card a{color:var(--brand);text-decoration:none;font-weight:600}
+  .toc-card a:hover{text-decoration:underline}
+
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px 28px;margin-bottom:20px;scroll-margin-top:16px}
+  section > h2{margin:0 0 4px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+  section .lead{color:var(--text-2);margin:0 0 18px}
+  section h3.sub{margin:26px 0 8px;font-size:16px;color:var(--brand)}
+  .num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center}
+
+  .path{font-family:var(--mono);background:#161514;color:#eeece4;border-radius:8px;padding:10px 13px;font-size:13px;overflow-x:auto;margin:12px 0}
+  .path b{color:#f0c88a;font-weight:600}
+  code.k{font-family:var(--mono);background:var(--brand-soft);color:var(--brand);padding:1px 6px;border-radius:5px;font-size:13px;word-break:break-word}
+  a.link{color:var(--blue);font-weight:600;text-decoration:none;word-break:break-word}
+  a.link:hover{text-decoration:underline}
+
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .mini .m{border:1px solid var(--border);border-radius:12px;padding:15px}
+  .mini .m h4{margin:0 0 6px;font-size:15px}
+  .mini .m p{margin:0;font-size:14px;color:var(--text-2)}
+
+  .stepper{display:grid;gap:16px;margin:16px 0 4px}
+  .stepper .s{display:flex;gap:16px;align-items:flex-start}
+  .stepper .s .n{flex:0 0 auto;width:30px;height:30px;border-radius:8px;background:var(--brand-solid);color:#fff;font-weight:700;font-size:14px;display:grid;place-items:center;margin-top:1px}
+  .stepper .s .b{flex:1 1 auto;min-width:0}
+  .stepper .s .b h4{margin:1px 0 4px;font-size:16px}
+  .stepper .s .b p{margin:5px 0;font-size:14.5px;color:var(--text-2)}
+  .stepper .s .b ul{margin:6px 0 0;padding-left:18px}
+  .stepper .s .b ul li{margin:5px 0;font-size:14.5px;color:var(--text-2)}
+
+  .tablewrap{overflow-x:auto;margin:12px 0}
+  table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:480px}
+  table.t th,table.t td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:600}
+  table.t tr:last-child td{border-bottom:0}
+  table.t td code,table.t th code{font-family:var(--mono);font-size:12.5px;background:var(--surface-0);padding:1px 5px;border-radius:4px}
+
+  .tip{display:flex;gap:12px;border-radius:10px;padding:13px 16px;margin-top:16px;border:1px solid var(--border-success);background:var(--green-soft)}
+  .tip.warn{background:var(--amber-soft);border-color:var(--border-warning)}
+  .tip.note{background:var(--blue-soft);border-color:#8fbcec}
+  .tip.danger{background:var(--red-soft);border-color:var(--border-danger)}
+  .tip .i{font-size:18px}
+  .tip p{margin:0;font-size:14px}
+  ul.clean{margin:10px 0 0;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  p.para{margin:10px 0}
+
+  .figure{border:1px solid var(--border);border-radius:12px;background:var(--surface-2);padding:14px 14px 8px;margin:14px 0}
+  .figure svg{display:block;width:100%;height:auto}
+  .figure figcaption{font-size:12.5px;color:var(--text-3);text-align:center;padding:6px 8px 4px}
+  .svg-box{fill:var(--surface-1);stroke:var(--border-strong)}
+  .svg-t{fill:var(--text);font:600 13px var(--sans)}
+  .svg-ts{fill:var(--text-2);font:13px var(--sans)}
+  .svg-tm{fill:var(--text);font:600 13px var(--mono)}
+  .svg-hd{fill:var(--text-3);font:700 11px var(--sans);letter-spacing:.05em;text-transform:uppercase}
+  .svg-mut{fill:var(--text-3);font:12px var(--sans)}
+  .chip-ok{fill:var(--green-soft);stroke:var(--border-success)}
+  .chip-ok-t{fill:var(--green);font:600 11px var(--sans)}
+  .chip-warn{fill:var(--amber-soft);stroke:var(--border-warning)}
+  .chip-warn-t{fill:var(--amber);font:600 11px var(--sans)}
+  .chip-blue{fill:var(--blue-soft);stroke:#8fbcec}
+  .chip-blue-t{fill:var(--blue);font:600 11px var(--sans)}
+  .svg-arrow{stroke:var(--brand);stroke-width:1.5;fill:none;marker-end:url(#ah)}
+  .svg-brand{fill:var(--brand)}
+
+  .crosslink{display:flex;gap:14px;align-items:center;background:var(--blue-soft);border:1px solid #8fbcec;border-radius:12px;padding:15px 18px;margin-top:16px}
+  .crosslink .i{font-size:22px}
+  .crosslink a{color:var(--blue);font-weight:700;text-decoration:none}
+  .crosslink a:hover{text-decoration:underline}
+  .crosslink p{margin:0;font-size:14px;color:var(--text-2)}
+
+  footer{text-align:center;color:var(--text-3);font-size:14px;margin-top:10px;padding-top:22px;border-top:1px solid var(--border)}
+  footer a{color:var(--brand);font-weight:600;text-decoration:none}
+
+  #top{position:fixed;right:20px;bottom:20px;background:var(--brand-solid);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .25s}
+  #top.show{opacity:1;pointer-events:auto}
+
+  @media (max-width:560px){
+    .hero h1{font-size:24px}
+    .mini{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <a class="backlink" href="much-datev-training.html">← Back to the DATEV Handbook</a>
+  <div class="logo">much<b>.</b> DATEV</div>
+  <span class="kicker">Internal Ops · DATEV API · Provisioning</span>
+  <h1>Onboarding a DATEV API Customer</h1>
+  <p>The exact steps to provision a customer who subscribed to the DATEV API integration — from their ticket to a working <em>“Get Access Token”</em> button in their Odoo.</p>
+  <div class="badge-v">much. GmbH · Odoo 19 · DATEVconnect (native API) · internal use only</div>
+</header>
+
+<div class="layout">
+  <div class="content">
+
+    <div class="bigidea">
+      <span class="tag">🧠 The one big idea</span>
+      <p>Two authorizations must line up — <strong>always both</strong>. (1) A <strong>subscription key</strong> we mint in the <strong>DCS</strong> (DATEV Credential Service) and email to the customer, and (2) a <strong>redirect URL</strong> we register in the <strong>DATEV developer portal</strong> so DATEV is allowed to hand the token back to their instance. Miss either one and <em>“Get Access Token”</em> fails.</p>
+    </div>
+
+    <div class="toc-card">
+      <h3>On this page</h3>
+      <ol>
+        <li><a href="#need">What you need before you start</a></li>
+        <li><a href="#ticket">The ticket — where the URLs come from</a></li>
+        <li><a href="#perurl">For each URL — do <em>both</em> steps</a></li>
+        <li><a href="#handoff">Hand-off — what the customer does next</a></li>
+        <li><a href="#trouble">Troubleshooting &amp; reference</a></li>
+      </ol>
+    </div>
+
+    <!-- big picture diagram -->
+    <div class="figure">
+      <svg viewBox="0 0 680 250" role="img" aria-labelledby="figO-t figO-d">
+        <title id="figO-t">The two authorizations that make the API work</title>
+        <desc id="figO-d">From the ticket URL, we register a client in the DCS which emails a subscription key, and we register a redirect URL in the DATEV portal. Both feed the customer's Get Access Token flow in Odoo.</desc>
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" class="svg-brand"/>
+          </marker>
+        </defs>
+        <!-- ticket -->
+        <rect x="24" y="98" width="150" height="54" rx="10" class="svg-box"/>
+        <text x="99" y="121" text-anchor="middle" class="svg-t">Product ticket</text>
+        <text x="99" y="139" text-anchor="middle" class="svg-mut">instance URLs</text>
+        <!-- DCS -->
+        <rect x="252" y="30" width="176" height="64" rx="10" class="svg-box"/>
+        <text x="340" y="53" text-anchor="middle" class="svg-t">① DCS — add client</text>
+        <text x="340" y="72" text-anchor="middle" class="svg-mut">emails subscription key</text>
+        <rect x="286" y="78" width="108" height="9" rx="4" class="chip-ok"/>
+        <!-- portal -->
+        <rect x="252" y="156" width="176" height="64" rx="10" class="svg-box"/>
+        <text x="340" y="179" text-anchor="middle" class="svg-t">② DATEV portal</text>
+        <text x="340" y="198" text-anchor="middle" class="svg-mut">add redirect URL</text>
+        <rect x="286" y="204" width="108" height="9" rx="4" class="chip-blue"/>
+        <!-- odoo -->
+        <rect x="506" y="98" width="150" height="54" rx="10" class="svg-box"/>
+        <text x="581" y="121" text-anchor="middle" class="svg-t">Customer's Odoo</text>
+        <text x="581" y="139" text-anchor="middle" class="svg-mut">Get Access Token ✓</text>
+        <!-- arrows -->
+        <line x1="174" y1="118" x2="252" y2="66" class="svg-arrow"/>
+        <line x1="174" y1="132" x2="252" y2="186" class="svg-arrow"/>
+        <line x1="428" y1="62" x2="506" y2="116" class="svg-arrow"/>
+        <line x1="428" y1="188" x2="506" y2="134" class="svg-arrow"/>
+      </svg>
+      <figcaption>One customer URL → two registrations (DCS + DATEV portal) → a working token in their Odoo. Repeat per instance URL.</figcaption>
+    </div>
+
+    <!-- NEED -->
+    <section id="need">
+      <h2><span class="num">0</span> What you need before you start</h2>
+      <p class="lead">This is an internal provisioning job done by much. technical support. Gather these first.</p>
+      <ul class="clean">
+        <li>Access to the <strong>DCS</strong> (DATEV Credential Service) — <a class="link" href="https://dcs.muchconsulting.dev/" target="_blank" rel="noopener">dcs.muchconsulting.dev</a>. This is the internal site where we register every customer and where the subscription keys are minted.</li>
+        <li>Access to the <strong>DATEV developer portal</strong> — the <em>much. – Odoo Connector</em> app: <a class="link" href="https://developer.datev.de/en/app/details/778b1422-65c6-4f9e-af17-4b478392c4b1" target="_blank" rel="noopener">developer.datev.de → much. – Odoo Connector</a>.</li>
+        <li>The customer's <strong>product ticket</strong> with their Odoo instance URL(s).</li>
+      </ul>
+      <div class="tip note"><span class="i">🔒</span><p><strong>Hands off the app credentials.</strong> In the DCS, the <em>“API Credential Services”</em> section holds the data-app's own DATEV credentials. <strong>Never modify it</strong> — it only ever matters if the data app is recreated. Your job is creating <em>clients</em>, which is a separate thing you do all day long.</p></div>
+    </section>
+
+    <!-- TICKET -->
+    <section id="ticket">
+      <h2><span class="num">1</span> The ticket — where the URLs come from</h2>
+      <p class="lead">Customers (or their consultant) request the integration through the product-ticket form.</p>
+      <p class="para">They open <a class="link" href="https://erp.muchconsulting.de/open-product-ticket" target="_blank" rel="noopener">erp.muchconsulting.de/open-product-ticket</a> and choose type <strong>“DATEV API integration”</strong>. The form's URL fields correspond to the customer's Odoo instances — typically a <strong>QA/staging URL</strong>, a <strong>release URL</strong> and a <strong>production URL</strong> (two testing, one main).</p>
+      <p class="para">When the ticket lands, all you take from it is the <strong>URLs</strong>. And from each URL you only need the <strong>base domain</strong> — everything <em>before</em> the path (<code class="k">/odoo</code>, <code class="k">/web</code>, query strings, etc.).</p>
+      <div class="path">Ticket says: <b>https://acme-prod.odoo.com</b>/odoo/action-123/...&#10;You keep:   <b>https://acme-prod.odoo.com</b></div>
+      <div class="tip"><span class="i">💡</span><p>One customer usually has <strong>several instances</strong> (QA, staging/release, production). Run the two steps below <strong>once per URL</strong>.</p></div>
+    </section>
+
+    <!-- PER URL -->
+    <section id="perurl">
+      <h2><span class="num">2</span> For each URL — do <em>both</em> steps</h2>
+      <p class="lead">Step A mints and emails the subscription key. Step B lets DATEV send the token back into that instance. Both are mandatory.</p>
+
+      <h3 class="sub">A · Register the client in the DCS (mint &amp; email the key)</h3>
+      <div class="stepper">
+        <div class="s"><div class="n">1</div><div class="b">
+          <h4>Open the DCS → “Add New API Client”</h4>
+          <p>Go to <a class="link" href="https://dcs.muchconsulting.dev/" target="_blank" rel="noopener">dcs.muchconsulting.dev</a>. Creating a client automatically creates a 1Password entry and shares it to the email you provide.</p>
+        </div></div>
+        <div class="s"><div class="n">2</div><div class="b">
+          <h4>Fill the form and click <em>Add Client</em></h4>
+          <ul>
+            <li><strong>Name</strong> — a display name for this client.</li>
+            <li><strong>URL</strong> — the base instance domain (the origin that will access the DATEV credentials). <strong>Must be <code class="k">https</code></strong> — the form validates it.</li>
+            <li><strong>Email</strong> — the contact who opened the ticket. <em>This is where the subscription key is sent</em>, so double-check it.</li>
+            <li><strong>Subscription Valid Until</strong> — set roughly <strong>one year out</strong>. Leave empty for unlimited. If the subscription is renewed later, come back and bump the date.</li>
+          </ul>
+        </div></div>
+        <div class="s"><div class="n">3</div><div class="b">
+          <h4>The key is emailed automatically</h4>
+          <p>On save, the DCS emails the customer their <strong>API subscription key</strong>. That key is what unlocks the <em>“Get Access Token”</em> button inside their Odoo DATEV settings.</p>
+        </div></div>
+      </div>
+      <div class="tip warn"><span class="i">📧</span><p>Entered the wrong email? Just <strong>edit the email and save</strong> — the DCS re-sends the key to the corrected address. Confirm the customer actually received it.</p></div>
+
+      <h3 class="sub">B · Register the redirect URL in the DATEV portal</h3>
+      <div class="stepper">
+        <div class="s"><div class="n">1</div><div class="b">
+          <h4>Open the <em>much. – Odoo Connector</em> app in edit mode</h4>
+          <p>Open <a class="link" href="https://developer.datev.de/en/app/details/778b1422-65c6-4f9e-af17-4b478392c4b1" target="_blank" rel="noopener">developer.datev.de → much. – Odoo Connector</a> → Details. Then click the <strong>⋯ (three dots)</strong> at the top-right of the app form and choose <strong>“Edit App”</strong> — now the <strong>Redirect-URI(s)</strong> list is editable.</p>
+        </div></div>
+        <div class="s"><div class="n">2</div><div class="b">
+          <h4>Add the callback URL</h4>
+          <p>Add the same base instance domain with <code class="k">/datev/oauth/callback</code> appended, and <strong>Save</strong>:</p>
+          <div class="path">https://acme-prod.odoo.com<b>/datev/oauth/callback</b></div>
+          <p>This “call back” is what lets DATEV authenticate back to Odoo and <strong>save the token in the instance</strong>. Without it, the OAuth window has nowhere to return the token.</p>
+        </div></div>
+      </div>
+      <div class="tip danger"><span class="i">⚠️</span><p><strong>Be careful in the portal.</strong> <em>Edit</em> and <em>Delete</em> sit right next to each other — do not delete the app. Only <strong>add</strong> your new redirect URL; never touch the existing entries or the app credentials.</p></div>
+
+      <figure class="figure">
+        <svg viewBox="0 0 680 210" role="img" aria-labelledby="figB-t figB-d">
+          <title id="figB-t">Same base URL, two places</title>
+          <desc id="figB-d">The base instance domain is registered as the client URL in the DCS and as base + /datev/oauth/callback in the DATEV portal.</desc>
+          <text x="40" y="26" class="svg-hd">Base instance domain from the ticket</text>
+          <rect x="40" y="34" width="600" height="34" rx="8" class="svg-box"/>
+          <text x="58" y="56" class="svg-tm">https://acme-prod.odoo.com</text>
+          <line x1="200" y1="68" x2="200" y2="104" class="svg-arrow"/>
+          <line x1="480" y1="68" x2="480" y2="104" class="svg-arrow"/>
+          <rect x="40" y="108" width="300" height="72" rx="10" class="svg-box"/>
+          <text x="58" y="130" class="svg-hd">① DCS · client URL</text>
+          <text x="58" y="153" class="svg-tm">…acme-prod.odoo.com</text>
+          <text x="58" y="172" class="svg-mut">→ emails subscription key</text>
+          <rect x="360" y="108" width="280" height="72" rx="10" class="svg-box"/>
+          <text x="378" y="130" class="svg-hd">② DATEV portal · redirect URI</text>
+          <text x="378" y="153" class="svg-tm">…odoo.com/datev/oauth/callback</text>
+          <text x="378" y="172" class="svg-mut">→ authorises token return</text>
+        </svg>
+        <figcaption>Both registrations start from the same base URL — one gets the raw origin, the other gets it plus <code>/datev/oauth/callback</code>.</figcaption>
+      </figure>
+    </section>
+
+    <!-- HANDOFF -->
+    <section id="handoff">
+      <h2><span class="num">3</span> Hand-off — what the customer does next</h2>
+      <p class="lead">Once both registrations are done, the rest happens on the customer's side in Odoo.</p>
+      <div class="stepper">
+        <div class="s"><div class="n">1</div><div class="b">
+          <h4>Paste the subscription key</h4>
+          <p>In Odoo → <strong>Accounting → Settings → DATEV (API integration)</strong>, they paste the <strong>subscription key</strong> they received by email.</p>
+        </div></div>
+        <div class="s"><div class="n">2</div><div class="b">
+          <h4>Click “Get Access Token”</h4>
+          <p>The DATEV OAuth window opens — <em>allowed only because the redirect URL is registered</em> — they log in / grant permissions, and the token turns <strong style="color:var(--green)">green</strong> (valid).</p>
+        </div></div>
+        <div class="s"><div class="n">3</div><div class="b">
+          <h4>Click “Enable Integration”</h4>
+          <p>From here the scheduled <code class="k">export data</code> cron sends the Buchungsstapel, master data and PDFs to DATEV on the frequency they chose (daily or monthly).</p>
+        </div></div>
+      </div>
+      <div class="tip note"><span class="i">🔁</span><p>The green token proves the two-step setup worked end to end: the <strong>key</strong> (from your DCS client) authenticated them, and the <strong>redirect URL</strong> (from the portal) let DATEV return the token to their instance.</p></div>
+    </section>
+
+    <!-- TROUBLE -->
+    <section id="trouble">
+      <h2><span class="num">4</span> Troubleshooting &amp; reference</h2>
+      <p class="lead">The failures you'll actually see, and where each piece lives.</p>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Symptom</th><th>Most likely cause</th><th>Fix</th></tr>
+        <tr><td>“Could not get access token” / OAuth error</td><td>Client not subscribed, or user lacks rights</td><td>Confirm the DCS client exists and the subscription is still valid; confirm the customer's DATEV user has access to the needed services.</td></tr>
+        <tr><td>OAuth window won't return / redirect mismatch</td><td>Redirect URL doesn't match the instance</td><td>The portal redirect URI must equal the instance base domain + <code>/datev/oauth/callback</code> exactly — <code>https</code>, no typo, no extra path.</td></tr>
+        <tr><td>Key “not recognised” in settings</td><td>Wrong/partial key pasted, or wrong instance</td><td>Re-check the emailed subscription key was pasted into the right instance's settings.</td></tr>
+      </table></div>
+
+      <h3 class="sub">Under the hood — the moving parts</h3>
+      <div class="tablewrap"><table class="t">
+        <tr><th>Piece</th><th>What it is</th></tr>
+        <tr><td><strong>DCS</strong> (DATEV Credential Service)</td><td>Internal registry at <code>dcs.muchconsulting.dev</code> where we register all customers and send subscription keys. Clients are created here; the app-credential section is never touched.</td></tr>
+        <tr><td><strong>much. – Odoo Connector</strong> app</td><td>The DATEV-side app (a.k.a. the “merge Odoo connector” / master application) the customers subscribe to. It exposes endpoints for <em>Check clients</em> (rights), <em>Documents</em> (PDFs) and <em>Ext files</em> (the export file).</td></tr>
+        <tr><td><strong>Redirect URI</strong></td><td>The <code>/datev/oauth/callback</code> route on the customer's instance, registered in the portal so DATEV may return the OAuth token.</td></tr>
+      </table></div>
+
+      <div class="crosslink"><span class="i">🧪</span><p>Want to see the data actually land in DATEV? Run the end-to-end test playbook — <a href="much-datev-guide-api-testing.html">Testing the DATEV Integration →</a></p></div>
+    </section>
+
+    <footer>
+      <p>Internal ops guide for the <a href="much-datev-training.html">much. DATEV Integration handbook</a> · <strong>much. GmbH</strong></p>
+      <p style="margin-top:8px">Provisioning a DATEV API customer · Odoo 19 · DATEVconnect · internal use only</p>
+    </footer>
+
+  </div>
+</div>
+
+<button id="top" title="Back to top" aria-label="Back to top">↑</button>
+<script>
+  var topBtn=document.getElementById('top');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){topBtn.classList.add('show')}else{topBtn.classList.remove('show')}
+  });
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+</script>
+
+</body>
+</html>
