@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>much. — Product Usage Guide</title>
+<style>
+:root{
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--page:#f4f3ee;--surface-1:#fbfaf7;--surface-2:#ffffff;
+--text:#1a1a19;--text-2:#5f5e5a;--text-3:#8a8980;
+--border:#e4e2da;--border-strong:#cfcdc3;
+--green-bg:#EAF3DE;--green-text:#3B6D11;--green-border:#97C459;
+--red-bg:#FCEBEB;--red-text:#A32D2D;--red-border:#F09595;
+--yellow-bg:#FAEEDA;--yellow-text:#854F0B;--yellow-border:#EF9F27;
+--blue-bg:#E6F1FB;--blue-text:#0C447C;--blue-border:#378ADD;
+--gray-bg:#F1EFE8;--gray-text:#444441;--gray-border:#cfcdc3;
+}
+.dark{
+--page:#1c1b19;--surface-1:#26251f;--surface-2:#2c2b27;
+--text:#eeece4;--text-2:#b4b2a9;--text-3:#8a8980;
+--border:#3a3833;--border-strong:#4d4b44;
+--green-bg:#173404;--green-text:#C0DD97;--green-border:#3B6D11;
+--red-bg:#501313;--red-text:#F09595;--red-border:#A32D2D;
+--yellow-bg:#412402;--yellow-text:#FAC775;--yellow-border:#854F0B;
+--blue-bg:#0C447C;--blue-text:#B5D4F4;--blue-border:#378ADD;
+--gray-bg:#2C2C2A;--gray-text:#D3D1C7;--gray-border:#4d4b44;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--sans);line-height:1.6;font-size:15px}
+.wrap{max-width:960px;margin:0 auto;padding:36px 22px 80px}
+h1{font-size:24px;font-weight:600;margin:0 0 4px}
+.lead{color:var(--text-2);margin:0 0 28px;font-size:14px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.btns{display:flex;gap:8px}
+button{font:inherit;font-size:13px;padding:6px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+button:hover{border-color:var(--text-3)}
+a.back{display:inline-block;font-size:13px;color:#3C3489;text-decoration:none;margin-bottom:8px}
+
+/* Search + filter bar */
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+input[type=search]{font:inherit;font-size:13px;padding:7px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);flex:1;min-width:180px;outline:none}
+input[type=search]::placeholder{color:var(--text-3)}
+.filter-btn{font:inherit;font-size:12px;padding:5px 12px;border-radius:999px;border:1px solid var(--border-strong);background:var(--surface-1);color:var(--text-2);cursor:pointer;white-space:nowrap}
+.filter-btn.active{background:var(--text);color:var(--page);border-color:var(--text)}
+
+/* Cards */
+.cards{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .15s}
+.card:hover{border-color:var(--border-strong)}
+.card.hidden{display:none}
+.card-head{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer}
+.card-icon{font-size:22px;flex-shrink:0;width:36px;text-align:center}
+.card-info{flex:1;min-width:0}
+.card-name{font-weight:600;font-size:15px}
+.card-desc{font-size:12px;color:var(--text-3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-pills{display:flex;gap:6px;align-items:center;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.pill-green{background:var(--green-bg);color:var(--green-text);border:1px solid var(--green-border)}
+.pill-yellow{background:var(--yellow-bg);color:var(--yellow-text);border:1px solid var(--yellow-border)}
+.pill-red{background:var(--red-bg);color:var(--red-text);border:1px solid var(--red-border)}
+.pill-blue{background:var(--blue-bg);color:var(--blue-text);border:1px solid var(--blue-border)}
+.pill-gray{background:var(--gray-bg);color:var(--gray-text);border:1px solid var(--gray-border)}
+.chevron{color:var(--text-3);font-size:12px;transition:transform .2s;flex-shrink:0}
+.card.open .chevron{transform:rotate(90deg)}
+
+/* Detail */
+.card-detail{display:none;padding:0 18px 16px 68px;border-top:1px solid var(--border)}
+.card.open .card-detail{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:12px}
+.cell{border-radius:10px;padding:11px 14px}
+.cell-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;opacity:.6;margin-bottom:3px}
+.cell-value{font-size:13px;font-weight:500}
+.cell-green{background:var(--green-bg);color:var(--green-text)}
+.cell-yellow{background:var(--yellow-bg);color:var(--yellow-text)}
+.cell-red{background:var(--red-bg);color:var(--red-text)}
+.cell-gray{background:var(--gray-bg);color:var(--gray-text)}
+.cell-blue{background:var(--blue-bg);color:var(--blue-text)}
+.note{margin-top:10px;font-size:13px;color:var(--text-2);padding:10px 13px;border-radius:9px;background:var(--surface-2);border:1px solid var(--border)}
+.note-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin-bottom:3px}
+
+/* Legend */
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.lgi{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.ldot{width:10px;height:10px;border-radius:50%}
+.ldot-green{background:var(--green-text)}
+.ldot-yellow{background:var(--yellow-text)}
+.ldot-red{background:var(--red-text)}
+
+footer{margin-top:48px;color:var(--text-3);font-size:12px;border-top:1px solid var(--border);padding-top:14px}
+@media(max-width:580px){.card-pills{display:none}.card-detail{padding-left:18px}}
+@media print{
+.btns,.bar{display:none!important}
+.card-detail{display:block!important}
+body{background:#fff;font-size:12px}
+.wrap{padding:0}
+.card{break-inside:avoid;margin-bottom:12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+  <div>
+    <a class="back noprint" href="index.html">← Back to Guide Hub</a>
+    <h1>much. Product Usage Guide</h1>
+    <p class="lead">Can we use it? Can we sell it? Does it need a contract? — Quick answers for each product.</p>
+  </div>
+  <div class="btns noprint">
+    <button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
+    <button onclick="window.print()">Print / PDF</button>
+  </div>
+</div>
+
+<div class="bar noprint">
+  <input type="search" id="searchBox" placeholder="Search products…" oninput="applyFilters()">
+  <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All</button>
+  <button class="filter-btn" data-filter="closed" onclick="setFilter('closed',this)">much. proprietary</button>
+  <button class="filter-btn" data-filter="paid" onclick="setFilter('paid',this)">Paid / App Store</button>
+  <button class="filter-btn" data-filter="open" onclick="setFilter('open',this)">Open source</button>
+</div>
+
+<div class="legend noprint">
+  <span class="lgi"><span class="ldot ldot-green"></span>No restrictions / Yes</span>
+  <span class="lgi"><span class="ldot ldot-yellow"></span>Allowed with conditions</span>
+  <span class="lgi"><span class="ldot ldot-red"></span>Not allowed</span>
+</div>
+
+<div class="cards" id="cards"></div>
+
+<footer>
+  much. GmbH · For legal questions contact the product team at product@erp.muchconsulting.de · Data sourced from module manifests.
+</footer>
+</div>
+
+<script>
+const PRODUCTS = [
+  {
+    name: 'DATEV Integration',
+    desc: 'Connects Odoo accounting to the German DATEV system',
+    icon: '🇩🇪',
+    type: 'closed',
+    typePill: {label:'much. proprietary', cls:'pill-gray'},
+    cost: {label:'💰 Paid (subscription)', cls:'cell-blue'},
+    who: {label:'🏢 much. clients only', cls:'cell-yellow'},
+    contract: {label:'✅ Yes — required', cls:'cell-green'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ No', cls:'cell-red'},
+    canModify: {label:'⚠️ Only with agreement', cls:'cell-yellow'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Requires a much. subscription key per Odoo instance for the API mode. Contact product@erp.muchconsulting.de to get a key.'
+  },
+  {
+    name: 'Integration Hub',
+    desc: 'The shared base layer that powers all much. integrations',
+    icon: '🔗',
+    type: 'closed',
+    typePill: {label:'much. proprietary', cls:'pill-gray'},
+    cost: {label:'💰 Included with integrations', cls:'cell-blue'},
+    who: {label:'🏢 much. clients only', cls:'cell-yellow'},
+    contract: {label:'✅ Yes — required', cls:'cell-green'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ No', cls:'cell-red'},
+    canModify: {label:'⚠️ Only with agreement', cls:'cell-yellow'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Not sold standalone. Installed automatically as a dependency of other much. integrations.'
+  },
+  {
+    name: 'Shopware Integration',
+    desc: 'Syncs orders, products, stock and shipments between Odoo and Shopware 6',
+    icon: '🛍️',
+    type: 'closed',
+    typePill: {label:'much. proprietary', cls:'pill-gray'},
+    cost: {label:'💰 Paid', cls:'cell-blue'},
+    who: {label:'🏢 much. clients only', cls:'cell-yellow'},
+    contract: {label:'✅ Yes — required', cls:'cell-green'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ No', cls:'cell-red'},
+    canModify: {label:'⚠️ Only with agreement', cls:'cell-yellow'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Built on Order Base Integration and Integration Hub. Requires both to be installed.'
+  },
+  {
+    name: 'Order Base Integration',
+    desc: 'Generic shop connector foundation — orders, products, stock, returns',
+    icon: '📦',
+    type: 'closed',
+    typePill: {label:'much. proprietary', cls:'pill-gray'},
+    cost: {label:'💰 Included with shop connectors', cls:'cell-blue'},
+    who: {label:'🏢 much. clients only', cls:'cell-yellow'},
+    contract: {label:'✅ Yes — required', cls:'cell-green'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ No', cls:'cell-red'},
+    canModify: {label:'⚠️ Only with agreement', cls:'cell-yellow'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Not sold standalone. Powers all much. shop connectors.'
+  },
+  {
+    name: 'German Documents',
+    desc: 'DIN 5008 compliant layouts for invoices, orders and delivery notes',
+    icon: '📄',
+    type: 'closed',
+    typePill: {label:'much. proprietary', cls:'pill-gray'},
+    cost: {label:'💰 Paid', cls:'cell-blue'},
+    who: {label:'🏢 much. clients only', cls:'cell-yellow'},
+    contract: {label:'✅ Yes — required', cls:'cell-green'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ No', cls:'cell-red'},
+    canModify: {label:'⚠️ Only with agreement', cls:'cell-yellow'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Replaces Odoo\'s default document templates with German DIN 5008 standard layouts.'
+  },
+  {
+    name: 'German Data & Translations',
+    desc: 'AfA tables, BWA reports and German translations for Odoo',
+    icon: '🗂️',
+    type: 'closed',
+    typePill: {label:'much. proprietary', cls:'pill-gray'},
+    cost: {label:'💰 Paid', cls:'cell-blue'},
+    who: {label:'🏢 much. clients only', cls:'cell-yellow'},
+    contract: {label:'✅ Yes — required', cls:'cell-green'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ No', cls:'cell-red'},
+    canModify: {label:'⚠️ Only with agreement', cls:'cell-yellow'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Includes German depreciation tables (AfA), BWA financial report and base translations.'
+  },
+  {
+    name: 'Transaction Import',
+    desc: 'Imports bank transactions from PayPal, Stripe, Shopify, Mollie and more',
+    icon: '💳',
+    type: 'closed',
+    typePill: {label:'much. proprietary', cls:'pill-gray'},
+    cost: {label:'💰 Paid', cls:'cell-blue'},
+    who: {label:'🏢 much. clients only', cls:'cell-yellow'},
+    contract: {label:'✅ Yes — required', cls:'cell-green'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ No', cls:'cell-red'},
+    canModify: {label:'⚠️ Only with agreement', cls:'cell-yellow'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Reconciles imported transactions automatically with existing invoices in Odoo.'
+  },
+  {
+    name: 'PO Compliance Check',
+    desc: 'Tracks supplier quality certificates and blocks non-compliant purchase orders',
+    icon: '✅',
+    type: 'closed',
+    typePill: {label:'much. proprietary', cls:'pill-gray'},
+    cost: {label:'💰 Paid', cls:'cell-blue'},
+    who: {label:'🏢 much. clients only', cls:'cell-yellow'},
+    contract: {label:'✅ Yes — required', cls:'cell-green'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ No', cls:'cell-red'},
+    canModify: {label:'⚠️ Only with agreement', cls:'cell-yellow'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Sends automatic reminders when supplier certificates are about to expire.'
+  },
+  {
+    name: 'Manufacturing Traceability',
+    desc: 'Links production lots to repair orders and helpdesk tickets',
+    icon: '🏭',
+    type: 'closed',
+    typePill: {label:'much. proprietary', cls:'pill-gray'},
+    cost: {label:'💰 Paid', cls:'cell-blue'},
+    who: {label:'🏢 much. clients only', cls:'cell-yellow'},
+    contract: {label:'✅ Yes — required', cls:'cell-green'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ No', cls:'cell-red'},
+    canModify: {label:'⚠️ Only with agreement', cls:'cell-yellow'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Designed for manufacturers that need full traceability from production to after-sales.'
+  },
+  {
+    name: 'Procuros Connector',
+    desc: 'EDI connector for B2B order exchange via the Procuros network',
+    icon: '🔄',
+    type: 'paid',
+    typePill: {label:'Paid / App Store', cls:'pill-blue'},
+    cost: {label:'💰 Paid (one-time or subscription)', cls:'cell-blue'},
+    who: {label:'🌍 Anyone who buys it', cls:'cell-green'},
+    contract: {label:'⚠️ App Store purchase', cls:'cell-yellow'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ Cannot resell', cls:'cell-red'},
+    canModify: {label:'✅ Yes, for own use', cls:'cell-green'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Available on the Odoo Apps Store. Co-developed with Procuros. You can modify it but cannot resell or redistribute it.'
+  },
+  {
+    name: 'AI Automated Actions',
+    desc: 'Run AI prompts (Claude, ChatGPT, Gemini, Mistral) inside Odoo automated actions',
+    icon: '🤖',
+    type: 'paid',
+    typePill: {label:'Paid / App Store', cls:'pill-blue'},
+    cost: {label:'💰 Paid (one-time or subscription)', cls:'cell-blue'},
+    who: {label:'🌍 Anyone who buys it', cls:'cell-green'},
+    contract: {label:'⚠️ App Store purchase', cls:'cell-yellow'},
+    canUse: {label:'✅ Yes', cls:'cell-green'},
+    canSell: {label:'❌ Cannot resell', cls:'cell-red'},
+    canModify: {label:'✅ Yes, for own use', cls:'cell-green'},
+    openSource: {label:'❌ No', cls:'cell-red'},
+    note: 'Available on the Odoo Apps Store. Requires separate API keys for each AI provider (OpenAI, Anthropic, Google, Mistral).'
+  },
+  {
+    name: 'PayPal Integration',
+    desc: 'Full PayPal payment suite — Pay Later, Venmo, vaulting, express checkout',
+    icon: '💙',
+    type: 'open',
+    typePill: {label:'Open source', cls:'pill-green'},
+    cost: {label:'🆓 Free', cls:'cell-green'},
+    who: {label:'🌍 Anyone', cls:'cell-green'},
+    contract: {label:'❌ No contract needed', cls:'cell-green'},
+    canUse: {label:'✅ Yes, freely', cls:'cell-green'},
+    canSell: {label:'⚠️ Only if source is shared', cls:'cell-yellow'},
+    canModify: {label:'✅ Yes', cls:'cell-green'},
+    openSource: {label:'✅ Yes (AGPL-3)', cls:'cell-green'},
+    note: 'Open source — co-developed with PayPal Inc. If you offer this to others as a service or product, you must also share your source code. For internal use, no restrictions.'
+  },
+  {
+    name: 'MCP Server',
+    desc: 'Connects AI assistants (Claude, Cursor, VS Code) to Odoo via the Model Context Protocol',
+    icon: '🧠',
+    type: 'open',
+    typePill: {label:'Open source', cls:'pill-green'},
+    cost: {label:'🆓 Free', cls:'cell-green'},
+    who: {label:'🌍 Anyone', cls:'cell-green'},
+    contract: {label:'❌ No contract needed', cls:'cell-green'},
+    canUse: {label:'✅ Yes, freely', cls:'cell-green'},
+    canSell: {label:'⚠️ Changes must be shared', cls:'cell-yellow'},
+    canModify: {label:'✅ Yes', cls:'cell-green'},
+    openSource: {label:'✅ Yes (LGPL-3)', cls:'cell-green'},
+    note: 'Most permissive license in our portfolio. Can be combined freely with commercial products. Only changes to this specific module need to be shared publicly.'
+  }
+];
+
+const FIELDS = [
+  {key:'cost',     label:'Cost'},
+  {key:'who',      label:'Who can use it'},
+  {key:'contract', label:'Contract with much.'},
+  {key:'canUse',   label:'Can use it'},
+  {key:'canSell',  label:'Can sell / commercialize'},
+  {key:'canModify',label:'Can modify'},
+  {key:'openSource',label:'Source code is public'},
+];
+
+const container = document.getElementById('cards');
+
+PRODUCTS.forEach(p => {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.dataset.type = p.type;
+  el.dataset.name = p.name.toLowerCase();
+
+  const fieldsHtml = FIELDS.map(f => {
+    const v = p[f.key];
+    return `<div class="cell ${v.cls}"><div class="cell-label">${f.label}</div><div class="cell-value">${v.label}</div></div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="card-head" onclick="toggle(this)">
+      <div class="card-icon">${p.icon}</div>
+      <div class="card-info">
+        <div class="card-name">${p.name}</div>
+        <div class="card-desc">${p.desc}</div>
+      </div>
+      <div class="card-pills">
+        <span class="pill ${p.typePill.cls}">${p.typePill.label}</span>
+        <span class="pill ${p.canSell.cls.replace('cell','pill')}">${p.canSell.label.split(' ').slice(0,2).join(' ')}</span>
+      </div>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="card-detail">
+      <div class="grid">${fieldsHtml}</div>
+      <div class="note"><div class="note-label">📌 Note</div>${p.note}</div>
+    </div>
+  `;
+  container.appendChild(el);
+});
+
+function toggle(head) {
+  head.closest('.card').classList.toggle('open');
+}
+
+let activeFilter = 'all';
+function setFilter(type, btn) {
+  activeFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById('searchBox').value.toLowerCase();
+  document.querySelectorAll('.card').forEach(c => {
+    const matchType = activeFilter === 'all' || c.dataset.type === activeFilter;
+    const matchSearch = !q || c.dataset.name.includes(q);
+    c.classList.toggle('hidden', !matchType || !matchSearch);
+  });
+}
+</script>
+</body>
+</html>

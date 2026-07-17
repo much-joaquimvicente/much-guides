@@ -54,6 +54,19 @@ a.chip:hover{border-color:var(--text-3)}
 .meta b{color:var(--text-2);font-weight:600}
 .pnote{margin-top:14px;background:var(--bg-warning);border:1px solid var(--border-warning);border-radius:10px;padding:11px 14px;font-size:14px;color:var(--text-warning)}
 .pnote b{font-weight:600}
+.m-purple{--bg:var(--mp-bg);--fg:var(--mp-fg)}
+.m-teal{--bg:var(--mt-bg);--fg:var(--mt-fg)}
+.m-blue{--bg:var(--mb-bg);--fg:var(--mb-fg)}
+.m-coral{--bg:var(--mc-bg);--fg:var(--mc-fg)}
+.m-amber{--bg:var(--ma-bg);--fg:var(--ma-fg)}
+.m-pink{--bg:var(--mk-bg);--fg:var(--mk-fg)}
+.m-gray{--bg:var(--mg-bg);--fg:var(--mg-fg)}
+.search{position:relative;margin:0 0 22px}
+.search input{width:100%;font:inherit;font-size:15px;padding:12px 16px 12px 42px;border-radius:12px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text)}
+.search input:focus{outline:none;border-color:var(--text-3);box-shadow:0 2px 14px rgba(0,0,0,.05)}
+.search:before{content:"\1F50E";position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.65;pointer-events:none}
+.search .hint{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text-3);pointer-events:none}
+.p-empty{color:var(--text-2);font-size:14px;padding:14px 2px;border:1px solid var(--border);border-radius:12px;background:var(--surface-1);text-align:center}
 footer{margin-top:40px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
 @media print{.noprint{display:none!important}body{background:#fff}}
 </style>
@@ -71,6 +84,11 @@ footer{margin-top:40px;color:var(--text-3);font-size:13px;border-top:1px solid v
 <button onclick="document.documentElement.classList.toggle('dark')">Light / dark</button>
 <button onclick="window.print()">Print / PDF</button>
 </div>
+</div>
+
+<div class="search noprint">
+<input id="q" type="search" placeholder="Search products…" autocomplete="off" spellcheck="false">
+<span class="hint" id="qhint"></span>
 </div>
 
 <div id="products"></div>
@@ -120,10 +138,93 @@ const PRODUCTS=[
  who:'Odoo companies trading with large retailers / grocery chains over EDI — either as a buyer (Purchase-to-Pay) or a supplier (Order-to-Cash).',
  features:'Built on iHub (scheduling, logging, mappers) and symmetric — the same module serves both sides of a deal. Key documents / flows: Order handshake (PO → Sales Order), Order Response (accept / change / reject), Shipping Notice (despatch → receipt), Invoice → vendor bill, Credit Note, and Remittance Advice (payment). Trading partners are identified by GLN and products by GTIN (GS1 standards). Without it, an Odoo company cannot exchange EDI documents over Procuros.',
  resources:[{label:'GitHub Repository',url:'https://github.com/much-GmbH/procuros-connector'},{label:'Knowledge article',url:''}],meeting:'to be scheduled'
+},
+{
+ ic:'🤖',color:'m-teal',name:'AI Assistant (MCP)',status:'',statusCls:'',
+ sub:'Claude Desktop connected to Odoo over MCP',
+ desc:'Connects Claude (Desktop) to Odoo over the Model Context Protocol so the AI can read and act on real Odoo data — with a permissions module deciding what it is allowed to touch.',
+ who:'Odoo users and junior technical joiners who want to ask an AI assistant questions about their real Odoo data and act on it, without writing integration code.',
+ features:'AI Assistant (MCP) uses the Model Context Protocol standard from Anthropic to connect Claude Desktop to Odoo through an MCP server that runs locally on your own machine, so the AI can read and work with your Odoo data alongside the code. Key features: <b>MCP server</b> (runs locally via uvx, never on the Odoo server), <b>Claude Desktop config</b> (an odoo entry under mcpServers pointing at your uvx path), <b>API key authentication</b> (generated in Odoo under Account Security, or user plus password instead), <b>Environment variables</b> (ODOO_URL and ODOO_DB plus credentials, with the database auto-detected if omitted), <b>Permissions module</b> (a free much. Odoo Marketplace module controlling what the AI can touch, e.g. Sales but not Accounting, read-only vs create/update), <b>Remote transport</b> (streamable-http on a port for web clients), <b>MCP Log Cleanup</b> (daily scheduled action honouring the Log Retention setting). Without the MCP server, the AI only sees your code and test environments, never the actual data.',
+ resources:[{label:'GitHub Repository',url:'https://github.com/much-GmbH/much-mcp-server'}]
+},
+{
+ ic:'🧾',color:'m-amber',name:'DATEV',status:'',statusCls:'',
+ sub:'Odoo accounting data handed over to DATEV',
+ desc:'Hands Odoo accounting data to DATEV — Buchungsstapel (CSV) and XML export, DATEV import, and automatic syncing over the DATEV API.',
+ who:'German Odoo clients and their Steuerberater who need Odoo\'s accounting data handed over to DATEV in DATEV\'s exact format, plus the much. team that configures and maintains it.',
+ features:'DATEV is a suite of six much. modules layered on Odoo\'s standard German localization (l10n_de) that moves posted bookings, partner master data and invoice documents from Odoo into DATEV, the software German tax advisors use for the official books. Key features: <b>Base</b> (foundation module adding the DATEV settings tab, Debitor/Kreditor numbers on partners, and the shared Download DATEV File tools), <b>CSV Export</b> (the Buchungsstapel in EXTF format, optionally zipped with invoice PDFs and a document.xml Beleglink), <b>CSV Import</b> (brings DATEV EXTF files back as draft journal entries, one calendar month per file), <b>XML Export</b> (one Belegverwaltung online record per invoice carrying amounts, taxes, dates and the partner\'s DATEV number), <b>API Integration</b> (DATEVconnect OAuth push of master data, entries and PDFs on a Daily/Monthly/Quarterly cron, tracked in DATEV Export Jobs with retry and critical-error emails), <b>Debitor/Kreditor numbering</b> (auto-assigned from the Receivable 10000 and Payable 70000 ranges, unique per partner), <b>Configuration tab</b> (account lengths, KOST1/KOST2 cost centres, batch size, CP1252 or UTF-8 encoding). Without the Consultant Number and Client Number on the company, every DATEV export refuses to run.',
+ resources:[{label:'Product Description',url:'https://erp.muchconsulting.de/odoo/knowledge/1886'},{label:'Documentation',url:'https://erp.muchconsulting.de/odoo/knowledge/1887'},{label:'Brochures & Demo',url:'https://drive.google.com/drive/folders/1pOXZegPNayi-hLSCf_s8LmMA2q0YMBzu'},{label:'GitHub Repository',url:'https://github.com/much-GmbH/much-datev-integration/tree/18.latest-qa'},{label:'Sales Page (API)',url:'https://erp.muchconsulting.de/odoo/products/1822'},{label:'Sales Page (no API)',url:'https://erp.muchconsulting.de/odoo/products/57'}],
+ note:'<b>DATEV specialist — Michael Becker.</b> Sold in two variants: with the DATEV API (automatic sync) and without (manual CSV/XML export).'
+},
+{
+ ic:'💳',color:'m-blue',name:'Payment Providers (PayPal)',status:'',statusCls:'',
+ sub:'Full PayPal checkout for the Odoo shop',
+ desc:'Connects a PayPal Business account to an Odoo shop — PayPal, Pay Later, Venmo and card payments, with saved methods and automatic webhooks.',
+ who:'Odoo shop merchants with a PayPal Business account who want the full modern PayPal checkout instead of the basic built-in redirect.',
+ features:'Payment Providers (PayPal) is the much. PayPal suite, a bundle of Odoo 19 modules built with PayPal that links your PayPal Business account to your online shop and manages the whole payment journey — wallet, Pay Later instalments, Venmo, Google Pay, Apple Pay and cards — plus refunds and automatic status sync. Key features: <b>Payment Integration</b> (the core engine handling payments, refunds and logging), <b>Merchant Configurator</b> (Display Options controlling which methods are on and where banners and buttons appear), <b>Vaulting</b> (logged-in customers save PayPal, Venmo or card details and manage them under My Account, Payment Methods), <b>Webhook Base</b> (safely receives and queues PayPal status updates, drained by the PayPal: Process Webhook Queue cron), <b>Website Sale</b> (storefront Pay in 4 banners, express-checkout buttons on product page, cart and payment), <b>Onboarding wizard</b> (Connect with PayPal popup fills Merchant ID and Client ID back into Odoo), <b>Sandbox vs Production</b> (test with fake money, then switch to live), <b>Refunds</b> (full refund through the PayPal API from the transaction record). Without publishing the provider, customers cannot see PayPal at checkout at all.',
+ resources:[{label:'Product Description',url:'https://erp.muchconsulting.de/odoo/knowledge/2929/knowledge/2270'},{label:'Odoo App Store Page',url:'https://apps.odoo.com/apps/modules/19.0/payment_paypal_suite'},{label:'GitHub Repository',url:'https://github.com/much-GmbH/much-paypal-integration'}]
+},
+{
+ ic:'📥',color:'m-teal',name:'Transaction Importer',status:'',statusCls:'',
+ sub:'Provider payments into bank statement lines',
+ desc:'Pulls payments from PayPal, Stripe, Mollie, Heidelpay, Shopify and SIX into Odoo bank statement lines and reconciles them against the invoices they settle.',
+ who:'Finance and accounting teams who receive payments through providers like PayPal or Stripe and want those payments pulled into Odoo and matched to invoices automatically, without downloading lists or hand-typing them.',
+ features:'Transaction Importer connects Odoo to external payment providers, downloads each payment, lands it as a bank statement line and reconciles it against the invoice it settles. Key features: <b>Integrations</b> (one saved connection per provider account, with credentials and schedule), <b>Six built-in providers</b> (PayPal, Stripe, Mollie, Heidelpay, Shopify, SIX), <b>Setting Lines</b> (routing rules pointing at a Journal, with optional parameter filters), <b>Matching options</b> (exact amount or over/underpayment tolerance, by Partner or by Transaction ID), <b>Fees</b> (one extra statement line summing what the provider kept), <b>Scheduled actions</b> (two crons per integration — import and reconcile), <b>Run Manually</b> (wizard to import or reconcile a chosen date range on demand), <b>Logs</b> (info, warning and error messages explaining skips and unmatched payments), <b>Test vs Production credentials</b> (staging uses its own keys automatically). Without Transaction Importer, someone has to download every provider\'s payment list by hand and manually tick off which payment paid which invoice.',
+ resources:[{label:'GitHub Repository',url:'https://github.com/much-GmbH/much-transactions'}]
+},
+{
+ ic:'📄',color:'m-coral',name:'German Document Templates',status:'',statusCls:'',
+ sub:'DIN 5008 business-letter layout for Odoo documents',
+ desc:'Reformats Odoo invoices, quotations, orders and delivery slips into the German DIN 5008 business-letter layout, with a settings panel for logos, footers and colours.',
+ who:'German-market Odoo users who need their printed business documents to follow the DIN 5008 letter standard that customers, vendors and authorities expect.',
+ features:'The much QWeb Updater suite rebuilds Odoo\'s printed documents to the DIN 5008 layout and adds a no-code settings screen for logos, footers, colours and extra text. Key features: <b>Recipient address block</b> (repositioned to the window-envelope location), <b>Header & logo</b> (resizable logo plus a company sender line in your primary colour), <b>Line-item table</b> (headers recoloured to your primary/secondary colours), <b>Free Text Footer</b> (four equal columns of your text, or auto-filled company details, VAT ID and bank account), <b>Extra fields</b> (optional Order Title and Description before Table printed above the item table), <b>Suite extensions</b> (a core module plus add-ons for Sales, Accounting, Purchasing and Inventory), <b>Covered documents</b> (invoices and credit notes, quotations and sales orders, purchase orders and RFQs, delivery slips with country of origin, HS codes and weights). Without the QWeb Updater, Odoo\'s default layout is not DIN-compliant, so the address will not sit in the envelope window and your documents will not look proper to German recipients.',
+ resources:[{label:'Documentation',url:'https://erp.muchconsulting.de/odoo/action-1305/1743'},{label:'GitHub Repository',url:'https://github.com/much-GmbH/much-german-documents/tree/17.latest-qa'},{label:'Sales Product Page',url:'https://erp.muchconsulting.de/odoo/products/1798'}]
+},
+{
+ ic:'🇩🇪',color:'m-amber',name:'German Data & Translations',status:'',statusCls:'',
+ sub:'German accounting/HR data and a sharper German UI',
+ desc:'Pre-loads German accounting and HR data (AfA tables, BWA reports, working times, holidays) and sharpens Odoo’s German-language interface.',
+ who:'German companies starting on Odoo who need local accounting and HR reference data plus proper German interface wording without setting it all up by hand.',
+ features:'Much OfD (Odoo für Deutschland) is a pair of modules: one pre-fills the database with German accounting and HR reference data on install, the other replaces Odoo\'s built-in German text with cleaner translations. Key features: <b>AfA depreciation asset models</b> (official German depreciation templates, grouped by industry), <b>Industry selection wizard</b> (activates matching asset models and archives the rest, with a warning before you commit), <b>Working-time calendars</b> (German working times loaded on install), <b>Public holidays</b> (German holiday calendars loaded on install), <b>BWA financial reports</b> (ready-made, in SKR03 and SKR04 variants), <b>Improved German translations</b> (corrected de_DE interface text across many apps), <b>Upgrade re-apply</b> (force-overwrites terms so the improved German always wins after an Odoo update). Without Much OfD, you build the AfA tables, calendars, holidays and BWA by hand and live with Odoo\'s gap-ridden default German labels.',
+ resources:[{label:'Product Description',url:'https://erp.muchconsulting.de/odoo/knowledge/1744'},{label:'Documentation',url:'https://erp.muchconsulting.de/odoo/knowledge/1789'},{label:'GitHub Repository',url:'https://github.com/much-GmbH/much-german-data-translation'}]
+},
+{
+ ic:'🔬',color:'m-teal',name:'Enhanced Traceability',status:'',statusCls:'',
+ sub:'Lot/serial traceability across manufacturing and repair',
+ desc:'Richer lot/serial traceability across manufacturing and repair — service dates in the report, live active components, ticket links and bulk repair tools.',
+ who:'Manufacturing and after-sales teams in regulated or high-value industries who must prove what is inside each unit and what has been done to it.',
+ features:'The much Manufacturing Traceability module extends Odoo\'s manufacturing and repair tools to track lots and serial numbers through production and after-sales service. Key features: <b>Service Date column</b> (shows when each repair line was completed in the traceability report, with scrap lines hidden), <b>Active Components</b> (live list of parts currently inside a unit, excluding anything removed or recycled in past repairs), <b>Helpdesk ticket links</b> (Tickets smart button on product and lot forms, plus Product / Lot fields on the ticket), <b>Bulk repair creation</b> (a wizard that makes one repair order per selected lot with shared responsible, tags, date, location and notes), <b>Mass repair actions</b> (Confirm / Start / End / Cancel many at once, blocked across mixed states), <b>Repair sign-off</b> (stamps Signed by and Signed at and logs it in the chatter), <b>Service date auto-fill</b> (set to today when a repair reaches Done, still editable). Without it, repairs leave no service date in the traceability report, you cannot see which components are actually still inside a serialised unit, and every repair order has to be created and closed one by one.',
+ resources:[{label:'Product Description',url:'https://erp.muchconsulting.de/odoo/knowledge/1530'},{label:'Documentation',url:'https://erp.muchconsulting.de/odoo/knowledge/2206'},{label:'GitHub Repository',url:'https://github.com/much-GmbH/much_manufacturing_traceability/tree/18.latest-qa'},{label:'Sales Product Page',url:'https://erp.muchconsulting.de/odoo/products/1786'}]
+},
+{
+ ic:'✅',color:'m-pink',name:'Supplier Compliance',status:'',statusCls:'',
+ sub:'Vendor qualification checks on purchase orders',
+ desc:'Blocks or flags purchase orders when a vendor’s level or certificates don’t meet the products’ compliance requirements.',
+ who:'Procurement teams who must avoid ordering products from unqualified suppliers or vendors whose quality certificates have expired, with an audit trail for every exception.',
+ features:'The Purchase Order Vendor Compliance Check module adds a compliance layer to Odoo\'s purchasing flow, checking on Confirm, Send by Email and Print whether a vendor\'s qualification covers what the products require. Key features: <b>Supplier Level</b> (quality tiers, shipped as A, B and C), <b>Supplier Compliance Type</b> (a level plus an industry, e.g. A Automotive, assigned to vendors and products), <b>Included Levels</b> (a higher tier automatically satisfies lower-tier requirements), <b>Minimum Supplier Certification</b> (the compliance type a product requires; unset products are never checked), <b>Compliance Fail Wizard</b> (block-with-override at Confirm: delete the failing line or record a per-line or general fail reason), <b>Certificates</b> (vendor documents with an expiry date and Valid / Expiring Soon / Expired state that either warn or block PO confirmation), <b>Expiry notifications</b> (a Compliance Notification User is emailed and a reminder activity is created about 29 days before expiry). Without it, buyers police supplier qualification from memory, which does not scale and leaves no record of why a non-compliant order was pushed through.',
+ resources:[{label:'Product Description',url:'https://erp.muchconsulting.de/odoo/knowledge/1531'},{label:'Documentation',url:'https://erp.muchconsulting.de/odoo/knowledge/2604'},{label:'GitHub Repository',url:'https://github.com/much-GmbH/purchase_order_vendor_compliance_check'},{label:'Sales Product Page',url:'https://erp.muchconsulting.de/odoo/products/1706'}]
+},
+{
+ ic:'📦',color:'m-gray',name:'ChannelEngine Integration',status:'Retired',statusCls:'warn',
+ sub:'Retired marketplace connector (Odoo ↔ ChannelEngine)',
+ desc:'Retired marketplace connector between Odoo and ChannelEngine, the middleware hub fronting Amazon, eBay, bol.com, Zalando and Kaufland.',
+ who:'Existing customers only — this retired, end-of-life product is documented for colleagues supporting the customers already on it, and must not be offered or sold to new customers.',
+ features:'ChannelEngine Integration was much.\'s bridge between Odoo and ChannelEngine, the third-party middleware hub that fronts 1,300+ online marketplaces such as Amazon, eBay, bol.com, Zalando and Kaufland. Key features: <b>Products and offers</b> (pushed out of Odoo so marketplaces can list them), <b>Stock</b> (sent out continuously to prevent overselling), <b>Prices</b> (price changes pushed to every channel), <b>Orders</b> (marketplace purchases arrive in Odoo as normal sales orders), <b>Shipments and tracking</b> (shipped status and tracking numbers sent back to the marketplace), <b>Cancellations and returns</b> (flow back into Odoo), <b>Integration Hub home</b> (lived under the same menu as our other connectors, with its own settings, logs and timed scheduled jobs). Without ChannelEngine Integration, Odoo knows nothing about ChannelEngine and marketplace data has to be copy-pasted between the two systems by hand.',
+ resources:[{label:'Product Description',url:'https://erp.muchconsulting.de/odoo/knowledge/1534'},{label:'Documentation',url:'https://erp.muchconsulting.de/odoo/knowledge/1702'},{label:'GitHub Repository',url:'https://github.com/much-GmbH/much-order-channelengine-integration'},{label:'Sales Product Page',url:'https://erp.muchconsulting.de/odoo/products/1717'}],
+ note:'<b>Retired — do not sell to new customers.</b> Reference only, for supporting existing users.'
+},
+{
+ ic:'📦',color:'m-gray',name:'WMS Integration Framework',status:'Retired',statusCls:'warn',
+ sub:'Retired warehouse/shipping framework, superseded by OBI',
+ desc:'Retired base layer for connecting Odoo to outside warehouse and 3PL systems. Superseded by Order Base integration.',
+ who:'Existing customers only — this retired, end-of-life foundation has been superseded by Order Base, so it must not be sold to new customers and no new project should start on it.',
+ features:'WMS Integration Framework was much.\'s older base layer for connecting Odoo to outside warehouse and 3PL systems, providing the shared plumbing every individual warehouse connector was built on top of. Key features: <b>Shared plumbing</b> (timed jobs, logging, data matching and error handling reused by each connector), <b>Delivery orders</b> (Odoo tells the warehouse to pick, pack and send), <b>Shipment confirmation and tracking</b> (warehouse reports back and Odoo marks the delivery complete), <b>Expected receipts / ASN</b> (advance notice to the warehouse that supplier stock is on its way), <b>Received quantities</b> (real counted quantities reported back so Odoo stock goes up), <b>Stock levels</b> (the warehouse, as source of truth, periodically syncs real stock back to prevent overselling), <b>Returns</b> (registered and put back in step across both systems), <b>Logs and scheduled runs</b> (first stop when an order was not sent or a shipment did not come back). Without it, Odoo\'s paper view of orders and stock drifts apart from what the warehouse physically holds and ships.',
+ resources:[{label:'GitHub Repository',url:'https://github.com/much-GmbH/wms_integration'},{label:'Sales Product Page',url:'https://erp.muchconsulting.de/odoo/products/1741'}],
+ note:'<b>Retired — do not sell to new customers.</b> Superseded by <b>Order Base integration</b>; reference only for existing users.'
 }
 ];
 function resChip(r){return r.url?`<a class="chip" href="${r.url}" target="_blank" rel="noopener">${r.label} ↗</a>`:`<span class="chip">${r.label}</span>`;}
-document.getElementById('products').innerHTML=PRODUCTS.map(p=>`
+function cardHTML(p){return `
   <div class="prod ${p.color}">
     <div class="p-top">
       <div class="p-ic">${p.ic}</div>
@@ -140,7 +241,33 @@ document.getElementById('products').innerHTML=PRODUCTS.map(p=>`
     <div class="lab">Resources</div>
     <div class="chips">${p.resources.map(resChip).join('')}${p.testing?resChip({label:'🔗 '+p.testing.label,url:p.testing.url}):''}</div>
     <div class="meta">${p.meeting?`<span><b>🗓 Meeting:</b> ${p.meeting}</span>`:''}${p.status?`<span><b>Status:</b> ${p.status}</span>`:''}</div>
-  </div>`).join('');
+  </div>`;}
+
+/* ── search ── filters the cards on name, subtitle, description, audience,
+   key features and resource labels. Every term must match (AND). ── */
+const q=document.getElementById('q'), qhint=document.getElementById('qhint'), grid=document.getElementById('products');
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function haystack(p){
+  return [p.name,p.sub,p.desc,p.who,p.features,p.note,p.status,(p.resources||[]).map(r=>r.label).join(' ')]
+    .map(v=>String(v||'').replace(/<[^>]*>/g,' '))   // strip the <b> tags inside features/note
+    .join(' ').toLowerCase();
+}
+function render(list){
+  grid.innerHTML = list.length
+    ? list.map(cardHTML).join('')
+    : `<div class="p-empty">No products match “${esc(q.value.trim())}”.</div>`;
+}
+function runSearch(){
+  const raw=(q.value||'').trim().toLowerCase();
+  if(!raw){qhint.textContent='';render(PRODUCTS);return;}
+  const terms=raw.split(/\s+/).filter(Boolean);
+  const hits=PRODUCTS.filter(p=>{const h=haystack(p);return terms.every(t=>h.indexOf(t)>=0);});
+  qhint.textContent=`${hits.length} of ${PRODUCTS.length}`;
+  render(hits);
+}
+q.addEventListener('input',runSearch);
+q.addEventListener('keydown',e=>{if(e.key==='Escape'){q.value='';runSearch();q.blur();}});
+render(PRODUCTS);
 </script>
 </body>
 </html>
