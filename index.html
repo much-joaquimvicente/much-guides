@@ -489,15 +489,6 @@ const PRODUCTS_NAV = [
 ];
 const TRAINING_NAV = [
   {
-    icon:  '🎓',
-    color: 'm-pink',
-    badge: 'Onboarding',
-    title: 'Training Track',
-    desc:  'Your onboarding path — self-paced trainings and live sessions, with status and links.',
-    tags:  ['Checklist'],
-    href:  'training-track.html'
-  },
-  {
     icon:  '🚀',
     color: 'm-coral',
     badge: 'Consultant',
@@ -505,28 +496,6 @@ const TRAINING_NAV = [
     desc:  'How we cut an Odoo addon release — commits since last tag, manifest version bumps, QA → stable merge, version branch, and release notes.',
     tags:  ['Release', 'Workflow'],
     href:  'much-release-guide.html'
-  }
-];
-const SCRIPTS_NAV = [
-  {
-    icon:  '🎙️',
-    color: 'm-blue',
-    badge: 'Transcripts',
-    title: 'Training Meetings Scripts',
-    desc:  'Full transcripts of the onboarding calls — Product knowledge base, Test environment & tools, Helpdesk & project overview, Shopware integration setup, and MCP setup with Claude Desktop.',
-    tags:  ['5 sessions'],
-    href:  'meeting-scripts.html'
-  }
-];
-const VIDEOS_NAV = [
-  {
-    icon:  '🎥',
-    color: 'm-coral',
-    badge: 'Recordings',
-    title: 'Video-Calls',
-    desc:  'Recorded video-call sessions — each with the recording embedded, a summary and notes.',
-    tags:  ['6 videos'],
-    href:  'video-calls.html'
   }
 ];
 const ODOO_TRAINING_NAV = [
@@ -688,7 +657,7 @@ function cardHTML(g) {
 
 function render() {
   document.getElementById('grid').innerHTML = GUIDES.map(cardHTML).join('');
-  document.getElementById('extras-grid').innerHTML = PRODUCTS_NAV.concat(TRAINING_NAV, SCRIPTS_NAV, VIDEOS_NAV).map(cardHTML).join('');
+  document.getElementById('extras-grid').innerHTML = PRODUCTS_NAV.concat(TRAINING_NAV).map(cardHTML).join('');
   document.getElementById('odoo-training-grid').innerHTML = ODOO_TRAINING_NAV.map(cardHTML).join('');
   document.getElementById('testing-grid').innerHTML = TESTING.map(cardHTML).join('');
 }
