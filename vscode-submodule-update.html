@@ -53,6 +53,8 @@ button:hover{border-color:var(--text-3)}
 .copy:hover{border-color:#666;color:#eee}
 .sexp{margin:10px 0 0;font-size:14px;color:var(--text-2)}
 .sexp .out{display:block;font-family:var(--mono);font-size:12.5px;background:var(--surface-0);border:1px solid var(--border);border-radius:8px;padding:8px 11px;margin-top:6px;white-space:pre-wrap;color:var(--text)}
+.snote{margin-top:10px;background:var(--bg-warning);border:1px solid var(--border-warning);border-left:3px solid var(--border-warning);border-radius:8px;padding:10px 12px}
+.snote p{margin:0 0 8px;font-size:13.5px;color:var(--text-warning)}
 footer{margin-top:40px;color:var(--text-3);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
 @media print{.noprint{display:none!important}body{background:#fff}.cmd{background:#f0efe8;color:#000;border:1px solid #ccc}.copy{display:none}}
 </style>
@@ -86,6 +88,11 @@ Updating a submodule is a two-step dance:
 If you skip step 2, teammates pulling the main project won't get the submodule update — they'll still be pointing at the old version!
 </div>
 
+<div class="callout tip">
+<b>📣 One more step — trigger the deployment</b><br>
+Pushing your changes does <b>not</b> update the testing web environment on its own. The <b>Testing Web will only be updated after you post in the <code>#dev-odoo-deployments</code> channel</b>. So once your <code>git push</code> succeeds, post there to have your update deployed and testable.
+</div>
+
 <h2 style="font-size:20px;font-weight:600;margin:38px 0 4px">Before testing: pull the docs into each environment</h2>
 <p class="lead">Do this once per testing-environment version, before you run any test.</p>
 
@@ -105,10 +112,14 @@ If you skip step 2, teammates pulling the main project won't get the submodule u
 <script>
 const STEPS=[
 {cmd:'cd much-order-base-integration',
- exp:"Move <b>into</b> the submodule folder. You're now inside the nested repo. <i>(This is just an example module — use the real folder name of whichever submodule you're updating.)</i>"},
+ exp:"Move <b>into</b> the submodule folder, inside the main folder of the Odoo version you're updating. You're now inside the nested repo. <i>(This is just an example module — use the real folder name of whichever submodule you're updating.)</i>",
+ note:"If the folder is <b>empty or missing</b>, the submodule hasn't been pulled in yet. Initialise it first, then <code>cd</code> into it:",
+ notecmd:'git submodule update --init'},
 {cmd:'git branch',
  exp:"Check which branch you're on. The <code>*</code> marks your current branch — here you're on <code>19.latest-qa</code>:",
- out:"  18.latest\n* 19.latest-qa"},
+ out:"  18.latest\n* 19.latest-qa",
+ note:"If your branch is <b>different</b> from the one shown above, switch to the latest-qa branch first:",
+ notecmd:'git checkout 18.latest-qa'},
 {cmd:'git pull',
  exp:"Pull the latest changes from GitHub. This downloads any new commits, branches and tags from the remote into your local submodule. In this example it pulled a batch of new test files — <b>71 files changed</b>. Because it was a <b>“fast-forward”</b>, there were no conflicts: your branch simply moved forward to the newest version."},
 {cmd:'cd ..',
@@ -118,7 +129,9 @@ const STEPS=[
 {cmd:'git commit -m "I am updating order base integration"',
  exp:"Commit that pointer update. This saves the change: “the main project now points to this newer version of the submodule.”"},
 {cmd:'git push',
- exp:"Push it to GitHub. This uploads your commit (the updated pointer) to the remote repository, on the <code>staging-qa</code> branch."}
+ exp:"Push it to GitHub. This uploads your commit (the updated pointer) to the remote repository, on the <code>staging-qa</code> branch.",
+ note:"If you get an <b>error</b>, update your Odoo version first, then push again:",
+ notecmd:'git pull --rebase'}
 ];
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 document.getElementById('rail').innerHTML=STEPS.map((s,i)=>`
@@ -127,6 +140,7 @@ document.getElementById('rail').innerHTML=STEPS.map((s,i)=>`
     <div class="sbody">
       <div class="cmd"><span class="prompt">$</span><span class="txt">${esc(s.cmd)}</span><button class="copy noprint" onclick="copyCmd(this,'${esc(s.cmd).replace(/'/g,"\\'")}')">Copy</button></div>
       <p class="sexp">${s.exp}${s.out?`<span class="out">${esc(s.out)}</span>`:''}</p>
+      ${s.note?`<div class="snote"><p>${s.note}</p><div class="cmd"><span class="prompt">$</span><span class="txt">${esc(s.notecmd)}</span><button class="copy noprint" onclick="copyCmd(this,'${esc(s.notecmd).replace(/'/g,"\\'")}')">Copy</button></div></div>`:''}
     </div>
   </div>`).join('');
 function copyCmd(btn,txt){

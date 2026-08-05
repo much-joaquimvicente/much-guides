@@ -98,6 +98,10 @@ footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid v
 </div>
 </div>
 
+<div class="callout">
+<b>How the translations work.</b> Every translation lives in a <code>.po</code> file and can also be edited by hand. Anything you add in Odoo — both <b>messages and field labels</b> — needs to be added to the German translations. The only exception is <b>log messages</b>, which do not need translating.
+</div>
+
 <h2>1. What is this?</h2>
 <p>"German Data &amp; Translations" (internally branded <b>Much OfD</b> — "Odoo für Deutschland") is a pair of add-on modules. One pre-fills your database with German accounting and HR reference data on install; the other replaces Odoo's built-in German text with cleaner, more accurate translations. Together they save you from setting up German-specific data by hand and from living with rough machine-style German labels.</p>
 <p><b>Why it exists:</b> Odoo ships English-first defaults and its standard German translation has gaps. German businesses also need specific local artifacts Odoo does not provide out of the box — the official <b>AfA depreciation tables</b>, German working-time and public-holiday calendars, and the <b>BWA</b> report every tax advisor expects. These modules fill those gaps so a German company can start immediately.</p>
@@ -137,6 +141,10 @@ footer{margin-top:48px;color:var(--text-3);font-size:13px;border-top:1px solid v
 </div>
 
 <div class="doc" id="doc"></div>
+
+<div class="callout tip">
+<b>⚠️ Coming soon.</b> The <b>BWA</b> and <b>Kontoblatt</b> reports are not part of the module yet — they will be added in a future release.
+</div>
 
 <footer>Onboarding aid for the much. OfD modules (<code>much_german_data</code>, <code>much_german_translation</code>, Odoo 19). Data is imported on install from bundled Excel files; translations re-apply on upgrade. Self-contained &amp; offline.</footer>
 
